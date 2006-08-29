@@ -3,9 +3,9 @@
 
 
 LIB=opendicom-sharp
+DOC=opendicom-sharp-doc
 UTILS=opendicom-utils
 NAVI=opendicom-navigator
-DOC=opendicom-sharp-doc
 
 
 DICOM_SHARP_RELEASE=$(shell cat $(LIB)/release)
@@ -40,11 +40,13 @@ clean-packages:
 
 md5sum:
 	@sh checksum.sh lib $(DICOM_SHARP_RELEASE)
+	@sh checksum.sh doc $(DICOM_SHARP_RELEASE)
 	@sh checksum.sh utils $(DICOM_UTILS_RELEASE)
 	@sh checksum.sh navi $(DICOM_NAVI_RELEASE)
 
 debs: md5sum
 	@dpkg -b $(LIB)_$(DICOM_SHARP_RELEASE)_deb $(LIB)_$(DICOM_SHARP_RELEASE)_all.deb
+	@dpkg -b $(DOC)_$(DICOM_SHARP_RELEASE)_deb $(DOC)_$(DICOM_SHARP_RELEASE)_all.deb
 	@dpkg -b $(UTILS)_$(DICOM_UTILS_RELEASE)_deb $(UTILS)_$(DICOM_UTILS_RELEASE)_all.deb
 	@dpkg -b $(NAVI)_$(DICOM_NAVI_RELEASE)_deb $(NAVI)_$(DICOM_NAVI_RELEASE)_all.deb	
 
