@@ -1,0 +1,81 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>UniqueIdentifier Members</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">openDICOM.NET API Reference (openDICOM# Class Library)</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">UniqueIdentifier Members
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p>
+        <a href="openDicom.Encoding.UniqueIdentifier.html">UniqueIdentifier overview</a>
+      </p>
+      <h4 class="dtH4">Public Instance Constructors</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr VALIGN="top">
+            <td width="50%">
+              <img src="pubmethod.gif" />
+              <a href="openDicom.Encoding.UniqueIdentifierConstructor.html">UniqueIdentifier Constructor</a>
+            </td>
+            <td width="50%">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Public Instance Properties</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.IsImplicit.html">IsImplicit</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Returns whether this instance is an implicit VR, a value representation without corresponding DICOM data stream entry. Therefore, the transfer syntax is considered. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.IsUndefined.html">IsUndefined</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Returns whether this instance is a defined or undefined value representation. An undefined value representation also is an unspecific value representation. Attention: The value representation UN (Unknown) is not an undefined value representation and thus specific. An undefined value representation is represented by an empty string. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.IsUnknown.html">IsUnknown</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Returns true, if this value representation instance is unknown (UN). </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.Name.html">Name</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Access the string representation of this instance. The string representation is a two characters string of format "VR" and is an abbreviation for the type of DICOM value representation. If a value representation is unspecified, an empty string will be returned. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.StreamPosition.html">StreamPosition</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Position within a DICOM stream of this VR instance. If this instance does not belong to a stream, -1 will be returned. This will be the case, if this VR instance is registered in a data element dictionary. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.Tag.html">Tag</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Access corresponding DICOM tag. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.TransferSyntax.html">TransferSyntax</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Access corresponding DICOM transfer syntax. </td></tr></table>
+      </div>
+      <h4 class="dtH4">Public Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.Decode.html">Decode</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Determines the correct type and multiplicity of a DICOM value. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.DecodeToValue.html">DecodeToValue</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Determines the correct type and multiplicity of a DICOM value and converts it to a DICOM value class. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassEqualsTopic.asp">Equals</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassGetHashCodeTopic.asp">GetHashCode</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassGetTypeTopic.asp">GetType</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.LoadFrom_overload_1.html">LoadFrom</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> Re-creates this instance from a DICOM output stream. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.Encoding.UniqueIdentifier.ToLongString.html">ToLongString</a></td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.ValueRepresentation.ToString.html">ToString</a> (inherited from <b>ValueRepresentation</b>)</td><td width="50%"> DICOM VR string representation. </td></tr></table>
+      </div>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="openDicom.Encoding.UniqueIdentifier.html">UniqueIdentifier Class</a> | <a href="openDicom.Encoding.html">openDicom.Encoding Namespace</a></p>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:albert.gnandt@hs-heilbronn.de?subject=openDICOM.NET%20API%20Reference%20(openDICOM#%20Class%20Library)%20Documentation%20Feedback:%20UniqueIdentifier%20Members&#xD;&#xA;						">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>Copyright (C) 2006  Albert Gnandt</a>
+        </p>
+        <p>Generated from assembly opendicom-sharp [0.1.0.0]</p>
+      </div>
+    </div>
+  </body>
+</html>

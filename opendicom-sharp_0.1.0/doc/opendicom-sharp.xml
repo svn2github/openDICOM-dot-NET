@@ -1,0 +1,2138 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>bin/opendicom-sharp</name>
+    </assembly>
+    <members>
+        <member name="T:openDicom.DataStructure.IDicomStreamMember">
+            <summary>
+            DICOM member stream interface for classes that participate in a
+            DICOM data stream according to the DICOM standard. If a DICOM class
+            is binary represented on a DICOM stream, it will have to implement
+            this interface.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.IDicomStreamMember.TransferSyntax">
+            <summary>
+            DICOM transfer syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.IDicomStreamMember.StreamPosition">
+            <summary>
+            Position within a DICOM data stream.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.IDicomStreamMember.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a DICOM stream member instance from a specified
+            DICOM output stream.
+            </summary></member>
+        <member name="T:openDicom.Registry.IDicomDictionary">
+            <summary>
+            Dictionary interface for DICOM registry dictionaries. Each
+            dictionary is supposed to implement this common interface.
+            </summary></member>
+        <member name="M:openDicom.Registry.IDicomDictionary.LoadFrom(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Re-creates a dictionary instance from a file of specified
+            format.
+            </summary></member>
+        <member name="M:openDicom.Registry.IDicomDictionary.SaveTo(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Saves dictionary instance content to a file of specified
+            format.
+            </summary></member>
+        <member name="T:openDicom.Encoding.TransferSyntax">
+            <summary>
+            This class represents a DICOM transfer syntax.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor">
+            <summary>
+            Creates a new DICOM default transfer syntax instance with default
+            character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(System.String)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified
+            DICOM UID string representation and default character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(System.String,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified
+            DICOM UID string representation and specified DICOM character
+            repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.Registry.Uid)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified
+            DICOM UID and default character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.Registry.Uid,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified DICOM
+            UID and default character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.DataStructure.DataSet.DataElement)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified transfer
+            syntax UID data element and default character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.DataStructure.DataSet.DataElement,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified
+            transfer syntax UID data element and specified DICOM character
+            repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified data
+            set containing a transfer syntax UID data element and default
+            character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.#ctor(openDicom.DataStructure.DataSet.DataSet,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Creates a new DICOM transfer syntax instance from specified data
+            set containing a transfer syntax UID data element and specified
+            character repertoire.
+            </summary></member>
+        <member name="F:openDicom.Encoding.TransferSyntax.UidTag">
+            <summary>
+            DICOM transfer syntax UID (0002,0010).
+            </summary></member>
+        <member name="F:openDicom.Encoding.TransferSyntax.Default">
+            <summary>
+            DICOM default transfer syntax with UID 1.2.840.10008.1.2.
+            </summary></member>
+        <member name="F:openDicom.Encoding.TransferSyntax.FileMetaInformation">
+            <summary>
+            DICOM transfer syntax for file meta information data sets
+            (UID is 1.2.840.10008.1.2.1).
+            </summary></member>
+        <member name="P:openDicom.Encoding.TransferSyntax.IsImplicitVR">
+            <summary>
+            Returns whether this transfer syntax instance uses implicit
+            DICOM value representations. Implicit VRs can only be accessed
+            from the data element dictionary and are not part of a
+            DICOM stream.
+            </summary></member>
+        <member name="P:openDicom.Encoding.TransferSyntax.IsLittleEndian">
+            <summary>
+            Returns whether this transfer syntax uses little endian byte
+            ordering. This is relevant in context of de-/encoding of
+            DICOM stream content according to
+            <see cref="P:openDicom.Encoding.TransferSyntax.IsMachineLittleEndian" />.
+            </summary></member>
+        <member name="P:openDicom.Encoding.TransferSyntax.IsMachineLittleEndian">
+            <summary>
+            Returns whether the underlying machine is a little endian
+            byte ordering architecture or not.
+            </summary></member>
+        <member name="P:openDicom.Encoding.TransferSyntax.CharacterRepertoire">
+            <summary>
+            Returns the corresponding DICOM character repertoire.
+            </summary></member>
+        <member name="P:openDicom.Encoding.TransferSyntax.Uid">
+            <summary>
+            Access the DICOM UID indentifying this transfer syntax instance.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.LoadFrom(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Re-creates a DICOM transfer syntax instance from specified data
+            set containing a transfer syntax UID data element and default
+            character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.LoadFrom(openDicom.DataStructure.DataSet.DataElement)">
+            <summary>
+            Determines whether this instance is equal to another DICOM
+            transfer syntax instance or not. Equality of the UIDs will
+            be checked.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.Equals(openDicom.Encoding.TransferSyntax)">
+            <summary>
+            Determines whether this instance is equal to another DICOM
+            transfer syntax instance or not. Equality of the UIDs will
+            be checked.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.ToString(System.Byte[])">
+            <summary>
+            Converts an array of bytes into a string by this
+            DICOM transfer syntax instance's character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.ToString(System.Byte[],System.Int32)">
+            <summary>
+            Converts count of bytes from a byte array into a string by this
+            DICOM transfer syntax instance's character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.ToString(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Converts count of bytes from a byte array starting at
+            specified offset into a string by this DICOM transfer syntax
+            instance's character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.ToBytes(System.String)">
+            <summary>
+            Converts a string into an array of bytes by this
+            DICOM transfer syntax instance's character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.CorrectByteOrdering(System.UInt16)">
+            <summary>
+            Determines whether the bytes of an unsigned word have to be
+            swapped according to the used transfer syntax. There is
+            considered the endian type of underlying machine and transfer
+            syntax.
+            </summary>
+            <param name="word">
+            Unsigned word to process.
+            </param>
+            <returns>
+            Unsigned word with or without bytes swapped.
+            </returns></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.CorrectByteOrdering(System.Int16)">
+            <summary>
+            Determines whether the bytes of a signed word have to be
+            swapped according to the used transfer syntax. There is
+            considered the endian type of underlying machine and transfer
+            syntax.
+            </summary>
+            <param name="word">
+            Signed word to process.
+            </param>
+            <returns>
+            Signed word with or without bytes swapped.
+            </returns></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.CorrectByteOrdering(System.UInt32)">
+            <summary>
+            Determines whether the bytes of an unsigned integer have to be
+            swapped according to the used transfer syntax. There is
+            considered the endian type of underlying machine and transfer
+            syntax.
+            </summary>
+            <param name="value">
+            Unsigned integer to process.
+            </param>
+            <returns>
+            Unsigned integer with or without bytes swapped.
+            </returns></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.CorrectByteOrdering(System.Int32)">
+            <summary>
+            Determines whether the bytes of a signed integer have to be
+            swapped according to the used transfer syntax. There is
+            considered the endian type of underlying machine and transfer
+            syntax.
+            </summary>
+            <param name="value">
+            Signed integer to process.
+            </param>
+            <returns>
+            Signed integer with or without bytes swapped.
+            </returns></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.CorrectByteOrdering(System.Byte[])">
+            <summary>
+            Determines whether the bytes of an array have to be swapped
+            according to the used transfer syntax. This method only is
+            relevant to numeric representations as byte arrays. There is
+            considered the endian type of underlying machine and transfer
+            syntax.
+            </summary>
+            <param name="bytes">
+            Byte array to process.
+            </param>
+            <returns>
+            Byte array with or without bytes swapped.
+            </returns></member>
+        <member name="M:openDicom.Encoding.TransferSyntax.ToString">
+            <summary>
+            Returns a DICOM transfer syntax UID as string representation.
+            </summary></member>
+        <member name="T:openDicom.Encoding.Type.Age">
+            <summary>
+            This class represents a single DICOM Age String (AS) value.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.Age.#ctor(System.String)">
+            <summary>
+            Creates a new age instance from specified age string of
+            format "xxxM", where "xxx" is a decimal number, the age value,
+            like "013" and "M", is the age context or measuring unit.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.Age.#ctor(System.Int32,openDicom.Encoding.Type.AgeContext)">
+            <summary>
+            Creates a new age instance from specified age value and
+            context.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.Age.#ctor(System.Int32,System.Char)">
+            <summary>
+            Creates a new age instance from specified age value and
+            context as single character. Only DICOM VR Age String (AS)
+            measuring units are allowed (see <see cref="T:openDicom.Encoding.Type.AgeContext" />).
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.Age.Context">
+            <summary>
+            Returns the choosen age measuring unit.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.Age.IsDays">
+            <summary>
+            Access <see cref="P:openDicom.Encoding.Type.Age.Context" /> for measuring unit in days.
+            </summary>
+            <remarks>
+            Only one measuring unit can be assigned to this instance at
+            once. If this property is set on true, <see cref="P:openDicom.Encoding.Type.Age.Context" />
+            will be re-assigned to days.
+            </remarks></member>
+        <member name="P:openDicom.Encoding.Type.Age.IsWeeks">
+            <summary>
+            Access <see cref="P:openDicom.Encoding.Type.Age.Context" /> for measuring unit in weeks.
+            </summary>
+            <remarks>
+            Only one measuring unit can be assigned to this instance at
+            once. If this property is set on true, <see cref="P:openDicom.Encoding.Type.Age.Context" />
+            will be re-assigned to weeks.
+            </remarks></member>
+        <member name="P:openDicom.Encoding.Type.Age.IsMonths">
+            <summary>
+            Access <see cref="P:openDicom.Encoding.Type.Age.Context" /> for measuring unit in months.
+            </summary>
+            <remarks>
+            Only one measuring unit can be assigned to this instance at
+            once. If this property is set on true, <see cref="P:openDicom.Encoding.Type.Age.Context" />
+            will re-assigned to months.
+            </remarks></member>
+        <member name="P:openDicom.Encoding.Type.Age.IsYears">
+            <summary>
+            Access <see cref="P:openDicom.Encoding.Type.Age.Context" /> for measuring unit in years.
+            </summary>
+            <remarks>
+            Only one measuring unit can be assigned to this instance at
+            once. If this property is set on true, <see cref="P:openDicom.Encoding.Type.Age.Context" />
+            will be re-assigned to years.
+            </remarks></member>
+        <member name="P:openDicom.Encoding.Type.Age.AgeValue">
+            <summary>
+            Access of age value.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.Age.ToString">
+            <summary>
+            Returns the DICOM VR Age String (AS) representation of this
+            instance. Format is "xxxM", where "xxx" is a decimal number
+            and "M" is a single character that represents the
+            <see cref="T:openDicom.Encoding.Type.AgeContext" />.
+            </summary></member>
+        <member name="T:openDicom.Encoding.Type.PersonName">
+            <summary>
+            This class represents a single DICOM Person Name (PN) value.
+            </summary>
+            <remarks>
+            TODO: Support of ideographic representation is not implemented.
+            </remarks></member>
+        <member name="M:openDicom.Encoding.Type.PersonName.#ctor">
+            <summary>
+            Creates a new empty person name instance.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.PersonName.#ctor(System.String)">
+            <summary>
+            Creates a new person name instance from specified full name.
+            All person name parts have to be seperated by "^" according to
+            the DICOM standard.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.PersonName.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Creates a new person name instance from the different person
+            name parts.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.Item(System.Int32)">
+            <summary>
+            Access this person name instance as array. Index range is
+            bounded between 0 (family name) and 4 (name suffix).
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.FamilyName">
+            <summary>
+            Access person name part family name.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.GivenName">
+            <summary>
+            Access person name part given name.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.MiddleName">
+            <summary>
+            Access person name part middle name.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.NamePrefix">
+            <summary>
+            Access person name part name prefix.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.NameSuffix">
+            <summary>
+            Access person name part name suffix.
+            </summary></member>
+        <member name="P:openDicom.Encoding.Type.PersonName.FullName">
+            <summary>
+            Access full person name string representation. According
+            to the DICOM standard "^" is used as seperator of different
+            person name parts.
+            </summary></member>
+        <member name="M:openDicom.Encoding.Type.PersonName.ToString">
+            <summary>
+            Return this person name instance's <see cref="P:openDicom.Encoding.Type.PersonName.FullName" />.
+            </summary></member>
+        <member name="T:openDicom.Encoding.UnsignedShort">
+            <summary>
+            This class represents the specific DICOM VR Unsigned Short (US).
+            </summary></member>
+        <member name="T:openDicom.Encoding.ApplicationEntity">
+            <summary>
+            This class represents the specific DICOM VR Application Entity (AE).
+            </summary></member>
+        <member name="T:openDicom.Encoding.AgeString">
+            <summary>
+            This class represents the specific DICOM VR Age String (AS).
+            </summary></member>
+        <member name="T:openDicom.Encoding.AttributeTag">
+            <summary>
+            This class represents the specific DICOM VR Attribute Tag (AT).
+            </summary></member>
+        <member name="T:openDicom.Encoding.CodeString">
+            <summary>
+            This class represents the specific DICOM VR Code String (CS).
+            </summary></member>
+        <member name="T:openDicom.Encoding.Date">
+            <summary>
+            This class represents the specific DICOM VR Date (DA).
+            </summary></member>
+        <member name="T:openDicom.Encoding.DecimalString">
+            <summary>
+            This class represents the specific DICOM VR Decimal String (DS).
+            </summary></member>
+        <member name="T:openDicom.Encoding.DateTime">
+            <summary>
+            This class represents the specific DICOM VR Date Time (DT).
+            </summary></member>
+        <member name="T:openDicom.Encoding.FloatingPointSingle">
+            <summary>
+            This class represents the specific DICOM VR Floating Point Single (FL).
+            </summary></member>
+        <member name="T:openDicom.Encoding.FloatingPointDouble">
+            <summary>
+            This class represents the specific DICOM VR Floating Point Double (FD).
+            </summary></member>
+        <member name="T:openDicom.Encoding.IntegerString">
+            <summary>
+            This class represents the specific DICOM VR Integer String (IS).
+            </summary></member>
+        <member name="T:openDicom.Encoding.LongString">
+            <summary>
+            This class represents the specific DICOM VR Long String (LO).
+            </summary></member>
+        <member name="T:openDicom.Encoding.LongText">
+            <summary>
+            This class represents the specific DICOM VR Long Text (LT).
+            </summary></member>
+        <member name="T:openDicom.Encoding.OtherByteString">
+            <summary>
+            This class represents the specific DICOM VR Other Byte String (OB).
+            </summary></member>
+        <member name="T:openDicom.Encoding.OtherFloatString">
+            <summary>
+            This class represents the specific DICOM VR Other Float String (OF).
+            </summary></member>
+        <member name="T:openDicom.Encoding.OtherWordString">
+            <summary>
+            This class represents the specific DICOM VR Other Word String (OW).
+            </summary></member>
+        <member name="T:openDicom.Encoding.PersonName">
+            <summary>
+            This class represents the specific DICOM VR Person Name (PN).
+            </summary></member>
+        <member name="T:openDicom.Encoding.ShortName">
+            <summary>
+            This class represents the specific DICOM VR Short Name (SH).
+            </summary></member>
+        <member name="T:openDicom.Encoding.SignedShort">
+            <summary>
+            This class represents the specific DICOM VR Signed Short (SS).
+            </summary></member>
+        <member name="T:openDicom.Encoding.SignedLong">
+            <summary>
+            This class represents the specific DICOM VR Signed Long (SL).
+            </summary></member>
+        <member name="T:openDicom.Encoding.SequenceOfItems">
+            <summary>
+            This class represents the specific DICOM VR Sequence of Items (SQ).
+            </summary></member>
+        <member name="T:openDicom.Encoding.ShortText">
+            <summary>
+            This class represents the specific DICOM VR Short Text (ST).
+            </summary></member>
+        <member name="T:openDicom.Encoding.UnsignedLong">
+            <summary>
+            This class represents the specific DICOM VR Unsigned Long (UL).
+            </summary></member>
+        <member name="T:openDicom.Encoding.Time">
+            <summary>
+            This class represents the specific DICOM VR Time (TM).
+            </summary></member>
+        <member name="T:openDicom.Encoding.UniqueIdentifier">
+            <summary>
+            This class represents the specific DICOM VR Unique Identifier (UI).
+            </summary></member>
+        <member name="T:openDicom.Encoding.UnlimitedText">
+            <summary>
+            This class represents the specific DICOM VR Unlimited Text (UT).
+            </summary></member>
+        <member name="T:openDicom.Encoding.Unknown">
+            <summary>
+            This class represents the specific DICOM VR Unknown (UN).
+            </summary></member>
+        <member name="T:openDicom.Encoding.EncodingException">
+            <summary>
+            Parent class for all encoding exceptions.
+            </summary></member>
+        <member name="T:openDicom.Encoding.ByteConvert">
+            <summary>
+            Byte arrays conversion methods.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToString(System.Byte[],openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Converts an array of bytes into a string by given DICOM
+            character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToString(System.Byte[],System.Int32,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Converts count of bytes from a byte array into a string by
+            given DICOM character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToString(System.Byte[],System.Int32,System.Int32,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Converts count of bytes from a byte array starting at a
+            specified offset into a string by given DICOM character
+            repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToBytes(System.String,openDicom.Encoding.CharacterRepertoire)">
+            <summary>
+            Converts a string to an array of bytes by given DICOM
+            character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToBytes(System.UInt16[])">
+            <summary>
+            Converts an array of unsigned words into an array of bytes.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToBytes(System.Int16[])">
+            <summary>
+            Converts an array of signed words into an array of bytes.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToUnsignedWords(System.Byte[])">
+            <summary>
+            Converts an array of bytes into an array of unsigned words.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.ToSignedWords(System.Byte[])">
+            <summary>
+            Converts an array of bytes into an array of signed words.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.UInt16)">
+            <summary>
+            Changes between little and big endian byte ordering of an
+            unsigned word and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Int16)">
+            <summary>
+            Changes between little and big endian byte ordering of a
+            signed word and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.UInt32)">
+            <summary>
+            Changes between little and big endian byte ordering of an
+            unsigned integer and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Int32)">
+            <summary>
+            Changes between little and big endian byte ordering of a
+            signed integer and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.UInt64)">
+            <summary>
+            Changes between little and big endian byte ordering of an
+            unsigned long integer and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Int64)">
+            <summary>
+            Changes between little and big endian byte ordering of a
+            signed long integer and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Single)">
+            <summary>
+            Changes between little and big endian byte ordering of a
+            single or float and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Double)">
+            <summary>
+            Changes between little and big endian byte ordering of a
+            double and returns it.
+            </summary></member>
+        <member name="M:openDicom.Encoding.ByteConvert.SwapBytes(System.Byte[])">
+            <summary>
+            Changes between little and big endian byte ordering of an
+            array of bytes and returns it.
+            </summary></member>
+        <member name="T:openDicom.Encoding.CharacterRepertoire">
+            <summary>
+            This class represents a DICOM character repertoire.
+            </summary></member>
+        <member name="M:openDicom.Encoding.CharacterRepertoire.#ctor(System.String)">
+            <summary>
+            Creates a new DICOM character repertoire instance from
+            specified character set or map.
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.CharacterSetTag">
+            <summary>
+            DICOM tag (0008,0005).
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.Default">
+            <summary>
+            DICOM default character repertoire (ISO_IR 6).
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.Ascii">
+            <summary>
+            DICOM ASCII character repertoire.
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.Utf8">
+            <summary>
+            DICOM UTF-8 character repertoire.
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.G0">
+            <summary>
+            DICOM character repertoire G0 (ISO_IR 6).
+            </summary></member>
+        <member name="F:openDicom.Encoding.CharacterRepertoire.G1">
+            <summary>
+            DICOM character repertoire G1 (ISO_IR 100).
+            </summary></member>
+        <member name="P:openDicom.Encoding.CharacterRepertoire.Encoding">
+            <summary>
+            DICOM character repertoire text encoding.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.Tag">
+            <summary>
+            This class represents a DICOM tag (gggg,eeee).
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String)">
+            <summary>
+            Creates a new tag instance from specified string representation
+            tag.
+            </summary>
+            <param name="tag">
+            Tag representation as string of format "(gggg,eeee)".
+            </param></member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new tag instance from specified string representations
+            (group,element).
+            </summary>
+            <param name="group">
+            Group id as string of format "gggg".
+            </param>
+            <param name="element">
+            Element id as string of format "eeee".
+            </param></member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new tag instance from specified integer representations
+            (group,element).
+            </summary>
+            <param name="group">
+            Group id value.
+            </param>
+            <param name="element">
+            Element id value.
+            </param></member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new tag instance from a DICOM output stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM output stream.
+            </param></member>
+        <member name="P:openDicom.DataStructure.Tag.Group">
+            <summary>
+            Access of a tag instance's group id. Group is a hexadecimal
+            string value of format "gggg".
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Tag.Element">
+            <summary>
+            Access of a tag instance's element id. Element is a hexadecimal
+            string value of format "eeee".
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Tag.IsUserDefined">
+            <summary>
+            Returns true, if this tag is a private tag, a tag defined by
+            user, else false. A private tag is not registered to a data
+            element dictionary.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Tag.StreamPosition">
+            <summary>
+            Access this instance's stream position. If a tag does
+            not belong to a stream, a position of -1 will be returned.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Tag.TransferSyntax">
+            <summary>
+            Access this instance's transfer syntax.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Tag.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates this instance from a DICOM output stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM output stream.
+            </param></member>
+        <member name="M:openDicom.DataStructure.Tag.SaveTo(System.IO.Stream)">
+            <summary>
+            Saves this instance to a DICOM input stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM input stream.
+            </param></member>
+        <member name="M:openDicom.DataStructure.Tag.Equals(openDicom.DataStructure.Tag)">
+            <summary>
+            Determines whether this instance is equal to another DICOM
+            tag instance.
+            </summary>
+            <param name="tag">
+            An instance of class Tag.
+            </param>
+            <return>
+            True, if equality is given, else false.
+            </return></member>
+        <member name="M:openDicom.DataStructure.Tag.Equals(System.String)">
+            <summary>
+            Determines whether this instance is equal to a string
+            representation of the format "(gggg,eeee)".
+            </summary>
+            <param name="tag">
+            An instance of class Tag.
+            </param>
+            <returns>
+            True, if equality is given, else false.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.Tag.CompareTo(System.Object)">
+            <summary>
+            Implementation of the IComparable interface. So the use
+            of this instance within collections is guaranteed.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Tag.GetDictionaryEntry">
+            <summary>
+            Corresponding data element dictionary entry.
+            </summary>
+            <returns>
+            A DICOM data element dictionary entry. If this instance represents
+            a private tag, a completely useable dictionary entry of type
+            unknown is returned.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.Tag.ToString">
+            <summary>
+            DICOM tag string representation.
+            </summary>
+            <returns>
+            A DICOM tag as string of format "(gggg,eeee)".
+            </returns></member>
+        <member name="T:openDicom.DataStructure.ValueRepresentation">
+            <summary>
+            This class represents an unspecific DICOM value representation (VR).
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.#ctor(openDicom.DataStructure.Tag)">
+            <summary>
+            Creates a new value representation instance and registers it
+            by the defined tag.
+            </summary>
+            <param name="tag">
+            DICOM tag.
+            </param></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.#ctor(System.String,openDicom.DataStructure.Tag)">
+            <summary>
+            Creates a new value representation instance from its string
+            representation and registers it by the defined tag.
+            </summary>
+            <param name="vr">
+            DICOM string value representation of format "VR".
+            </param>
+            <param name="tag">
+            DICOM tag.
+            </param></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.#ctor(System.IO.Stream,openDicom.DataStructure.Tag)">
+            <summary>
+            Creates a new VR instance form a DICOM output stream and
+            registers it by the specified tag.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.Name">
+            <summary>
+            Access the string representation of this instance. The string
+            representation is a two characters string of format "VR" and
+            is an abbreviation for the type of DICOM value representation.
+            If a value representation is unspecified, an empty string will
+            be returned.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.Tag">
+            <summary>
+            Access corresponding DICOM tag.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.TransferSyntax">
+            <summary>
+            Access corresponding DICOM transfer syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.IsImplicit">
+            <summary>
+            Returns whether this instance is an implicit VR, a value
+            representation without corresponding DICOM data stream entry.
+            Therefore, the transfer syntax is considered.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.IsUndefined">
+            <summary>
+            Returns whether this instance is a defined or undefined
+            value representation. An undefined value representation
+            also is an unspecific value representation. Attention: The value
+            representation UN (Unknown) is not an undefined value
+            representation and thus specific. An undefined value
+            representation is represented by an empty string.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.IsUnknown">
+            <summary>
+            Returns true, if this value representation instance is unknown (UN).
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.IsStrictDecoded">
+            <summary>
+            Global switch for controlling strictness of DICOM content
+            decoding. If this switch is set to false, a lot of conditions
+            within <see cref="M:openDicom.DataStructure.ValueRepresentation.Decode(System.Byte[])" /> will be ignored.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueRepresentation.StreamPosition">
+            <summary>
+            Position within a DICOM stream of this VR instance. If this
+            instance does not belong to a stream, -1 will be returned. This
+            will be the case, if this VR instance is registered in a
+            data element dictionary.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.GetBy(openDicom.DataStructure.Tag)">
+            <summary>
+            Returns a new value representation instance registered by the
+            defined tag.
+            </summary>
+            <param name="tag">
+            DICOM tag.
+            </param>
+            <returns>
+            New undefined DICOM VR.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.GetBy(System.String,openDicom.DataStructure.Tag)">
+            <summary>
+            Returns a new value representation instance specified by the
+            defined string representation and registered by the defined tag.
+            </summary>
+            <param name="name">
+            DICOM string value representation of format "VR". If 'name'
+            is not a known DICOM VR, an undefined VR will be returned.
+            </param>
+            <param name="tag">
+            DICOM tag.
+            </param>
+            <returns>
+            New specific DICOM VR or a new unspecific VR.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.IsImplicitBy(openDicom.DataStructure.Tag)">
+            <summary>
+            The same as <see cref="P:openDicom.DataStructure.ValueRepresentation.IsImplicit" />, but in a static manner.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates this instance from a DICOM output stream.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.LoadFrom(System.IO.Stream,openDicom.DataStructure.Tag)">
+            <summary>
+            Creates a new VR instance from a DICOM output stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM output stream.
+            </param>
+            <returns>
+            Output stream position of this instance.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.ToString">
+            <summary>
+            DICOM VR string representation.
+            </summary>
+            <returns>
+            A DICOM VR as string of the format "VR". If this instance
+            is an undefined VR, an empty string will be returned.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.ToLongString">
+            <summary>
+            DICOM VR detailed string representation.
+            </summary>
+            <returns>
+            A DICOM VR as string of the format "Value Representation (VR)".
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.Decode(System.Byte[])">
+            <summary>
+            Determines the correct type and multiplicity of a DICOM value.
+            </summary>
+            <remarks>
+            This method is overwritten by all specific DICOM VR
+            implementations.
+            </remarks>
+            <param name="bytes">
+            DICOM byte array.
+            </param>
+            <returns>
+            DICOM value as array of a specific type.
+            </returns></member>
+        <member name="M:openDicom.DataStructure.ValueRepresentation.DecodeToValue(System.Byte[])">
+            <summary>
+            Determines the correct type and multiplicity of a DICOM value
+            and converts it to a DICOM value class.
+            </summary>
+            <param name="bytes">
+            DICOM byte array.
+            </param>
+            <returns>
+            DICOM Value class instance.
+            </returns></member>
+        <member name="T:openDicom.DataStructure.DataSet.DataElement">
+            <summary>
+            This class represents a DICOM data element.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataElement.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new data element instance from specified DICOM
+            output stream using the DICOM default transfer syntax.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataElement.#ctor(System.IO.Stream,openDicom.Encoding.TransferSyntax)">
+            <summary>
+            Creates a new data element instance from specified DICOM
+            output stream using specified DICOM transfer syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.Tag">
+            <summary>
+            Data element tag.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.VR">
+            <summary>
+            Data element value representation.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.ValueLength">
+            <summary>
+            Data element value length.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.Value">
+            <summary>
+            Data element value.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.StreamPosition">
+            <summary>
+            DICOM stream position of this data element instance.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataElement.TransferSyntax">
+            <summary>
+            Transfer syntax of this data element instance.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataElement.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a data element instance from specified DICOM
+            output stream using <see cref="P:openDicom.DataStructure.DataSet.DataElement.TransferSyntax" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataElement.CompareTo(System.Object)">
+            <summary>
+            Implementation of the IComparable interface. So use
+            of this class within collections is guaranteed.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.DataSet.DataSet">
+            <summary>
+            This class represents a DICOM data set.
+            </summary>
+            <remarks>
+            This is the basic container class for all other DICOM stream
+            releated container classes with unique data element support.
+            DICOM data set is an ascending ordered sequence of data elements
+            with unique DICOM tags.
+            </remarks></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.#ctor">
+            <summary>
+            Creates a new empty DICOM data set instance.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new DICOM data set instance and fills it from
+            specified DICOM output stream using the default transfer
+            syntax.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.#ctor(System.IO.Stream,openDicom.Encoding.TransferSyntax)">
+            <summary>
+            Creates a new DICOM data set instance and fills it from
+            specified DICOM output stream using specified transfer
+            syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.DataSet.Item(openDicom.DataStructure.Tag)">
+            <summary>
+            Access of a DICOM data set instance as array of
+            <see cref="T:openDicom.DataStructure.DataSet.DataElement" />. The index is a DICOM tag.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a new DICOM data set instance and fills it from
+            specified DICOM output stream using
+            <see cref="P:openDicom.DataStructure.DataSet.Sequence.TransferSyntax" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.Add(openDicom.DataStructure.DataSet.DataElement)">
+            <summary>
+            Adds a new DICOM data element to this data set instance.
+            Multiple data elements of the same DICOM tag are not allowed
+            within a data set. Uniqueness is guaranteed by DICOM tags.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.Add(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Concatenates another DICOM data set instance with this data set
+            instance. Multiple data elements of the same DICOM tag are not
+            allowed during concatentation. Uniqueness is guaranteed by
+            DICOM tags.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.GetJointSubsequences">
+            <summary>
+            Returns all sequences of all levels of a data set tree as
+            one concatenated zero-level sequence. Multiple data elements
+            of equal instances are allowed within a DICOM sequence.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.Contains(openDicom.DataStructure.Tag)">
+            <summary>
+            Determines whether this data set instance contains a data
+            element with specified DICOM tag.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.Clear">
+            <summary>
+            Clears all DICOM data set properties.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.DataSet.Sort">
+            <summary>
+            Sorts all data elements of a data set instance by their DICOM
+            tag in ascending order.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.DataSet.Sequence">
+            <summary>
+            This class represents a DICOM sequence.
+            </summary>
+            <remarks>
+            This is the basic container class for all other DICOM stream
+            releated container classes. DICOM sequences of items is an
+            ordered sequence of data element with the same DICOM tag (FFFE,E000).
+            </remarks></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.#ctor">
+            <summary>
+            Creates a new empty DICOM sequence instance.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new DICOM sequence instance and fills it with
+            DICOM data elements from specified DICOM output stream using
+            the default transfer syntax.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.#ctor(System.IO.Stream,openDicom.Encoding.TransferSyntax)">
+            <summary>
+            Creates a new DICOM sequence instance and fills it with
+            DICOM data elements from specified DICOM output stream using
+            specified transfer syntax.
+            </summary></member>
+        <member name="F:openDicom.DataStructure.DataSet.Sequence.DelimiterTag">
+            <summary>
+            DICOM tag (FFFE,E0DD).
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.Sequence.Item(System.Int32)">
+            <summary>
+            Access of this sequence instance as array of
+            <see cref="T:openDicom.DataStructure.DataSet.DataElement" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.Sequence.Count">
+            <summary>
+            Returns count of DICOM data elements.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.Sequence.IsEmpty">
+            <summary>
+            Returns whether this instance contains DICOM data elements.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.Sequence.TransferSyntax">
+            <summary>
+            Access corresponding DICOM transfer syntax. If null is assinged,
+            the DICOM default transfer syntax will be used instead.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.DataSet.Sequence.StreamPosition">
+            <summary>
+            Returns this instance's position within a DICOM data stream.
+            If this instance has not get in contact with a DICOM stream,
+            no position will be marked and -1 will be returned.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.Add(openDicom.DataStructure.DataSet.DataElement)">
+            <summary>
+            Adds a DICOM data element instance to this instance. Multiple
+            data elements of equal instances are allowed within a
+            sequence.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.Add(openDicom.DataStructure.DataSet.Sequence)">
+            <summary>
+            Concatenates another DICOM sequence instance with this sequence
+            instance. Multiple data elements of the same DICOM tag are
+            allowed during concatentation.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a new DICOM sequence instance and fills it with
+            DICOM data elements from specified DICOM output stream using
+            <see cref="P:openDicom.DataStructure.DataSet.Sequence.TransferSyntax" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.GetJointSubsequences">
+            <summary>
+            Returns all sequences of all levels of a sequence tree as
+            one concatenated zero-level sequence. Multiple data elements
+            of equal instances are allowed within a DICOM sequence.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.Clear">
+            <summary>
+            Clears all DICOM sequence properties.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.Sort">
+            <summary>
+            Sorts all data elements of a sequence instance using
+            <see cref="M:System.Collections.ArrayList.Sort" />. This method is normally supposed
+            not to be used, except by derivated classes that
+            use unique data element identifiers like DICOM data set.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.ToArray">
+            <summary>
+            Returns all containing data elements as array of
+            <see cref="T:openDicom.DataStructure.DataSet.DataElement" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.Sequence.GetEnumerator">
+            <summary>
+            Needed by the C# foreach-statement. Makes life easier.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.DataSet.NestedDataSet">
+            <summary>
+            This class represents a DICOM nested data set.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.NestedDataSet.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new DICOM nested data set instance from specified
+            DICOM output stream using the default transfer syntax.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.NestedDataSet.#ctor(System.IO.Stream,openDicom.Encoding.TransferSyntax)">
+            <summary>
+            Creates a new DICOM nested data set instance from specified
+            DICOM output stream using specified transfer syntax.
+            </summary></member>
+        <member name="F:openDicom.DataStructure.DataSet.NestedDataSet.DelimiterTag">
+            <summary>
+            DICOM tag (FFFE,E00D).
+            </summary></member>
+        <member name="M:openDicom.DataStructure.DataSet.NestedDataSet.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a DICOM nested data set instance from specified
+            DICOM output stream using <see cref="P:openDicom.DataStructure.DataSet.Sequence.TransferSyntax" />.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.Value">
+            <summary>
+            This class represents a DICOM value.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.#ctor(System.IO.Stream,openDicom.DataStructure.ValueRepresentation,openDicom.DataStructure.ValueLength)">
+            <summary>
+            Re-creates this DICOM value length instance from specified DICOM
+            output stream using specified DICOM VR and value length.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.Item(System.Int32)">
+            <summary>
+            Access this DICOM value instance as array.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.Count">
+            <summary>
+            Returns the count of single values within a DICOM value instance.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsEmpty">
+            <summary>
+            Returns whether this DICOM value instance contains any values.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsUndefined">
+            <summary>
+            Returns whether this DICOM value instance deals with undefined
+            value representation or value types. In this case, only values
+            as byte arrays are expected.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsMultiValue">
+            <summary>
+            Returns whether this DICOM value instance contains of
+            multiple values.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsUnknown">
+            <summary>
+            Returns whether this DICOM value instance deals with DICOM
+            VR Unknown (UN) values. In this case, only values as byte
+            arrays are expected.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsSequence">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            that are build up of a DICOM <see cref="T:openDicom.DataStructure.DataSet.Sequence" /></summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsNestedDataSet">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            that are build up of a DICOM <see cref="T:openDicom.DataStructure.DataSet.NestedDataSet" /></summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsPixelData">
+            <summary>
+            Returns whether this DICOM value instance contains a value
+            that is DICOM pixel data. This value can be processed with
+            help of <see cref="T:openDicom.Image.PixelData" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsString">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type string.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsNumeric">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of a numeric type like int or float. Easy processing might
+            be given by <see cref="T:System.Decimal" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsTag">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type DICOM <see cref="T:openDicom.DataStructure.Tag" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsUid">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type DICOM <see cref="T:openDicom.Registry.Uid" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsPersonName">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type <see cref="T:openDicom.Encoding.Type.PersonName" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsAge">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type <see cref="T:openDicom.Encoding.Type.Age" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsDate">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            that are dates. This values can be understood as
+            <see cref="T:System.DateTime" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsTime">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            that are times. This values can be understood as
+            <see cref="T:System.TimeSpan" />.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.IsArray">
+            <summary>
+            Returns whether this DICOM value instance contains values
+            of type string. Be careful! Do not confuse with
+            <see cref="P:openDicom.DataStructure.Value.IsMultiValue" />! This property concerns
+            a single value entry.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.VR">
+            <summary>
+            Access corresponding DICOM VR.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.ValueLength">
+            <summary>
+            Access corresponding DICOM value length.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.TransferSyntax">
+            <summary>
+            Access corresponding DICOM transfer syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.Value.StreamPosition">
+            <summary>
+            Returns this instance's position within a DICOM data stream. If
+            this instance does not belong to a stream, -1 will be returned.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates this DICOM value instance from specified DICOM
+            output stream using <see cref="P:openDicom.DataStructure.Value.TransferSyntax" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.Add(System.Object)">
+            <summary>
+            Adds a single value to a DICOM value instance.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.Add(System.Array)">
+            <summary>
+            Adds an array of values to a DICOM value instance. If the
+            specified multiple value is a byte array, the multiple value
+            is understood as a single entry.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.GetEnumerator">
+            <summary>
+            Needed by C# foreach-statements. Makes life easier.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.ToArray">
+            <summary>
+            Returns all value entries of a DICOM value instance as array.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.Value.CompareTo(System.Object)">
+            <summary>
+            Implementation of the IComparable interface. So the use
+            of this instance within collections is guaranteed.
+            </summary></member>
+        <member name="T:openDicom.DataStructure.ValueLength">
+            <summary>
+            This class represents a DICOM value length.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueLength.#ctor(System.IO.Stream,openDicom.DataStructure.ValueRepresentation)">
+            <summary>
+            Creates this DICOM value length instance from specified DICOM
+            output stream using specified DICOM VR.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueLength.VR">
+            <summary>
+            Access corresponding DICOM VR.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueLength.TransferSyntax">
+            <summary>
+            Access corresponding DICOM transfer syntax.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueLength.Value">
+            <summary>
+            Access value length.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueLength.IsUndefined">
+            <summary>
+            Returns whether this value length instance is negativ which is
+            an undefined state.
+            </summary></member>
+        <member name="P:openDicom.DataStructure.ValueLength.StreamPosition">
+            <summary>
+            Returns this instance's position within a DICOM data stream. If
+            this instance does not belong to a stream, -1 will be returned.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueLength.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates this DICOM value length instance from specified DICOM
+            output stream using <see cref="P:openDicom.DataStructure.ValueLength.TransferSyntax" />.
+            </summary></member>
+        <member name="M:openDicom.DataStructure.ValueLength.ToString">
+            <summary>
+            Returns <see cref="P:openDicom.DataStructure.ValueLength.Value" /> as string.
+            </summary></member>
+        <member name="T:openDicom.Registry.ValueMultiplicity">
+            <summary>
+            This class represents DICOM value multiplicity (VM).
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.VR">
+            <summary>
+            Corresponding DICOM value representation.
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.Value">
+            <summary>
+            DICOM VM as string representation. For example, "1", "1-3",
+            "1-n" or "2-2n" are possible string representations.
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.LowerFactor">
+            <summary>
+            Lower factor of a VM. In case of "1-3", the lower factor is 1.
+            If the DICOM VM is only one number, the lower and upper factors
+            will be equal.
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.UpperFactor">
+            <summary>
+            Upper factor of a VM. In case of "1-3", the upper factor is 3.
+            If the DICOM VM is only one number, the lower and upper factors
+            will be equal. In case of use of variables like "2-2n", the
+            upper factor will only be the corresponding multiplier. In this
+            example the upper factor will be 2.
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.IsUnbounded">
+            <summary>
+            Returns whether a VM instance is unbounded which means
+            the upper factor is only a multiplier and not determined. For
+            example, "1-3" is not unbounded unlike "2-2n".
+            </summary></member>
+        <member name="P:openDicom.Registry.ValueMultiplicity.IsUndefined">
+            <summary>
+            Returns whether a VM instance is undefined. An undefined VM
+            equals to a string representation of "0". A data element with
+            a undefined VM is not registered to the used data element
+            dictionary.
+            </summary></member>
+        <member name="M:openDicom.Registry.ValueMultiplicity.IsValid(System.Int32)">
+            <summary>
+            Determines whether a specified count of values is conform with
+            this DICOM VM instance. This method is supposed to be used
+            for validation of real count of DICOM values against the
+            corresponding DICOM data element dictionary entry.
+            </summary>
+            <remarks>
+            If this VM instance is not registered in the data element
+            dictionary or this instance is undefined, all specified
+            count of values will be valid.
+            </remarks></member>
+        <member name="M:openDicom.Registry.ValueMultiplicity.Equals(System.Int32)">
+            <summary>
+            Determines whether this VM instance is exactly equal to
+            a specified count of values. Equality can only be given by
+            defined, bounded and invariable DICOM VMs like "1" or "3".
+            </summary></member>
+        <member name="M:openDicom.Registry.ValueMultiplicity.ToString">
+            <summary>
+            Returns the string representation of a VM instance.
+            </summary></member>
+        <member name="T:openDicom.Registry.UidDictionary">
+            <summary>
+            UID (Unique Identifier) dictionary. This class represents the
+            registry of DICOM UIDs.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.#ctor">
+            <summary>
+            Creates a new empty UID dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.#ctor(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Creates a new UID dictionary instance and fills it
+            with entries from the specified UID dictionary file
+            of specified file format.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionary.Item(openDicom.Registry.Uid)">
+            <summary>
+            Access UID dictionary instance as array. DICOM
+            UIDs are used for indexing.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionary.Global">
+            <summary>
+            The global UID dictionary instance. Normally, the
+            first loaded UID dictionary is assigned as this
+            instance, automatically.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionary.Count">
+            <summary>
+            Returns the count of dictionary entries.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionary.IsEmpty">
+            <summary>
+            Returns whether a dictionary does not contain entries.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.LoadFrom(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Re-creates a UID dictionary instance and fills it
+            with entries from the specified UID dictionary file
+            of given file format.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.SaveTo(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Saves the entire UID dictionary instance content to
+            file using specified file format.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.ToArray">
+            <summary>
+            Returns the entire UID dictionary as array of
+            <see cref="T:openDicom.Registry.UidDictionaryEntry" />.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.Add(openDicom.Registry.UidDictionaryEntry)">
+            <summary>
+            Adds a new UID dictionary entry to a UID
+            dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.Clear">
+            <summary>
+            Clears all UID dictionary properties.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.Contains(openDicom.Registry.Uid)">
+            <summary>
+            Determines whether a DICOM UID already is in use within a UID
+            dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionary.GetDictionaryEntry(openDicom.Registry.Uid)">
+            <summary>
+            Returns a dictionary entry by specified DICOM UID.
+            </summary></member>
+        <member name="T:openDicom.Registry.Uid">
+            <summary>
+            This class represents a DICOM Unique Identifier (UID).
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.#ctor(System.String)">
+            <summary>
+            Creates a new DICOM UID instance from a given string
+            representation.
+            </summary></member>
+        <member name="P:openDicom.Registry.Uid.Value">
+            <summary>
+            DICOM UID as string representation.
+            </summary></member>
+        <member name="P:openDicom.Registry.Uid.IsUserDefined">
+            <summary>
+            Returns whether this DICOM UID instance is known by the
+            global UID dictionary or user defined.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.Equals(System.String)">
+            <summary>
+            Determines whether this instance is equal to another UID string
+            representation.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.Equals(openDicom.Registry.Uid)">
+            <summary>
+            Determines whether this instance is equal to another UID.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.CompareTo(System.Object)">
+            <summary>
+            Determines the ranking between another UID instance
+            and this instance. This is important for sorting and use of
+            arrays.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.GetTransferSyntax">
+            <summary>
+            Returns the corresponding DICOM transfer syntax of this UID
+            instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.GetDictionaryEntry">
+            <summary>
+            Returns the corresponding UID dictionary entry of this UID
+            instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.Uid.ToString">
+            <summary>
+            Returns the DICOM UID string representation.
+            </summary></member>
+        <member name="T:openDicom.Registry.UidDictionaryEntry">
+            <summary>
+            UID (Unique Identifier) data dictionary entry. This class
+            represents a registered DICOM UID.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionaryEntry.Uid">
+            <summary>
+            DICOM UID.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionaryEntry.Name">
+            <summary>
+            DICOM UID name.
+            </summary></member>
+        <member name="P:openDicom.Registry.UidDictionaryEntry.Type">
+            <summary>
+            DICOM UID type.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionaryEntry.Equals(openDicom.Registry.UidDictionaryEntry)">
+            <summary>
+            Determines whether another UID dictionary entry instance equals
+            this instance by its properties.
+            </summary></member>
+        <member name="M:openDicom.Registry.UidDictionaryEntry.CompareTo(System.Object)">
+            <summary>
+            Determines the ranking between another UID dictionary instance
+            and this instance. This is important for sorting and use of
+            arrays.
+            </summary></member>
+        <member name="T:openDicom.Registry.DataElementDictionaryEntry">
+            <summary>
+            Data element dictionary entry. This class represents a registered
+            DICOM data element.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionaryEntry.Tag">
+            <summary>
+            DICOM tag.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionaryEntry.Description">
+            <summary>
+            Human readable free text which describes a DICOM tag.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionaryEntry.VR">
+            <summary>
+            DICOM value representation (VR).
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionaryEntry.VM">
+            <summary>
+            DICOM value multiplicity (VM).
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionaryEntry.Equals(openDicom.Registry.DataElementDictionaryEntry)">
+            <summary>
+            Determines whether this instance is equal to another
+            data element dictionary entry instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionaryEntry.CompareTo(System.Object)">
+            <summary>
+            Returns the ranking between another data element entry
+            instance and this instance. This is important for sorting and
+            use of arrays.
+            </summary></member>
+        <member name="T:openDicom.Registry.DataElementDictionary">
+            <summary>
+            Data element dictionary. This class represents the registry of
+            DICOM data elements.
+            </summary>
+            <remarks>
+            This implementation does not support DICOM VR overloading like
+            "US/SS" which is known from the DICOM standard. VR from a
+            dictionary is an a-priori information which is used for decoding,
+            especially in the case of VR implicitness (DICOM output stream
+            provides no DICOM VR content).
+            </remarks></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.#ctor">
+            <summary>
+            Creates a new empty data element dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.#ctor(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Creates a new data element dictionary instance and fills it
+            with entries from the specified data element dictionary file
+            of specified file format.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionary.Item(openDicom.DataStructure.Tag)">
+            <summary>
+            Access data element dictionary instance as array. DICOM
+            tags are used for indexing.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionary.Global">
+            <summary>
+            The global data element dictionary instance. Normally, the
+            first loaded data element dictionary is assigned as this
+            instance, automatically.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionary.Count">
+            <summary>
+            Returns the count of dictionary entries.
+            </summary></member>
+        <member name="P:openDicom.Registry.DataElementDictionary.IsEmpty">
+            <summary>
+            Returns whether a dictionary does not contain entries.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.LoadFrom(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Re-creates a data element dictionary instance and fills it
+            with entries from the specified data element dictionary file
+            of given file format.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.SaveTo(System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Saves the entire data element dictionary instance content to
+            file using specified file format.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.ToArray">
+            <summary>
+            Returns the entire data element dictionary as array of
+            <see cref="T:openDicom.Registry.DataElementDictionaryEntry" />.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.Add(openDicom.Registry.DataElementDictionaryEntry)">
+            <summary>
+            Adds a new data element dictionary entry to a data element
+            dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.Clear">
+            <summary>
+            Clears all data element dictionary properties.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.Contains(openDicom.DataStructure.Tag)">
+            <summary>
+            Determines whether a DICOM tag already is in use within a data
+            element dictionary instance.
+            </summary></member>
+        <member name="M:openDicom.Registry.DataElementDictionary.GetDictionaryEntry(openDicom.DataStructure.Tag)">
+            <summary>
+            Returns a dictionary entry by specified DICOM tag.
+            </summary></member>
+        <member name="T:openDicom.File.FileMetaInformation">
+            <summary>
+            This class represents DICOM file meta information.
+            </summary></member>
+        <member name="M:openDicom.File.FileMetaInformation.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a DICOM file meta information instance from a DICOM
+            output stream. The stream position is assumed to be the DICOM
+            output stream's start position (mostly zero).
+            </summary></member>
+        <member name="F:openDicom.File.FileMetaInformation.DicomPrefix">
+            <summary>
+            DICOM file prefix (DICM).
+            </summary></member>
+        <member name="P:openDicom.File.FileMetaInformation.FilePreamble">
+            <summary>
+            DICOM file preamble.
+            </summary>
+            <remarks>
+            Zero filled file preambles are returned as empty string.
+            </remarks></member>
+        <member name="M:openDicom.File.FileMetaInformation.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a DICOM file meta information instance from a DICOM
+            output stream. The output stream position is assumed to be the
+            DICOM stream's start position (mostly zero).
+            </summary></member>
+        <member name="M:openDicom.File.FileMetaInformation.Clear">
+            <summary>
+            Clears all properties of a DICOM file meta information instance.
+            </summary></member>
+        <member name="T:openDicom.File.DicomFile">
+            <summary>
+            This class represents a DICOM file.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a DICOM file instance from any DICOM output stream.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.#ctor(System.IO.Stream,System.Boolean)">
+            <summary>
+            Creates a DICOM file instance from any DICOM output stream.
+            <see cref="P:openDicom.File.DicomFile.IsStrictDecoded" /> is set to specified decoding
+            attribute.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.#ctor(System.String)">
+            <summary>
+            Creates a DICOM file instance from a DICOM file.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates a DICOM file instance from a DICOM file.
+            <see cref="P:openDicom.File.DicomFile.IsStrictDecoded" /> is set to given decoding
+            attribute.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates a DICOM file instance from a DICOM file.
+            <see cref="P:openDicom.File.DicomFile.IsStrictDecoded" /> is set to given decoding
+            attribute. If memory preloading is activated, the
+            entire file content will be written to memory and afterwards
+            processed.
+            </summary></member>
+        <member name="P:openDicom.File.DicomFile.MetaInformation">
+            <summary>
+            DICOM file meta information. This is a DICOM data set.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.IsDicomFile(System.String)">
+            <summary>
+            Determines whether a specified file is a DICOM file.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates a DICOM file instance from specified DICOM output
+            stream.
+            </summary></member>
+        <member name="M:openDicom.File.DicomFile.GetJointDataSets">
+            <summary>
+            Concatenates DICOM file meta information and DICOM data set to one
+            and returns it. Aim of this method is to ease the use of
+            <see cref="T:openDicom.File.AcrNemaFile" /> and <see cref="T:openDicom.File.DicomFile" /> without
+            differentiation. But be careful! Resulting data set will always
+            use the default transfer syntax!
+            </summary>
+            <remarks>
+            If an exception occurres, because of duplicate key ids
+            (DICOM tags), DICOM tag uniqueness overall data sets
+            will not be given. This exception is not supposed to be
+            thrown. DICOM data sets for concatenation are supposed to
+            complement one another. The differences in transfer syntaxes
+            cannot be processed. Thus, the default transfer syntax is
+            defined for concatenation.
+            </remarks></member>
+        <member name="T:openDicom.File.AcrNemaFile">
+            <summary>
+            This class represents a prior DICOM file, an ACR-NEMA file.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.#ctor(System.IO.Stream)">
+            <summary>
+            Creates an ACR-NEMA file instance from a ACR-NEMA output stream.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.#ctor(System.IO.Stream,System.Boolean)">
+            <summary>
+            Creates an ACR-NEMA file instance from an ACR-NEMA output stream.
+            <see cref="P:openDicom.File.AcrNemaFile.IsStrictDecoded" /> is set to specified decoding
+            attribute.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.#ctor(System.String)">
+            <summary>
+            Creates an ACR-NEMA file instance from an ACR-NEMA file defined
+            by file name.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.#ctor(System.String,System.Boolean)">
+            <summary>
+            Creates an ACR-NEMA file instance from an ACR-NEMA file defined
+            by file name. <see cref="P:openDicom.File.AcrNemaFile.IsStrictDecoded" /> is set to given
+            decoding attribute.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Creates an ACR-NEMA file instance from an ACR-NEMA file defined
+            by file name. <see cref="P:openDicom.File.AcrNemaFile.IsStrictDecoded" /> is set to given
+            decoding attribute. If memory preloading is activated, the
+            entire file content will be written to memory and afterwards
+            processed.
+            </summary></member>
+        <member name="P:openDicom.File.AcrNemaFile.DataSet">
+            <summary>
+            DICOM data set containing the entire file content.
+            </summary></member>
+        <member name="P:openDicom.File.AcrNemaFile.PixelData">
+            <summary>
+            This file instance's pixel data.
+            </summary>
+            <remarks>
+            Use in combination with <see cref="P:openDicom.File.AcrNemaFile.HasPixelData" /> in order to
+            prevent null pointer exceptions.
+            </remarks></member>
+        <member name="P:openDicom.File.AcrNemaFile.HasPixelData">
+            <summary>
+            Determines whether an ACR-NEMA file contains pixel data.
+            </summary></member>
+        <member name="P:openDicom.File.AcrNemaFile.IsStrictDecoded">
+            <summary>
+            Switch for controlling strictness of entire file content
+            decoding.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.IsAcrNemaFile(System.String)">
+            <summary>
+            Determines whether a specified file is an ACR-NEMA file.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates an ACR-NEMA file instance from given ACR-NEMA output
+            stream.
+            </summary></member>
+        <member name="M:openDicom.File.AcrNemaFile.GetJointDataSets">
+            <summary>
+            Concatenates all DICOM or ACR-NEMA data sets to one and returns it.
+            Aim of this method is to ease the use of <see cref="T:openDicom.File.AcrNemaFile" />
+            and <see cref="T:openDicom.File.DicomFile" /> without differentiation.
+            </summary>
+            <remarks>
+            If an exception occurres, because of duplicate key ids
+            (DICOM tags), DICOM tag uniqueness overall data sets
+            will not be given. This exception is not supposed to be
+            thrown. DICOM data sets for concatenation are supposed to
+            complement one another.
+            </remarks></member>
+        <member name="T:openDicom.File.XmlFile">
+            <summary>
+            This class represents a DICOM- or ACR-NEMA-XML file.
+            </summary>
+            <remarks>
+            The representation of DICOM content as XML is not standardized.
+            </remarks></member>
+        <member name="M:openDicom.File.XmlFile.#ctor(openDicom.File.AcrNemaFile)">
+            <summary>
+            Creates a XML file instance from the given ACR-NEMA or
+            DICOM file content provider.
+            </summary></member>
+        <member name="M:openDicom.File.XmlFile.#ctor(openDicom.File.AcrNemaFile,System.Boolean)">
+            <summary>
+            Creates a XML file instance from the given ACR-NEMA or
+            DICOM file content provider in consideration of
+            pixel data exclusion.
+            </summary>
+            <remarks>
+            If pixel data is supposed to be excluded, the entire DICOM
+            group 7FE0 will be excluded from mapping to XML.
+            </remarks></member>
+        <member name="P:openDicom.File.XmlFile.AcrNemaFile">
+            <summary>
+            ACR-NEMA or DICOM file content provider.
+            </summary></member>
+        <member name="P:openDicom.File.XmlFile.IsDicomFile">
+            <summary>
+            Determines, if the used ACR-NEMA file in fact is a DICOM file.
+            </summary></member>
+        <member name="P:openDicom.File.XmlFile.IsPixelDataExcluded">
+            <summary>
+            Switch for excluding pixel data from writing to XML file.
+            </summary>
+            <remarks>
+            If pixel data is supposed to be excluded, the entire DICOM
+            group 7FE0 will be excluded from mapping to XML.
+            </remarks></member>
+        <member name="M:openDicom.File.XmlFile.IsXmlFile(System.String)">
+            <summary>
+            Determines whether a file with specified file name is an
+            ACR-NEMA- or DICOM-XML file.
+            </summary></member>
+        <member name="M:openDicom.File.XmlFile.SaveTo(System.String)">
+            <summary>
+            Saves <see cref="T:openDicom.File.AcrNemaFile" /> as XML file with the
+            specified file name.
+            </summary></member>
+        <member name="M:openDicom.File.XmlFile.SaveTo(System.IO.Stream)">
+            <summary>
+            Saves <see cref="T:openDicom.File.AcrNemaFile" /> as XML to specified input stream.
+            </summary></member>
+        <member name="T:openDicom.DicomException">
+            <summary>
+            Parent class of all DICOM related exceptions.
+            </summary>
+            <remarks>
+            This class will read from <see cref="T:openDicom.DicomContext" />, if
+            insufficient context is given.
+            </remarks></member>
+        <member name="P:openDicom.DicomException.StreamPosition">
+            <summary>
+            Current position within a DICOM stream.
+            </summary>
+            <remarks>
+            If the current stream is undefined or unknown, a stream position
+            of -1 will be returned.
+            </remarks></member>
+        <member name="P:openDicom.DicomException.Tag">
+            <summary>
+            Current DICOM tag.
+            </summary>
+            <remarks>
+            If the current tag is undefined or unknown, null will be returned.
+            </remarks></member>
+        <member name="P:openDicom.DicomException.ParamName">
+            <summary>
+            Name of an additional parameter.
+            </summary></member>
+        <member name="P:openDicom.DicomException.ParamValue">
+            <summary>
+            Value of an additional parameter.
+            </summary></member>
+        <member name="M:openDicom.DicomException.ToString">
+            <summary>
+            Returns a DICOM exception as string with the current DICOM tag,
+            current DICOM stream position and parameter value, if known.
+            </summary></member>
+        <member name="T:openDicom.DicomContext">
+            <summary>
+            Global context for DICOM exception.
+            </summary></member>
+        <member name="P:openDicom.DicomContext.DataElementDictionary">
+            <summary>
+            Access of the global DICOM data element dictionary instance.
+            </summary></member>
+        <member name="P:openDicom.DicomContext.UidDictionary">
+            <summary>
+            Access of the global DICOM UID dictionary instance.
+            </summary></member>
+        <member name="P:openDicom.DicomContext.CurrentTag">
+            <summary>
+            Access of currently referenced DICOM tag.
+            </summary></member>
+        <member name="P:openDicom.DicomContext.BaseStream">
+            <summary>
+            Access of currently referenced DICOM stream.
+            </summary></member>
+        <member name="P:openDicom.DicomContext.StreamPosition">
+            <summary>
+            Return of current position within <see cref="P:openDicom.DicomContext.BaseStream" />.
+            </summary>
+            <remarks>
+            If no DICOM stream is assigned to <see cref="P:openDicom.DicomContext.BaseStream" />,
+            -1 will be returned.
+            </remarks></member>
+        <member name="M:openDicom.DicomContext.Set(System.IO.Stream,openDicom.DataStructure.Tag)">
+            <summary>
+            Assigns current DICOM tag and stream to specified instances.
+            </summary></member>
+        <member name="M:openDicom.DicomContext.Reset">
+            <summary>
+            Assigns current DICOM tag and stream to null.
+            </summary></member>
+        <member name="T:openDicom.Image.PixelData">
+            <summary>
+            Basic class for working with DICOM pixel data.
+            </summary></member>
+        <member name="M:openDicom.Image.PixelData.#ctor(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Creates a pixel data instance from the specified data set.
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.SamplesPerPixelTag">
+            <summary>
+            DICOM tag (0028,0002).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.PlanarConfigurationTag">
+            <summary>
+            DICOM tag (0028,0006).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.RowsTag">
+            <summary>
+            DICOM tag (0028,0010).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.ColumnsTag">
+            <summary>
+            DICOM tag (0028,0011).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.BitsAllocatedTag">
+            <summary>
+            DICOM tag (0028,0100).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.BitsStoredTag">
+            <summary>
+            DICOM tag (0028,0101).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.HighBitTag">
+            <summary>
+            DICOM tag (0028,0102).
+            </summary></member>
+        <member name="F:openDicom.Image.PixelData.PixelDataTag">
+            <summary>
+            DICOM tag (7FE0,0010).
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.SamplesPerPixel">
+            <summary>
+            Value from DICOM tag (0028,0002). If this value is not
+            specified, 0 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.PlanarConfiguration">
+            <summary>
+            Value from DICOM tag (0028,0006). If this value is not
+            specified, -1 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.Rows">
+            <summary>
+            Value from DICOM tag (0028,0010). If this value is not
+            specified, 0 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.Columns">
+            <summary>
+            Value from DICOM tag (0028,0011). If this value is not
+            specified, 0 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.BitsAllocated">
+            <summary>
+            Value from DICOM tag (0028,0100). If this value is not
+            specified, 0 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.BitsStored">
+            <summary>
+            Value from DICOM tag (0028,0101). If this value is not
+            specified, 0 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.HighBit">
+            <summary>
+            Value from DICOM tag (0028,0102). If this value is not
+            specified, -1 will be returned.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.Data">
+            <summary>
+            Pixel data, DICOM tag (7FE0,0010), as DICOM data element.
+            </summary></member>
+        <member name="P:openDicom.Image.PixelData.IsJpeg">
+            <summary>
+            Determines by the DICOM transfer syntax whether pixel data
+            is stored as JPEG. If the transfer syntax is unknown,
+            pixel data will not be understood as JPEG data.
+            </summary></member>
+        <member name="M:openDicom.Image.PixelData.LoadFrom(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Re-creates a pixel data instance from the specified data set.
+            </summary></member>
+        <member name="M:openDicom.Image.PixelData.HasPixelData(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Determines whether specified data set contains pixel data.
+            </summary></member>
+        <member name="M:openDicom.Image.PixelData.IsValid(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Determines whether specified data set contains the minimum
+            of necessary content for working with pixel data.
+            </summary></member>
+        <member name="M:openDicom.Image.PixelData.ToArray">
+            <summary>
+            Returns the entire DICOM pixel data as array of binary arrays.
+            </summary>
+            <remarks>
+            If a DICOM pixel data element is not a DICOM sequence of items,
+            an array with a single binary array entry will be returned.
+            Binary arrays are supposed to be of the type byte[], ushort[]
+            or short[].
+            </remarks></member>
+        <member name="M:openDicom.Image.PixelData.ToBytesArray">
+            <summary>
+            Returns the entire DICOM pixel data as array of byte arrays.
+            </summary>
+            <remarks>
+            All non-byte arrays are transcoded into byte arrays. If a DICOM
+            pixel data element is not a DICOM sequence of items, an array
+            with a single byte array entry will be returned.
+            </remarks></member>
+        <member name="T:openDicom.Encoding.Type.AgeContext">
+            <summary>
+            All available age measuring units.
+            </summary></member>
+        <member name="F:openDicom.Encoding.Type.AgeContext.Months">
+            <summary>
+            DICOM VR Age String (AS) representation is "xxxM".
+            </summary></member>
+        <member name="F:openDicom.Encoding.Type.AgeContext.Days">
+            <summary>
+            DICOM VR Age String (AS) representation is "xxxD".
+            </summary></member>
+        <member name="F:openDicom.Encoding.Type.AgeContext.Years">
+            <summary>
+            DICOM VR Age String (AS) representation is "xxxY".
+            </summary></member>
+        <member name="F:openDicom.Encoding.Type.AgeContext.Weeks">
+            <summary>
+            DICOM VR Age String (AS) representation is "xxxW".
+            </summary></member>
+        <member name="T:openDicom.Registry.DictionaryFileFormat">
+            <summary>
+            Available file formats for dictionary files.
+            </summary></member>
+        <member name="F:openDicom.Registry.DictionaryFileFormat.XmlFile">
+            <summary>
+            Dictionary content is stored in form of a XML text file.
+            </summary></member>
+        <member name="F:openDicom.Registry.DictionaryFileFormat.BinaryFile">
+            <summary>
+            Dictionary content is stored not human readable. The implemented
+            binary format is not standardized. Use of file extensions .dic
+            is recommended.
+            </summary></member>
+        <member name="F:openDicom.Registry.DictionaryFileFormat.PropertyFile">
+            <summary>
+            Dictionary content is stored in form of a property text file,
+            well-known in context of the Java configuration environment.
+            Files of this format mostly have the extension .properties.
+            </summary></member>
+        <member name="F:openDicom.Registry.DictionaryFileFormat.CsvFile">
+            <summary>
+            Dictionary content is stored in form of a CSV (Comma Seperated
+            Values) text file, well-known in context of database batch
+            jobs.
+            </summary></member>
+        <member name="T:openDicom.Registry.UidType">
+            <summary>
+            Available types of DICOM UIDs (Unique Identifiers).
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.FrameOfReference">
+            <summary>
+            UID is a DICOM Well-known Frame of Reference.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.TransferSyntax">
+            <summary>
+            UID is a DICOM Transfer Syntax.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.SopInstance">
+            <summary>
+            UID is a DICOM Well-known SOP Instance.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.MetaSopClass">
+            <summary>
+            UID is a DICOM Meta SOP Class.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.CodingScheme">
+            <summary>
+            UID is a DICOM Coding Scheme.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.SopClass">
+            <summary>
+            UID is a DICOM SOP (Service Object Pair) Class.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.Unknown">
+            <summary>
+            This UID is unknown. It is not part of the DICOM
+            registry and therewith probably user defined.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.ServiceClass">
+            <summary>
+            UID is a DICOM Service Class.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.LdapOid">
+            <summary>
+            UID is a DICOM LDAP OID.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.PrinterSopInstance">
+            <summary>
+            UID is a DICOM Well-known Printer SOP Instance.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.ApplicationContextName">
+            <summary>
+            UID is a DICOM Application Context Name.
+            </summary></member>
+        <member name="F:openDicom.Registry.UidType.PrintQueueSopInstance">
+            <summary>
+            UID is a DICOM Well-known Print Queue SOP Instance.
+            </summary></member>
+    </members>
+</doc>
