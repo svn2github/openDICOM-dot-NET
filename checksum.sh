@@ -1,12 +1,17 @@
 #!/bin/sh
-# written by Albert Gnandt (albert.gnandt@hs-heilbronn.de, http://www.gnandt.com/)
+# written by Albert Gnandt (http://www.gnandt.com/)
+# $Id$
 
+BEAGLE="opendicom-beagle"
 LIB="opendicom-sharp"
 DOC="opendicom-sharp-doc"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
 
 case "$1" in
+    beagle)
+        DIR="${BEAGLE}_${2}_deb"
+	;;
     lib)
         DIR="${LIB}_${2}_deb"
         ;;
@@ -20,7 +25,7 @@ case "$1" in
         DIR="${NAVI}_${2}_deb"
         ;;
     *)
-        echo "usage: sh checksum.sh {lib|doc|utils|navi} <version>"
+        echo "usage: sh checksum.sh {beagle|lib|doc|utils|navi} <version>"
         exit 1
         ;;
 esac

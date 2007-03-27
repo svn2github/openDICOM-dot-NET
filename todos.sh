@@ -1,6 +1,11 @@
 #!/bin/sh
-# written by Albert Gnandt (albert.gnandt@hs-heilbronn.de, http://www.gnandt.com/)
+# written by Albert Gnandt (http://www.gnandt.com/)
+# $Id$
 
+echo
+echo "*** opendicom-beagle ***"
+echo
+grep -n -R "TODO:" `find opendicom-beagle/src -name *.cs` | sed "s/[ \\/]*TODO://"
 echo
 echo "*** opendicom-sharp ***"
 echo

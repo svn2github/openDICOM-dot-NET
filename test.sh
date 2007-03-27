@@ -1,7 +1,10 @@
 #!/bin/sh
-# written by Albert Gnandt (albert.gnandt@hs-heilbronn.de)
+# written by Albert Gnandt (http://www.gnandt.com/)
+# $Id$
 
-DICOM_FILE_LIST=`find samples -name *.dcm | grep -v heidelberg | grep -v kater | grep -v valid | grep -v wrongentry | grep -v pixeldata`
+SAMPLES_DIR="$1"
+
+DICOM_FILE_LIST=`find $SAMPLES_DIR -name *.dcm`
 
 for DICOM_FILE in $DICOM_FILE_LIST; do
     sh output.sh --cyan -n "echo $DICOM_FILE:"
