@@ -1,0 +1,20 @@
+#!/bin/sh
+
+NAME="opendicom-beagle"
+GROUP="opendicom.net"
+
+chmod 644 /usr/share/$GROUP/$NAME/FilterDicom.dll
+ln -s /usr/share/$GROUP/opendicom-sharp/opendicom-sharp.dll /usr/lib/beagle/Filters/opendicom-sharp.dll
+
+if [ `ps ax | grep beagled | grep -v grep | wc -l` -gt 0 ]; then
+    echo
+    echo -n " * Stopping Beagle Daemon ... "
+    /usr/bin/beagle-shutdown && sleep 3
+    if [ "$?" -eq "0" ]; then
+        echo "ok."
+    else
+        echo "failed."
+    fi
+    echo
+    echo "Please start the Beagle daemon as normal user again."
+fi

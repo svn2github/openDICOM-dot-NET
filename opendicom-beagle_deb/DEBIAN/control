@@ -1,0 +1,13 @@
+Package: opendicom-beagle
+Version: 0.1.0
+Section: science
+Priority: optional
+Architecture: all
+Depends: opendicom-sharp (= 0.1.0), beagle (>= 0.2.9)
+Suggests: opendicom-navigator
+Provides: opendicom-beagle
+Installed-Size: 252
+Maintainer: Albert Gnandt (http://www.gnandt.com/)
+Description: DICOM filter plugin for the Beagle desktop search
+ This package is part of the openDICOM.NET project. Please take a look at
+ http://www.opendicom.net/ for more detailed informations.

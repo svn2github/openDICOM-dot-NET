@@ -1,0 +1,9 @@
+
+openDICOM.NET Beagle Filter Plugin  0.1.0
+
+   * initial release:
+      + full ACR-NEMA and DICOM file content extraction
+      + DICOM property generation
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-10
+
