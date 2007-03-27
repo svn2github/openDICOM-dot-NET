@@ -1,0 +1,34 @@
+
+
+ ******************************************
+ *** openDICOM.NET Beagle Filter Plugin ***
+ ******************************************
+
+
+Purpose:
+openDICOM.NET Beagle Filter Plugin makes DICOM file content available
+for the Beagle Desktop Search (provides FilterDicom.dll).
+
+Directories:
+   bin        built filter location
+   dd         data dictionary location
+   src        source code files
+
+Build and installation:
+   see INSTALL
+
+Release or version:
+   see release
+
+Changes:
+   see changelog
+
+License:
+   see license and GPL
+
+Copyright and disclaimer:
+   see copyright
+
+Contact:
+   web:   http://www.gnandt.com/
+

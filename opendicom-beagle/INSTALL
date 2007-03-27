@@ -1,0 +1,18 @@
+
+The entire installation process is adapted to GNU/Linux platforms
+and tested with latest Ubuntu distributions. The installation on
+a machine running Windows has to be done manually at the moment.
+
+
+Rebuild filter:
+    make clean
+    make
+
+Install filter in Beagle:
+    su
+    make install
+
+Remove filter from Beagle:
+    su
+    make uninstall
+

@@ -1,0 +1,13 @@
+
+openDICOM.NET Beagle Filter Plugin
+
+openDICOM.NET Beagle Filter Plugin makes DICOM file content available
+for the Beagle Desktop Search
+
+Copyright (C) 2007  Albert Gnandt
+
+
+This implementation is Open Source. It is distributed under the GNU 
+General Public License (GPL). See license and GPL file for more
+informations.
+
