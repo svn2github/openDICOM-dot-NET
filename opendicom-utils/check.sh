@@ -1,6 +1,6 @@
 #!/bin/sh
 # written by Albert Gnandt (http://www.gnandt.com/)
-# $Id: check.sh 33 2007-03-28 10:04:10Z agnandt $
+# $Id$
 
 print_ok()
 {
