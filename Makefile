@@ -1,36 +1,42 @@
 #!/usr/bin/make
-# written by Albert Gnandt (albert.gnandt@hs-heilbronn.de, http://www.gnandt.com/)
+# written by Albert Gnandt (http://www.gnandt.com/)
+# $Id$
 
-
+BEAGLE=opendicom-beagle
 LIB=opendicom-sharp
 DOC=opendicom-sharp-doc
 UTILS=opendicom-utils
 NAVI=opendicom-navigator
 
-
-DICOM_SHARP_RELEASE=$(shell cat $(LIB)/release)
-DICOM_UTILS_RELEASE=$(shell cat $(UTILS)/release)
-DICOM_NAVI_RELEASE=$(shell cat $(NAVI)/release)
+BEAGLE_RELEASE=$(shell cat $(BEAGLE)/release)
+LIB_RELEASE=$(shell cat $(LIB)/release)
+DOC_RELEASE=$(shell cat $(DOC)/release)
+UTILS_RELEASE=$(shell cat $(UTILS)/release)
+NAVI_RELEASE=$(shell cat $(NAVI)/release)
 
 
 all: build
 
 clean: clean-packages
+	@make -C $(BEAGLE) clean
 	@make -C $(LIB) clean
 	@make -C $(UTILS) clean
 	@make -C $(NAVI) clean
 
 build:
+	@make -C $(BEAGLE) build
 	@make -C $(LIB) build
 	@make -C $(UTILS) build
 	@make -C $(NAVI) build
 
 install:
+	@make -C $(BEAGLE) install
 	@make -C $(LIB) install
 	@make -C $(UTILS) install
 	@make -C $(NAVI) install
 
 uninstall:
+	@make -C $(BEAGLE) uninstall
 	@make -C $(LIB) uninstall
 	@make -C $(UTILS) uninstall
 	@make -C $(NAVI) uninstall
@@ -39,27 +45,29 @@ clean-packages:
 	@rm -f *.tar.gz *.zip *.deb
 
 md5sum:
-	@sh checksum.sh lib $(DICOM_SHARP_RELEASE)
-	@sh checksum.sh doc $(DICOM_SHARP_RELEASE)
-	@sh checksum.sh utils $(DICOM_UTILS_RELEASE)
-	@sh checksum.sh navi $(DICOM_NAVI_RELEASE)
+	@sh checksum.sh beagle
+	@sh checksum.sh lib
+	@sh checksum.sh doc
+	@sh checksum.sh utils
+	@sh checksum.sh navi
 
 debs: md5sum
-	@dpkg -b $(LIB)_$(DICOM_SHARP_RELEASE)_deb $(LIB)_$(DICOM_SHARP_RELEASE)_all.deb
-	@dpkg -b $(DOC)_$(DICOM_SHARP_RELEASE)_deb $(DOC)_$(DICOM_SHARP_RELEASE)_all.deb
-	@dpkg -b $(UTILS)_$(DICOM_UTILS_RELEASE)_deb $(UTILS)_$(DICOM_UTILS_RELEASE)_all.deb
-	@dpkg -b $(NAVI)_$(DICOM_NAVI_RELEASE)_deb $(NAVI)_$(DICOM_NAVI_RELEASE)_all.deb	
+	@dpkg -b $(BEAGLE)_deb $(BEAGLE)_$(BEAGLE_RELEASE)_all.deb
+	@dpkg -b $(LIB)_deb $(LIB)_$(LIB_RELEASE)_all.deb
+	@dpkg -b $(DOC)_deb $(DOC)_$(DOC_RELEASE)_all.deb
+	@dpkg -b $(UTILS)_deb $(UTILS)_$(UTILS_RELEASE)_all.deb
+	@dpkg -b $(NAVI)_deb $(NAVI)_$(NAVI_RELEASE)_all.deb	
 
 tar-balls:
-	@sh check.sh --dir -e $(LIB)_$(DICOM_SHARP_RELEASE) $(UTILS)_$(DICOM_UTILS_RELEASE) $(NAVI)_$(DICOM_NAVI_RELEASE) $(DOC)_$(DICOM_SHARP_RELEASE)
-	@tar cvzf $(LIB)_$(DICOM_SHARP_RELEASE).tar.gz $(LIB)_$(DICOM_SHARP_RELEASE) > /dev/null
-	@tar cvzf $(UTILS)_$(DICOM_UTILS_RELEASE).tar.gz $(UTILS)_$(DICOM_UTILS_RELEASE) > /dev/null
-	@tar cvzf $(NAVI)_$(DICOM_NAVI_RELEASE).tar.gz $(NAVI)_$(DICOM_NAVI_RELEASE) > /dev/null
-	@tar cvzf $(DOC)_$(DICOM_SHARP_RELEASE).tar.gz $(DOC)_$(DICOM_SHARP_RELEASE) > /dev/null
+	@tar cvzf $(BEAGLE)_$(BEAGLE_RELEASE).tar.gz $(BEAGLE) > /dev/null
+	@tar cvzf $(LIB)_$(LIB_RELEASE).tar.gz $(LIB) > /dev/null
+	@tar cvzf $(UTILS)_$(UTILS_RELEASE).tar.gz $(UTILS) > /dev/null
+	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) > /dev/null
+	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) > /dev/null
 zips:
 	@sh check.sh --cmd -e zip
-	@sh check.sh --dir -e $(LIB)_$(DICOM_SHARP_RELEASE) $(UTILS)_$(DICOM_UTILS_RELEASE) $(NAVI)_$(DICOM_NAVI_RELEASE) $(DOC)_$(DICOM_SHARP_RELEASE)
-	@zip -q -r $(LIB)_$(DICOM_SHARP_RELEASE).zip $(LIB)_$(DICOM_SHARP_RELEASE)
-	@zip -q -r $(UTILS)_$(DICOM_UTILS_RELEASE).zip $(UTILS)_$(DICOM_UTILS_RELEASE)
-	@zip -q -r $(NAVI)_$(DICOM_NAVI_RELEASE).zip $(NAVI)_$(DICOM_NAVI_RELEASE)
-	@zip -q -r $(DOC)_$(DICOM_SHARP_RELEASE).zip $(DOC)_$(DICOM_SHARP_RELEASE)
+	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE)
+	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB)
+	@zip -q -r $(UTILS)_$(UTILS_RELEASE).zip $(UTILS)
+	@zip -q -r $(NAVI)_$(NAVI_RELEASE).zip $(NAVI)
+	@zip -q -r $(DOC)_$(DOC_RELEASE).zip $(DOC)
