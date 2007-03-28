@@ -1,8 +1,0 @@
-#!/bin/sh
-
-NAME="opendicom-sharp-doc"
-GROUP="opendicom.net"
-
-rm -Rf /usr/share/doc/$GROUP/$NAME
-rmdir --ignore-fail-on-non-empty /usr/share/doc/$GROUP
-

@@ -1,5 +1,0 @@
-#!/bin/sh
-
-export MONO_PATH=/usr/lib/mono/opendicom-sharp
-mono /usr/share/opendicom.net/opendicom-utils/bin/dicom-dd-query.exe $@
-
