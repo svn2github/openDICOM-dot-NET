@@ -55,5 +55,5 @@ uninstall:
 	@rm -Rf /usr/share/doc/$(GROUP)/$(NAME)
 	@rmdir --ignore-fail-on-non-empty /usr/share/$(GROUP)
 	@rmdir --ignore-fail-on-non-empty /usr/share/doc/$(GROUP)
-	@rm /usr/lib/beagle/Filters/$(DLL_NAME)
-	@rm /usr/lib/beagle/Filters/opendicom-sharp.dll
+	@rm -f /usr/lib/beagle/Filters/$(DLL_NAME)
+	@rm -f /usr/lib/beagle/Filters/opendicom-sharp.dll
