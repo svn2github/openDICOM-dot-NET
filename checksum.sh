@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # written by Albert Gnandt (http://www.gnandt.com/)
 # $Id$
 

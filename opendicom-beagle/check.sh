@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # written by Albert Gnandt (http://www.gnandt.com/)
 # $Id: check.sh 22 2007-03-27 22:39:49Z agnandt $
 
