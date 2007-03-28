@@ -1,0 +1,13 @@
+c9ff6d794df4a0c439c6a6df4e34e6a5  usr/share/opendicom.net/opendicom-navigator/dd/dicom-elements-2004.dic
+6b0d16d2934a49e67ee376d97c861a7f  usr/share/opendicom.net/opendicom-navigator/dd/dicom-uids-2004.dic
+39be99a2519e6a79b9f5dedcd3738370  usr/share/opendicom.net/opendicom-navigator/bin/dicom-file-navigator.exe
+b01c6cec83aff84887883dc9f536344b  usr/share/doc/opendicom.net/opendicom-navigator/changelog
+c8a7543fc90253211d6f2cf8ea1d4ab6  usr/share/doc/opendicom.net/opendicom-navigator/copyright
+eb723b61539feef013de476e68b5c50a  usr/share/doc/opendicom.net/opendicom-navigator/GPL
+5e909ec6124c3f149d55c8e8884bc4e9  usr/share/doc/opendicom.net/opendicom-navigator/INSTALL
+b67c7699842b654af249abd8bb0e8ee5  usr/share/doc/opendicom.net/opendicom-navigator/license
+ec3be94577acfd3040649a1a2640f531  usr/share/doc/opendicom.net/opendicom-navigator/README
+1347633cdf7cdcb2168d61093630d5ae  usr/share/doc/opendicom.net/opendicom-navigator/release
+1da84b43d3a1ed9ce6a1ced43b355740  usr/share/pixmaps/sextant.png
+f472a97bbe9044505e5d0b4446ac7bc1  usr/share/applications/dicom-file-navigator.desktop
+a6f3a143307890c49ff4ef7913eb08ac  usr/bin/dicom-file-navigator

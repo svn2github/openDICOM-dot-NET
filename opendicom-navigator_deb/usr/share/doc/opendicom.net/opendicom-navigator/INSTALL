@@ -1,0 +1,18 @@
+
+The entire installation process is adapted to GNU/Linux platforms
+and tested with latest Ubuntu and Mandriva distributions. The
+installation on a machine running Windows has to be done manually
+at the moment.
+
+Rebuild tools:
+    make clean
+    make
+
+Install tools system wide:
+    su
+    make install
+
+Remove tools from system:
+    su
+    make uninstall
+
