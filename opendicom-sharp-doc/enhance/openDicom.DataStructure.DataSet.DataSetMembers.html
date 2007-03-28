@@ -1,0 +1,95 @@
+<html dir="LTR">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+    <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+    <title>DataSet Members</title>
+    <xml>
+    </xml>
+    <link rel="stylesheet" type="text/css" href="MSDN.css" />
+  </head>
+  <body id="bodyID" class="dtBODY">
+    <div id="nsbanner">
+      <div id="bannerrow1">
+        <table class="bannerparthead" cellspacing="0">
+          <tr id="hdr">
+            <td class="runninghead">openDICOM.NET API Reference (openDICOM# Class Library)</td>
+            <td class="product">
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="TitleRow">
+        <h1 class="dtH1">DataSet Members
+					</h1>
+      </div>
+    </div>
+    <div id="nstext">
+      <p>
+        <a href="openDicom.DataStructure.DataSet.DataSet.html">DataSet overview</a>
+      </p>
+      <h4 class="dtH4">Public Instance Constructors</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+          <tr VALIGN="top">
+            <td width="50%">
+              <img src="pubmethod.gif" />
+              <a href="openDicom.DataStructure.DataSet.DataSetConstructor.html">DataSet</a>
+            </td>
+            <td width="50%">Overloaded. Initializes a new instance of the DataSet class.</td>
+          </tr>
+        </table>
+      </div>
+      <h4 class="dtH4">Public Instance Properties</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.Count.html">Count</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Returns count of DICOM data elements. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.IsEmpty.html">IsEmpty</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Returns whether this instance contains DICOM data elements. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.Item1.html">Item</a></td><td width="50%">Overloaded.  Access of a DICOM data set instance as array of <a href="openDicom.DataStructure.DataSet.DataElement.html">DataElement</a>. The index is a DICOM tag. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.StreamPosition.html">StreamPosition</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Returns this instance's position within a DICOM data stream. If this instance has not get in contact with a DICOM stream, no position will be marked and -1 will be returned. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubproperty.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.TransferSyntax.html">TransferSyntax</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Access corresponding DICOM transfer syntax. If null is assinged, the DICOM default transfer syntax will be used instead. </td></tr></table>
+      </div>
+      <h4 class="dtH4">Public Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.Add_overloads.html">Add</a></td><td width="50%">Overloaded.  Adds a new DICOM data element to this data set instance. Multiple data elements of the same DICOM tag are not allowed within a data set. Uniqueness is guaranteed by DICOM tags. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.Add_overload_1.html">Add</a> (inherited from <b>Sequence</b>)</td><td width="50%">Overloaded.  Adds a DICOM data element instance to this instance. Multiple data elements of equal instances are allowed within a sequence. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.Clear.html">Clear</a></td><td width="50%"> Clears all DICOM data set properties. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.Contains.html">Contains</a></td><td width="50%"> Determines whether this data set instance contains a data element with specified DICOM tag. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassEqualsTopic.asp">Equals</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.GetEnumerator.html">GetEnumerator</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Needed by the C# foreach-statement. Makes life easier. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassGetHashCodeTopic.asp">GetHashCode</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.GetJointSubsequences.html">GetJointSubsequences</a></td><td width="50%"> Returns all sequences of all levels of a data set tree as one concatenated zero-level sequence. Multiple data elements of equal instances are allowed within a DICOM sequence. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassGetTypeTopic.asp">GetType</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.LoadFrom.html">LoadFrom</a></td><td width="50%"> Re-creates a new DICOM data set instance and fills it from specified DICOM output stream using <a href="openDicom.DataStructure.DataSet.Sequence.TransferSyntax.html">TransferSyntax</a>. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.DataSet.Sort.html">Sort</a></td><td width="50%"> Sorts all data elements of a data set instance by their DICOM tag in ascending order. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.ToArray.html">ToArray</a> (inherited from <b>Sequence</b>)</td><td width="50%"> Returns all containing data elements as array of <a href="openDicom.DataStructure.DataSet.DataElement.html">DataElement</a>. </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="pubmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassToStringTopic.asp">ToString</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr></table>
+      </div>
+      <h4 class="dtH4">Protected Instance Fields</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="protfield.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.itemList.html">itemList</a> (inherited from <b>Sequence</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protfield.gif"></img><a href="openDicom.DataStructure.DataSet.Sequence.streamPosition.html">streamPosition</a> (inherited from <b>Sequence</b>)</td><td width="50%"> </td></tr></table>
+      </div>
+      <h4 class="dtH4">Protected Instance Methods</h4>
+      <div class="tablediv">
+        <table class="dtTABLE" cellspacing="0">
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassFinalizeTopic.asp">Finalize</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr>
+<tr VALIGN="top"><td width="50%"><img src="protmethod.gif"></img><a href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpref/html/frlrfSystemObjectClassMemberwiseCloneTopic.asp">MemberwiseClone</a> (inherited from <b>Object</b>)</td><td width="50%"> </td></tr></table>
+      </div>
+      <h4 class="dtH4">See Also</h4>
+      <p>
+        <a href="openDicom.DataStructure.DataSet.DataSet.html">DataSet Class</a> | <a href="openDicom.DataStructure.DataSet.html">openDicom.DataStructure.DataSet Namespace</a></p>
+      <hr />
+      <div id="footer">
+        <p>
+          <a href="mailto:albert.gnandt@hs-heilbronn.de?subject=openDICOM.NET%20API%20Reference%20(openDICOM#%20Class%20Library)%20Documentation%20Feedback:%20DataSet%20Members&#xD;&#xA;						">Send comments on this topic.</a>
+        </p>
+        <p>
+          <a>Copyright (C) 2006  Albert Gnandt</a>
+        </p>
+        <p>Generated from assembly opendicom-sharp [0.1.0.0]</p>
+      </div>
+    </div>
+  </body>
+</html>
