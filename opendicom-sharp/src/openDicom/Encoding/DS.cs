@@ -23,6 +23,7 @@
     $Id$
 */
 using System;
+using System.Globalization;
 using openDicom;
 using openDicom.DataStructure;
 
@@ -54,7 +55,8 @@ namespace openDicom.Encoding
                 try
                 {
                     if (item.Length > 0)
-                        decimalValue[i] = (decimal) double.Parse(item);
+                        decimalValue[i] = decimal.Parse(item,
+                            NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception e)
                 {
@@ -80,7 +82,8 @@ namespace openDicom.Encoding
                     try
                     {
                         if (item.Length > 0)
-                            decimalValue[i] = (decimal) double.Parse(item);
+                            decimalValue[i] = decimal.Parse(item,
+                                NumberFormatInfo.InvariantInfo);
                     }
                     catch (Exception e)
                     {
