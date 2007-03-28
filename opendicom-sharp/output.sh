@@ -1,6 +1,6 @@
 #!/bin/bash
 # written by Albert Gnandt (http://www.gnandt.com/)
-# $Id: output.sh 21 2007-03-27 22:31:54Z agnandt $
+# $Id$
 
 print_usage()
 {
