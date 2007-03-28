@@ -1,9 +1,9 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.0
+    openDICOM.NET openDICOM# 0.1.1
 
     openDICOM# provides a library for DICOM related development on Mono.
-    Copyright (C) 2006  Albert Gnandt
+    Copyright (C) 2006-2007  Albert Gnandt
  
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Lesser General Public
