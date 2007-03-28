@@ -1,0 +1,13 @@
+
+openDICOM.NET Utils
+
+Console tools for DICOM stream and DICOM as XML processing written in C#
+for Mono and the .NET framework.
+
+Copyright (C) 2006  Albert Gnandt
+
+
+This implementation is Open Source. It is distributed under the GNU
+General Public License (GPL). See license and GPL file for more
+informations.
+

@@ -1,0 +1,17 @@
+c9ff6d794df4a0c439c6a6df4e34e6a5  usr/share/opendicom.net/opendicom-utils/dd/dicom-elements-2004.dic
+6b0d16d2934a49e67ee376d97c861a7f  usr/share/opendicom.net/opendicom-utils/dd/dicom-uids-2004.dic
+a36c34b33db269ce6715be02352f437e  usr/share/opendicom.net/opendicom-utils/bin/dicom-dd-transform.exe
+795950d1be52c318d05e74e5e10a6cb9  usr/share/opendicom.net/opendicom-utils/bin/dicom-dd-query.exe
+2b6c15de693eaf4d4d0353395533e89d  usr/share/opendicom.net/opendicom-utils/bin/dicom-file-query.exe
+1a33bed5a27e1cc580fd9b77da614234  usr/share/opendicom.net/opendicom-utils/bin/dicom-file-transform.exe
+a6c0e2922ac076d9d4307cb7ddaf4114  usr/share/doc/opendicom.net/opendicom-utils/changelog
+d26730c937add26a5dd2ef281c4029c4  usr/share/doc/opendicom.net/opendicom-utils/copyright
+eb723b61539feef013de476e68b5c50a  usr/share/doc/opendicom.net/opendicom-utils/GPL
+5e909ec6124c3f149d55c8e8884bc4e9  usr/share/doc/opendicom.net/opendicom-utils/INSTALL
+c0adfd26ebd364831ab2339e5198493c  usr/share/doc/opendicom.net/opendicom-utils/license
+f104e71961fade779ef94cd5daec1354  usr/share/doc/opendicom.net/opendicom-utils/README
+1347633cdf7cdcb2168d61093630d5ae  usr/share/doc/opendicom.net/opendicom-utils/release
+29b25bb70a3c36c4ff181c7c08204a21  usr/bin/dicom-file-transform
+a92f42cbe21a072e66ccc48d7348f11f  usr/bin/dicom-file-query
+9087ac7f2968c0262592bba563bf51fe  usr/bin/dicom-dd-query
+62fc0197d9df8d4964d7cf2bcaf472fe  usr/bin/dicom-dd-transform

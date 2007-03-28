@@ -1,0 +1,11 @@
+#!/bin/sh
+
+NAME="opendicom-utils"
+GROUP="opendicom.net"
+
+rm -Rf /usr/share/$GROUP/$NAME
+rm -Rf /usr/share/doc/$GROUP/$NAME
+rmdir --ignore-fail-on-non-empty /usr/share/$GROUP
+rmdir --ignore-fail-on-non-empty /usr/share/doc/$GROUP
+rm -f /usr/bin/dicom-file-transform /usr/bin/dicom-dd-transform /usr/bin/dicom-dd-query /usr/bin/dicom-file-query
+
