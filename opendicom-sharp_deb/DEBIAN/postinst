@@ -1,0 +1,7 @@
+#!/bin/sh
+
+NAME="opendicom-sharp"
+GROUP="opendicom.net"
+
+chmod 644 /usr/share/$GROUP/$NAME/opendicom-sharp.dll
+chmod 644 /usr/lib/pkgconfig/opendicom-sharp.pc
