@@ -11,5 +11,5 @@ opendicom-utils  0.1.0
       + dicom-file-transform: Transforms entire DICOM and ACR-NEMA files to
          XML files and provides support for DICOM pixel data extraction
 
- -- Albert Gnandt  <albert.gnandt@hs-heilbronn.de>  2006-03-02
+ -- Albert Gnandt  (http://www.gnandt.com/)  2006-03-02
 

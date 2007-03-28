@@ -8,5 +8,5 @@ openDICOM#  0.1.0
       + write support for DICOM as XML
       + partial support for DICOM pixel data processing
 
- -- Albert Gnandt  <albert.gnandt@hs-heilbronn.de>  2006-03-01
+ -- Albert Gnandt  (http://www.gnandt.com/)  2006-03-01
 

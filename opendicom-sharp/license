@@ -3,7 +3,7 @@ openDICOM#
 
 openDICOM# provides a library (opendicom-sharp.dll) for DICOM related development
 on Mono C#.
-Copyright (C) 2006  Albert Gnandt
+Copyright (C) 2006-2007  Albert Gnandt
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public
