@@ -70,6 +70,8 @@ install:
 	@mkdir -p /usr/share/$(GROUP)/$(NAME)/dd
 	@mkdir /usr/share/$(GROUP)/$(NAME)/bin
 	@mkdir -p /usr/share/doc/$(GROUP)/$(NAME)/
+	@cp res/$(DICOM_FILE_NAVI).desktop /usr/share/applications/
+	@cp res/sextant.png /usr/share/pixmaps/
 	@cp $(DOCS) /usr/share/doc/$(GROUP)/$(NAME)/
 	@cp dd/$(ELEMENT_DIC) dd/$(UID_DIC) /usr/share/$(GROUP)/$(NAME)/dd/
 	@cp bin/*.exe /usr/share/$(GROUP)/$(NAME)/bin/
@@ -79,6 +81,8 @@ install:
 	@chmod 755 /usr/bin/$(DICOM_FILE_NAVI)
 
 uninstall:
+	@rm -f /usr/share/applications/$(DICOM_FILE_NAVI).desktop
+	@rm -f /usr/share/pixmaps/sextant.png
 	@rm -Rf /usr/share/$(GROUP)/$(NAME)
 	@rm -Rf /usr/share/doc/$(GROUP)/$(NAME)
 	@rmdir --ignore-fail-on-non-empty /usr/share/$(GROUP)

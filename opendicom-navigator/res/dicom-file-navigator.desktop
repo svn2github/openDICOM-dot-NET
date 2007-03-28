@@ -1,0 +1,16 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=DICOM File Navigator
+Name[de]=DICOM Datei Navigator
+Name[en]=DICOM File Navigator
+Comment=Simple ACR-NEMA and DICOM file browser and transcoder
+Comment[de]=Einfacher ACR-NEMA und DICOM Datei Betrachter und Transcoder
+Comment[en]=Simple ACR-NEMA and DICOM file browser and transcoder
+Type=Application
+Exec=dicom-file-navigator
+Icon=sextant.png
+Terminal=false
+Categories=GNOME;Application;Graphics;
+StartupNotify=true
+MimeType=application/dicom;
+X-Ubuntu-Gettext-Domain=dicom-file-navigator
