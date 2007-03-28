@@ -76,6 +76,7 @@ clean:
 
 install:
 	@sh check.sh --cmd -e mono
+	@sh check.sh --lib -e $(LIB)
 	@sh check.sh --dir -e /usr/lib/mono /usr/lib/pkgconfig
 	@mkdir -p /usr/share/$(GROUP)/$(NAME)/dd
 	@mkdir /usr/share/$(GROUP)/$(NAME)/bin
