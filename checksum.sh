@@ -10,22 +10,22 @@ NAVI="opendicom-navigator"
 
 case "$1" in
     beagle)
-        DIR="${BEAGLE}_${2}_deb"
+        DIR="${BEAGLE}_deb"
 	;;
     lib)
-        DIR="${LIB}_${2}_deb"
+        DIR="${LIB}_deb"
         ;;
     doc)
-        DIR="${DOC}_${2}_deb"
+        DIR="${DOC}_deb"
         ;;
     utils)
-        DIR="${UTILS}_${2}_deb"
+        DIR="${UTILS}_deb"
         ;;
     navi)
-        DIR="${NAVI}_${2}_deb"
+        DIR="${NAVI}_deb"
         ;;
     *)
-        echo "usage: sh checksum.sh {beagle|lib|doc|utils|navi} <version>"
+        echo "usage: sh checksum.sh {beagle|lib|doc|utils|navi}"
         exit 1
         ;;
 esac

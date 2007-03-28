@@ -1,5 +1,5 @@
 #!/bin/sh
-# written by Albert Gnandt (albert.gnandt@hs-heilbronn.de, http://www.gnandt.com/)
+# written by Albert Gnandt (http://www.gnandt.com/)
 # $Id$
 
 print_ok()
