@@ -1,7 +1,8 @@
 
 openDICOM#  0.1.1
 
-   * fixed problem within Decimal String (DS) encoding
+   * fixed bugs:
+      + added culture invariance to Decimal String (DS) encoding
 
  -- Albert Gnandt (http://www.gnandt.com/)  2007-03-28
 
