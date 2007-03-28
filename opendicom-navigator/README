@@ -1,0 +1,45 @@
+
+
+ *******************************
+ *** openDICOM.NET Navigator ***
+ *******************************
+
+
+Purpose:
+   Simple GTK ACR-NEMA and DICOM Viewer for Mono / .NET based on the
+   openDICOM.NET library.
+
+Directories:
+   bin        built tools location
+   doc        Tools source code documentation as XML
+   dd         data dictionary location
+   conf       configuration file location
+   res        resource files location
+   src        source code files
+
+Build and installation:
+   see INSTALL
+
+Release or version:
+   see release
+
+Changes:
+   see changelog
+
+License:
+   see license and GPL
+
+Copyright and disclaimer:
+   see copyright
+
+Contact:
+   Albert Gnandt
+   Heilbronn University
+   Faculty for Informatics
+   Medical Informatics
+   Max-Planck-Str. 39
+   74081 Heilbronn
+   Germany
+   email: albert.gnandt@hs-heilbronn.de
+   web:   http://www.gnandt.com/
+
