@@ -1,0 +1,12 @@
+
+openDICOM#  0.1.0
+
+   * initial release:
+      + full support of DICOM 2004 data element and UID dictionary
+      + support of all 27 DICOM value representations
+      + full read support of DICOM and ACR-NEMA files
+      + write support for DICOM as XML
+      + partial support for DICOM pixel data processing
+
+ -- Albert Gnandt  <albert.gnandt@hs-heilbronn.de>  2006-03-01
+
