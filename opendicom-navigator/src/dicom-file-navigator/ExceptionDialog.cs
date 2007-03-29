@@ -51,6 +51,8 @@ public sealed class ExceptionDialog: GladeWidget
     public ExceptionDialog(string message, Exception exception):
         base("ExceptionDialog")
     {
+        ExceptionDetailsTextView.ModifyFont(
+            Pango.FontDescription.FromString("Monospace"));
         if (message != null)
             ExceptionLabel.Text = message;
         if (exception != null)
