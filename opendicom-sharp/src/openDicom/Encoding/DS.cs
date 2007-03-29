@@ -56,6 +56,7 @@ namespace openDicom.Encoding
                 {
                     if (item.Length > 0)
                         decimalValue[i] = decimal.Parse(item,
+                            NumberStyles.Float, 
                             NumberFormatInfo.InvariantInfo);
                 }
                 catch (Exception e)
@@ -83,6 +84,7 @@ namespace openDicom.Encoding
                     {
                         if (item.Length > 0)
                             decimalValue[i] = decimal.Parse(item,
+                                NumberStyles.Float, 
                                 NumberFormatInfo.InvariantInfo);
                     }
                     catch (Exception e)
