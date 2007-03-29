@@ -14,6 +14,7 @@ opendicom-navigator  0.1.1
         and save-image dialog
       + single image scale storage: corrected image size for single image
         manipulation (GIMP) and storage of original image size
+      + processing with GIMP: added image preperation exception handling
       + disabled single image storage when not in the image view
       + corrected recursion in data set tree view
 

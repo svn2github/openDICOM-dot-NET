@@ -1179,24 +1179,37 @@ public sealed class MainWindow: GladeWidget
         if (File.Exists(Configuration.Global.GimpRemoteExecutable))
         {
             string tempFileName = Path.GetTempFileName();
-
-            Pixbuf pixbuf = new Pixbuf(images[imageIndex],
-                DicomFile.PixelData.Columns,
-                DicomFile.PixelData.Rows);
-            pixbuf.Save(tempFileName, "png");
+            bool saveTempProblem = false;
             try
             {
-                Process.Start(Configuration.Global.GimpRemoteExecutable,
-                    tempFileName);
+                Pixbuf pixbuf = new Pixbuf(images[imageIndex],
+                    DicomFile.PixelData.Columns,
+                    DicomFile.PixelData.Rows);
+                pixbuf.Save(tempFileName, "png");
             }
-            catch (Exception e)
+            catch (Exception e1)
             {
+                saveTempProblem = true;
                 ExceptionDialog d = new ExceptionDialog(
-                    "Unexpected exception executing GIMP. Please make sure " +
-                    "the right GIMP remote executable has been selected at " +
-                    "preferences, e.g. \"gimp-win-remote.exe\" on a Windows " +
-                    "machine or \"gimp-remote\" on GNU/Linux.", e);
+                    "Unexpected problems preparing image for GIMP.", e1);
                 d.Self.Run();
+            }            
+            if ( ! saveTempProblem)
+            {
+                try
+                {
+                    Process.Start(Configuration.Global.GimpRemoteExecutable,
+                        tempFileName);
+                }
+                catch (Exception e2)
+                {
+                    ExceptionDialog d = new ExceptionDialog(
+                        "Unexpected exception executing GIMP. Please make sure " +
+                        "the right GIMP remote executable has been selected at " +
+                        "preferences, e.g. \"gimp-win-remote.exe\" on a Windows " +
+                        "machine or \"gimp-remote\" on GNU/Linux.", e2);
+                    d.Self.Run();
+                }
             }
         }
         else
