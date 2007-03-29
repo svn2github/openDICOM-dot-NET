@@ -230,8 +230,9 @@ namespace openDicom.DataStructure
         {
             get 
             { 
-                return VR.Name.Equals("OB") || VR.Name.Equals("OW") || 
-                    VR.Name.Equals("UN") || VR.IsUndefined;
+                return (VR.Name.Equals("OB") || VR.Name.Equals("OW") || 
+                    VR.Name.Equals("UN") || VR.IsUndefined) && 
+                    ! IsSequence && ! IsNestedDataSet;
             }
         }
 
@@ -418,6 +419,8 @@ namespace openDicom.DataStructure
         {
             return ToString().CompareTo(((Value) obj).ToString());
         }
+
+        // TODO: Value.ToString() implementation!
     }
 
 }

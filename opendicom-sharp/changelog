@@ -3,8 +3,9 @@ openDICOM#  0.1.1
 
    * fixed bugs:
       + added culture invariance to Decimal String (DS) encoding
+      + added exclusion of Sequence and NestedDataSet within Value.IsArray
 
- -- Albert Gnandt (http://www.gnandt.com/)  2007-03-28
+ -- Albert Gnandt (http://www.gnandt.com/)  2007-03-29
 
 
 openDICOM#  0.1.0

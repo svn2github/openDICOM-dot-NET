@@ -1778,146 +1778,6 @@
             Needed by the C# foreach-statement. Makes life easier.
             </summary>
         </member>
-        <member name="T:openDicom.DataStructure.Tag">
-            <summary>
-            This class represents a DICOM tag (gggg,eeee).
-            </summary>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String)">
-            <summary>
-            Creates a new tag instance from specified string representation
-            tag.
-            </summary>
-            <param name="tag">
-            Tag representation as string of format "(gggg,eeee)".
-            </param>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String,System.String)">
-            <summary>
-            Creates a new tag instance from specified string representations
-            (group,element).
-            </summary>
-            <param name="group">
-            Group id as string of format "gggg".
-            </param>
-            <param name="element">
-            Element id as string of format "eeee".
-            </param>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Creates a new tag instance from specified integer representations
-            (group,element).
-            </summary>
-            <param name="group">
-            Group id value.
-            </param>
-            <param name="element">
-            Element id value.
-            </param>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.#ctor(System.IO.Stream)">
-            <summary>
-            Creates a new tag instance from a DICOM output stream.
-            </summary>
-            <param name="stream">
-            Any kind of DICOM output stream.
-            </param>
-        </member>
-        <member name="P:openDicom.DataStructure.Tag.Group">
-            <summary>
-            Access of a tag instance's group id. Group is a hexadecimal
-            string value of format "gggg".
-            </summary>
-        </member>
-        <member name="P:openDicom.DataStructure.Tag.Element">
-            <summary>
-            Access of a tag instance's element id. Element is a hexadecimal
-            string value of format "eeee".
-            </summary>
-        </member>
-        <member name="P:openDicom.DataStructure.Tag.IsUserDefined">
-            <summary>
-            Returns true, if this tag is a private tag, a tag defined by
-            user, else false. A private tag is not registered to a data
-            element dictionary.
-            </summary>
-        </member>
-        <member name="P:openDicom.DataStructure.Tag.StreamPosition">
-            <summary>
-            Access this instance's stream position. If a tag does
-            not belong to a stream, a position of -1 will be returned.
-            </summary>
-        </member>
-        <member name="P:openDicom.DataStructure.Tag.TransferSyntax">
-            <summary>
-            Access this instance's transfer syntax.
-            </summary>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.LoadFrom(System.IO.Stream)">
-            <summary>
-            Re-creates this instance from a DICOM output stream.
-            </summary>
-            <param name="stream">
-            Any kind of DICOM output stream.
-            </param>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.SaveTo(System.IO.Stream)">
-            <summary>
-            Saves this instance to a DICOM input stream.
-            </summary>
-            <param name="stream">
-            Any kind of DICOM input stream.
-            </param>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.Equals(openDicom.DataStructure.Tag)">
-            <summary>
-            Determines whether this instance is equal to another DICOM
-            tag instance.
-            </summary>
-            <param name="tag">
-            An instance of class Tag.
-            </param>
-            <return>
-            True, if equality is given, else false.
-            </return>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.Equals(System.String)">
-            <summary>
-            Determines whether this instance is equal to a string
-            representation of the format "(gggg,eeee)".
-            </summary>
-            <param name="tag">
-            An instance of class Tag.
-            </param>
-            <returns>
-            True, if equality is given, else false.
-            </returns>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.CompareTo(System.Object)">
-            <summary>
-            Implementation of the IComparable interface. So the use
-            of this instance within collections is guaranteed.
-            </summary>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.GetDictionaryEntry">
-            <summary>
-            Corresponding data element dictionary entry.
-            </summary>
-            <returns>
-            A DICOM data element dictionary entry. If this instance represents
-            a private tag, a completely useable dictionary entry of type
-            unknown is returned.
-            </returns>
-        </member>
-        <member name="M:openDicom.DataStructure.Tag.ToString">
-            <summary>
-            DICOM tag string representation.
-            </summary>
-            <returns>
-            A DICOM tag as string of format "(gggg,eeee)".
-            </returns>
-        </member>
         <member name="T:openDicom.DataStructure.Value">
             <summary>
             This class represents a DICOM value.
@@ -2094,6 +1954,146 @@
             Implementation of the IComparable interface. So the use
             of this instance within collections is guaranteed.
             </summary>
+        </member>
+        <member name="T:openDicom.DataStructure.Tag">
+            <summary>
+            This class represents a DICOM tag (gggg,eeee).
+            </summary>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String)">
+            <summary>
+            Creates a new tag instance from specified string representation
+            tag.
+            </summary>
+            <param name="tag">
+            Tag representation as string of format "(gggg,eeee)".
+            </param>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new tag instance from specified string representations
+            (group,element).
+            </summary>
+            <param name="group">
+            Group id as string of format "gggg".
+            </param>
+            <param name="element">
+            Element id as string of format "eeee".
+            </param>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Creates a new tag instance from specified integer representations
+            (group,element).
+            </summary>
+            <param name="group">
+            Group id value.
+            </param>
+            <param name="element">
+            Element id value.
+            </param>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new tag instance from a DICOM output stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM output stream.
+            </param>
+        </member>
+        <member name="P:openDicom.DataStructure.Tag.Group">
+            <summary>
+            Access of a tag instance's group id. Group is a hexadecimal
+            string value of format "gggg".
+            </summary>
+        </member>
+        <member name="P:openDicom.DataStructure.Tag.Element">
+            <summary>
+            Access of a tag instance's element id. Element is a hexadecimal
+            string value of format "eeee".
+            </summary>
+        </member>
+        <member name="P:openDicom.DataStructure.Tag.IsUserDefined">
+            <summary>
+            Returns true, if this tag is a private tag, a tag defined by
+            user, else false. A private tag is not registered to a data
+            element dictionary.
+            </summary>
+        </member>
+        <member name="P:openDicom.DataStructure.Tag.StreamPosition">
+            <summary>
+            Access this instance's stream position. If a tag does
+            not belong to a stream, a position of -1 will be returned.
+            </summary>
+        </member>
+        <member name="P:openDicom.DataStructure.Tag.TransferSyntax">
+            <summary>
+            Access this instance's transfer syntax.
+            </summary>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.LoadFrom(System.IO.Stream)">
+            <summary>
+            Re-creates this instance from a DICOM output stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM output stream.
+            </param>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.SaveTo(System.IO.Stream)">
+            <summary>
+            Saves this instance to a DICOM input stream.
+            </summary>
+            <param name="stream">
+            Any kind of DICOM input stream.
+            </param>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.Equals(openDicom.DataStructure.Tag)">
+            <summary>
+            Determines whether this instance is equal to another DICOM
+            tag instance.
+            </summary>
+            <param name="tag">
+            An instance of class Tag.
+            </param>
+            <return>
+            True, if equality is given, else false.
+            </return>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.Equals(System.String)">
+            <summary>
+            Determines whether this instance is equal to a string
+            representation of the format "(gggg,eeee)".
+            </summary>
+            <param name="tag">
+            An instance of class Tag.
+            </param>
+            <returns>
+            True, if equality is given, else false.
+            </returns>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.CompareTo(System.Object)">
+            <summary>
+            Implementation of the IComparable interface. So the use
+            of this instance within collections is guaranteed.
+            </summary>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.GetDictionaryEntry">
+            <summary>
+            Corresponding data element dictionary entry.
+            </summary>
+            <returns>
+            A DICOM data element dictionary entry. If this instance represents
+            a private tag, a completely useable dictionary entry of type
+            unknown is returned.
+            </returns>
+        </member>
+        <member name="M:openDicom.DataStructure.Tag.ToString">
+            <summary>
+            DICOM tag string representation.
+            </summary>
+            <returns>
+            A DICOM tag as string of format "(gggg,eeee)".
+            </returns>
         </member>
         <member name="T:openDicom.DataStructure.ValueRepresentation">
             <summary>
