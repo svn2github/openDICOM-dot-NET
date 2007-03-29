@@ -75,6 +75,9 @@ public sealed class MainWindow: GladeWidget
     }
 
     [WidgetAttribute]
+    Notebook MainNotebook;
+
+    [WidgetAttribute]
     TreeView MainTreeView;
 
     [WidgetAttribute]
@@ -501,8 +504,12 @@ public sealed class MainWindow: GladeWidget
     {
         if ( ! isSlideCycling)
         {
-            SaveImageMenuItem.Sensitive = true;
-            SaveImageToolButton.Sensitive = true;
+            if (MainNotebook.Page == 2)
+            {
+                // only image view allows to select and save single images
+                SaveImageMenuItem.Sensitive = true;
+                SaveImageToolButton.Sensitive = true;
+            }
             //BrightenToolButton.Sensitive = true;
             //DarkenToolButton.Sensitive = true;
             GimpToolButton.Sensitive = true;
@@ -683,14 +690,14 @@ public sealed class MainWindow: GladeWidget
             {
                 store.AppendValues(
                     node,
-                    "",
-                    "",
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
                     o.ToString(),
-                    "",
-                    "",
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
                     "",
                     o.GetType().ToString(),
-                    "");
+                    element.Value.StreamPosition.ToString());
             }
         }
         else if (element.Value.IsDate)
@@ -858,10 +865,8 @@ public sealed class MainWindow: GladeWidget
         TreeSelection selection = MainTreeView.Selection;
         if (selection.GetSelected(out model, out node))
         {
-            string tag = (string) model.GetValue(node, 0);
-            string value = (string) model.GetValue(node, 2);
-            string valueLength = "";
-            bool isMultiValue = (tag == "");
+            string valueLength = (string) model.GetValue(node, 5);
+            bool isMultiValue = (valueLength == "");
             int index = 0;
             if (isMultiValue)
             {
@@ -871,14 +876,10 @@ public sealed class MainWindow: GladeWidget
                     index = path.Indices[path.Indices.Length - 1];
                 path.Up();
                 model.GetIter(out node, path);
-                tag = (string) model.GetValue(node, 0);
             }
-            else
-            {
-                tag = (string) model.GetValue(node, 0);
-                valueLength = (string) model.GetValue(node, 5);
-            }
+            string tag = (string) model.GetValue(node, 0);
             string description = (string) model.GetValue(node, 1);
+            string value = (string) model.GetValue(node, 2);
             string vr = (string) model.GetValue(node, 3);
             string vm = (string) model.GetValue(node, 4);
             string systemType = (string) model.GetValue(node, 6);
@@ -1204,5 +1205,21 @@ public sealed class MainWindow: GladeWidget
                 "correctly selected its remote executable at preferences, " +
                 "e.g. \"gimp-win-remote.exe\" on a Windows machine or " +
                 "\"gimp-remote\" on GNU/Linux.");
+    }
+
+    private void OnMainNotebookSwitchPage(object o, SwitchPageArgs args)
+    {
+        if (args.PageNum == 2 && GimpToolButton.Sensitive)
+        {
+            // enable single image save option when changed to image view
+            // page and image is processable
+            SaveImageMenuItem.Sensitive = true;
+            SaveImageToolButton.Sensitive = true;
+        }
+        else
+        {
+            SaveImageMenuItem.Sensitive = false;
+            SaveImageToolButton.Sensitive = false;
+        }
     }
 }

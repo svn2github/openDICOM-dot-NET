@@ -237,6 +237,7 @@
           <widget class="GtkNotebook" id="MainNotebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <signal name="switch_page" handler="OnMainNotebookSwitchPage"/>
             <child>
               <widget class="GtkScrolledWindow" id="MainFileInfoTreeViewScrolledWindow">
                 <property name="visible">True</property>
@@ -288,6 +289,7 @@
                         <property name="can_focus">True</property>
                         <property name="rules_hint">True</property>
                         <property name="enable_search">False</property>
+                        <property name="enable_tree_lines">True</property>
                         <signal name="cursor_changed" handler="OnMainTreeViewCursorChanged"/>
                       </widget>
                     </child>
