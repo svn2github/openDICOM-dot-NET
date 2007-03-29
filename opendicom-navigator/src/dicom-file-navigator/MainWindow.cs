@@ -874,8 +874,6 @@ public sealed class MainWindow: GladeWidget
                 if (path.Indices.Length > 0)
                     // row index in relation to lowest tree level
                     index = path.Indices[path.Indices.Length - 1];
-                path.Up();
-                model.GetIter(out node, path);
             }
             string tag = (string) model.GetValue(node, 0);
             string description = (string) model.GetValue(node, 1);
