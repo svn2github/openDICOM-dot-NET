@@ -1,13 +1,13 @@
 Package: opendicom-navigator
-Version: 0.1.0
+Version: 0.1.1
 Section: science
 Priority: optional
 Architecture: all
-Depends: mono (>= 1.1.8.3), opendicom-sharp (= 0.1.0)
-Suggests: opendicom-sharp, opendicom-utils
+Depends: mono (>= 1.1.17.1), opendicom-sharp (>= 0.1.1)
+Suggests: opendicom-sharp, opendicom-beagle, opendicom-utils
 Provides: opendicom-navigator
 Installed-Size: 464
-Maintainer: Albert Gnandt <albert.gnandt@hs-heilbronn.de>
+Maintainer: Albert Gnandt (http://www.gnandt.com/)
 Description: Simple ACR-NEMA and DICOM file browser and transcoder for Mono
  This package is part of the openDICOM.NET project. Please take a look at
- http://opendicom.sourceforge.net/ for more detailed informations.
+ http://www.opendicom.net/ for more detailed informations.
