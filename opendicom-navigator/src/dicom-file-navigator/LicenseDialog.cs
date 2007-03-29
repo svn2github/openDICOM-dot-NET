@@ -1,10 +1,10 @@
 /*
-    openDICOM.NET Navigator 0.1.0
+    openDICOM.NET Navigator 0.1.1
 
     Simple GTK ACR-NEMA and DICOM Viewer for Mono / .NET based on the 
     openDICOM.NET library.
 
-    Copyright (C) 2006  Albert Gnandt
+    Copyright (C) 2006-2007  Albert Gnandt
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

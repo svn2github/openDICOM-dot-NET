@@ -1,4 +1,23 @@
 
+opendicom-navigator  0.1.1
+
+   * new features:
+      + relies on openDICOM# 0.1.1
+      + added cut'n'copy content field
+      + added system type representation for API users
+      + replaced multi-value placeholder by concatenation of values
+      + replaced binary content type representation by binary hex digest
+      + made GUI Glade 3.0 compliant
+   * fixed bugs:
+      + dialogs were not working: adapted response values of export-as-xml
+        and save-image dialog
+      + single image scale storage: corrected image size for single image
+        manipulation (GIMP) and storage of original image size
+      + corrected recursion in data set tree view
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-29
+
+
 opendicom-navigator  0.1.0
 
    * initial release:

@@ -1,10 +1,10 @@
 /*
-    openDICOM.NET Navigator 0.1.0
+    openDICOM.NET Navigator 0.1.1
 
     Simple GTK ACR-NEMA and DICOM Viewer for Mono / .NET based on the 
     openDICOM.NET library.
 
-    Copyright (C) 2006  Albert Gnandt
+    Copyright (C) 2006-2007  Albert Gnandt
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -79,6 +79,9 @@ public sealed class MainWindow: GladeWidget
 
     [WidgetAttribute]
     TreeView MainFileInfoTreeView;
+
+    [WidgetAttribute]
+    TextView ContentTextView;
 
     [WidgetAttribute]
     Gtk.Image ImageViewImage;
@@ -199,12 +202,18 @@ public sealed class MainWindow: GladeWidget
             new CellRendererText(), "text", 4);
         MainTreeView.AppendColumn("Value Length", new CellRendererText(),
             "text", 5);
-        MainTreeView.AppendColumn("Stream Position", new CellRendererText(),
+        MainTreeView.AppendColumn("System Type", new CellRendererText(),
             "text", 6);
+        MainTreeView.AppendColumn("Stream Position", new CellRendererText(),
+            "text", 7);
+        // Does not work with Glade!
+        MainTreeView.CursorChanged += OnMainTreeViewCursorChanged;
         MainFileInfoTreeView.AppendColumn("Key", new CellRendererText(),
             "text", 0);
         MainFileInfoTreeView.AppendColumn("Value", new CellRendererText(),
             "text", 1);
+        ContentTextView.ModifyFont(
+            Pango.FontDescription.FromString("Monospace"));
         LoadDicomFile(fileName);
     }
 
@@ -453,13 +462,16 @@ public sealed class MainWindow: GladeWidget
         SaveImageFileChooserDialog saveImageFileChooserDialog = 
             new SaveImageFileChooserDialog();
         int response = saveImageFileChooserDialog.Self.Run();
-        if (response == -5)
+        if (response == -1)
         {
             string imageFileName = saveImageFileChooserDialog.FileName;
             string imageFileType = saveImageFileChooserDialog.FileType;
             try
             {
-                ImageViewImage.Pixbuf.Save(imageFileName, imageFileType);
+                Pixbuf pixbuf = new Pixbuf(images[imageIndex],
+                    DicomFile.PixelData.Columns,
+                    DicomFile.PixelData.Rows);
+                pixbuf.Save(imageFileName, imageFileType);
             }
             catch (Exception e)
             {
@@ -549,9 +561,10 @@ public sealed class MainWindow: GladeWidget
                     (int) ((Configuration.Global.ImageBrightnessFactor / 2) * 
                         100)));
                 bool isJpegNotSupported = false;
+                Pixbuf pixbuf = null;
                 try
                 {
-                    ImageViewImage.Pixbuf = new Pixbuf(images[imageIndex],
+                    pixbuf = new Pixbuf(images[imageIndex],
                             DicomFile.PixelData.Columns,
                             DicomFile.PixelData.Rows);
                 }
@@ -571,7 +584,7 @@ public sealed class MainWindow: GladeWidget
                     }
                     else
                     {
-                        ImageViewImage.Pixbuf = new Pixbuf(images[imageIndex],
+                        pixbuf = new Pixbuf(images[imageIndex],
                             false,
                             DicomFile.PixelData.BitsStored,
                             DicomFile.PixelData.Columns,
@@ -581,20 +594,19 @@ public sealed class MainWindow: GladeWidget
                             null);
                     }
                 }
-                if (ImageViewImage.Pixbuf != null)
+                if (pixbuf != null)
                 {
                     // TODO: How to get gdk-image from gtk-image?
-                    //image = BrightenImage(
+                    //Gdk.Image image = BrightenImage(
                     //    image, Configuration.Global.ImageBrightnessFactor);
-                    //ImageViewImage.Pixbuf.GetFromImage(image, image.Colormap, 
+                    //pixbuf = pixbuf.GetFromImage(image, image.Colormap, 
                     //    0, 0, 0, 0, image.Width, image.Height);
-                    ImageViewImage.Pixbuf = ImageViewImage.Pixbuf.ScaleSimple(
-                        (int) Math.Round(
-                            ImageViewImage.Pixbuf.Width * scaleFactor),
-                        (int) Math.Round(
-                            ImageViewImage.Pixbuf.Height * scaleFactor),
+                    ImageViewImage.Pixbuf = pixbuf.ScaleSimple(
+                        (int) Math.Round(pixbuf.Width * scaleFactor),
+                        (int) Math.Round(pixbuf.Height * scaleFactor),
                         InterpType.Bilinear);
-                    // very important
+                    // very important! prevents swapping to harddisk
+                    // tested: no feelable latency time between images
                     System.GC.Collect();
                     ActivateImageView();
                 }
@@ -623,17 +635,50 @@ public sealed class MainWindow: GladeWidget
 
     private TreeIter AppendNode(TreeStore store, DataElement element)
     {
+        return AppendNode(TreeIter.Zero, store, element, false);
+    }
+
+    private TreeIter AppendNode(TreeIter parentNode, TreeStore store,
+        DataElement element)
+    {
+        return AppendNode(parentNode, store, element, true);
+    }
+
+    private TreeIter AppendNode(TreeIter parentNode, TreeStore store,
+        DataElement element, bool useParentNode)
+    {
         TreeIter node;
         if (element.Value.IsMultiValue)
         {
-            node = store.AppendValues(
-                element.Tag.ToString(),
-                element.VR.Tag.GetDictionaryEntry().Description,
-                element.Value.ToString(),
-                element.VR.ToLongString(),
-                element.VR.Tag.GetDictionaryEntry().VM.ToString(),
-                element.Value.ValueLength.ToString(),
-                element.StreamPosition.ToString());
+            string multiValue = "";
+            foreach (object o in element.Value)
+            {
+                if (multiValue == "")
+                    multiValue = o.ToString();
+                else
+                    multiValue += "\\" + o.ToString();
+            }
+            if (useParentNode)
+                node = store.AppendValues(
+                    parentNode,
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    multiValue,
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
+            else
+                node = store.AppendValues(
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    multiValue,
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
             foreach (object o in element.Value)
             {
                 store.AppendValues(
@@ -644,31 +689,118 @@ public sealed class MainWindow: GladeWidget
                     "",
                     "",
                     "",
+                    o.GetType().ToString(),
                     "");
-
             }
         }
         else if (element.Value.IsDate)
         {
-            node = store.AppendValues(
-                element.Tag.ToString(),
-                element.VR.Tag.GetDictionaryEntry().Description,
-                ((DateTime) element.Value[0]).ToShortDateString(),
-                element.VR.ToLongString(),
-                element.VR.Tag.GetDictionaryEntry().VM.ToString(),
-                element.Value.ValueLength.ToString(),
-                element.StreamPosition.ToString());
+            if (useParentNode)
+                node = store.AppendValues(
+                    parentNode,
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    ((DateTime) element.Value[0]).ToShortDateString(),
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
+            else    
+                node = store.AppendValues(
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    ((DateTime) element.Value[0]).ToShortDateString(),
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
+        }
+        else if (element.Value.IsArray)
+        {
+            // shows the first n bytes of binary content as hex values
+            string hexDigest = ""; 
+            int n = 8;
+            byte[] bytes = new byte[n];
+            if (element.Value[0] is ushort[])
+                bytes = openDicom.Encoding.ByteConvert.ToBytes(
+                    (ushort[]) element.Value[0]);
+            else if (element.Value[0] is short[])
+                bytes = openDicom.Encoding.ByteConvert.ToBytes(
+                    (short[]) element.Value[0]);
+            else
+            {
+                int len = (element.Value[0] as byte[]).Length;
+                if (len > n) len = n + 1; // because of the "..." :)
+                bytes = new byte[len];
+                Array.Copy((byte[]) element.Value[0], 0, bytes, 0, len);
+            }
+            bool continues = bytes.Length > n;
+            if ( ! continues) n = bytes.Length;
+            for (int i = 0; i < n; i++)
+            {
+                if (hexDigest == "")
+                    hexDigest = string.Format("0x{0:X2}", bytes[i]);
+                else
+                    hexDigest += string.Format(" 0x{0:X2}", bytes[i]);
+            }
+            if (hexDigest != "" && continues) hexDigest += " ...";
+            if (useParentNode)
+                node = store.AppendValues(
+                    parentNode,
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    hexDigest,
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());            
+            else
+                node = store.AppendValues(
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    hexDigest,
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());            
         }
         else
         {
-            node = store.AppendValues(
-                element.Tag.ToString(),
-                element.VR.Tag.GetDictionaryEntry().Description,
-                element.Value.IsEmpty ? "" : element.Value[0].ToString(),
-                element.VR.ToLongString(),
-                element.VR.Tag.GetDictionaryEntry().VM.ToString(),
-                element.Value.ValueLength.ToString(),
-                element.StreamPosition.ToString());
+            if (useParentNode)
+                node = store.AppendValues(
+                    parentNode,
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    (element.Value.IsEmpty || element.Value.IsSequence || 
+                        element.Value.IsNestedDataSet) ? 
+                        "" : 
+                        element.Value[0].ToString(),
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value.IsEmpty ?
+                        "" : 
+                        element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
+            else
+                node = store.AppendValues(
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    (element.Value.IsEmpty || element.Value.IsSequence || 
+                        element.Value.IsNestedDataSet) ? 
+                        "" : 
+                        element.Value[0].ToString(),
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    element.Value.ValueLength.ToString(),
+                    element.Value.IsEmpty ?
+                        "" : 
+                        element.Value[0].GetType().ToString(),
+                    element.StreamPosition.ToString());
         }
         return node;
     }
@@ -680,15 +812,7 @@ public sealed class MainWindow: GladeWidget
         {
             foreach (DataElement d in (Sequence) element.Value[0])
             {
-                TreeIter node = store.AppendValues(
-                    parentNode,
-                    d.Tag.ToString(),
-                    d.VR.Tag.GetDictionaryEntry().Description,
-                    d.Value.IsEmpty ? "" : d.Value[0].ToString(),
-                    d.VR.ToLongString(),
-                    d.VR.Tag.GetDictionaryEntry().VM.ToString(),
-                    d.Value.ValueLength.ToString(),
-                    d.StreamPosition.ToString());
+                TreeIter node = AppendNode(parentNode, store, d);
                 AppendAllSubnodes(node, store, d);
             }
         }
@@ -696,15 +820,7 @@ public sealed class MainWindow: GladeWidget
         {
             foreach (DataElement d in (NestedDataSet) element.Value[0])
             {
-                TreeIter node = store.AppendValues(
-                    parentNode,
-                    d.Tag.ToString(),
-                    d.VR.Tag.GetDictionaryEntry().Description,
-                    d.Value.IsEmpty ? "" : d.Value[0].ToString(),
-                    d.VR.ToLongString(),
-                    d.VR.Tag.GetDictionaryEntry().VM.ToString(),
-                    d.Value.ValueLength.ToString(),
-                    d.StreamPosition.ToString());
+                TreeIter node = AppendNode(parentNode, store, d);
                 AppendAllSubnodes(node, store, d);
             }
         }
@@ -716,7 +832,7 @@ public sealed class MainWindow: GladeWidget
         {
             TreeStore store = new TreeStore(typeof(string), typeof(string), 
                typeof(string), typeof(string), typeof(string),
-               typeof(string), typeof(string));
+               typeof(string), typeof(string), typeof(string));
             MainTreeView.Model = store;
             try
             {
@@ -732,6 +848,60 @@ public sealed class MainWindow: GladeWidget
                     "Unexpected problems refreshing data sets view.", e);
                 d.Self.Run();
             }
+        }
+    }
+
+    private void OnMainTreeViewCursorChanged(object o, EventArgs args)
+    {
+        TreeModel model;
+        TreeIter node;
+        TreeSelection selection = MainTreeView.Selection;
+        if (selection.GetSelected(out model, out node))
+        {
+            string tag = (string) model.GetValue(node, 0);
+            string value = (string) model.GetValue(node, 2);
+            string valueLength = "";
+            bool isMultiValue = (tag == "");
+            int index = 0;
+            if (isMultiValue)
+            {
+                TreePath path = model.GetPath(node);
+                if (path.Indices.Length > 0)
+                    // row index in relation to lowest tree level
+                    index = path.Indices[path.Indices.Length - 1];
+                path.Up();
+                model.GetIter(out node, path);
+                tag = (string) model.GetValue(node, 0);
+            }
+            else
+            {
+                tag = (string) model.GetValue(node, 0);
+                valueLength = (string) model.GetValue(node, 5);
+            }
+            string description = (string) model.GetValue(node, 1);
+            string vr = (string) model.GetValue(node, 3);
+            string vm = (string) model.GetValue(node, 4);
+            string systemType = (string) model.GetValue(node, 6);
+            string streamPosition = (string) model.GetValue(node, 7);
+            ContentTextView.Buffer.Text =  string.Format(
+                "Tag:             {0}\n" +
+                "Description:     {1}\n" +
+                "Value{8}{2}\n" +
+                "VR:              {3}\n" +
+                "VM:              {4}\n" +
+                "Value Length:    {5}\n" +
+                "System Type:     {6}\n" +
+                "Stream Position: {7}", 
+                tag,
+                description,
+                value,
+                vr,
+                vm,
+                valueLength,
+                systemType,
+                streamPosition,
+                isMultiValue ? "[" + index.ToString() + "]:        " :
+                    ":           ");
         }
     }
 
@@ -757,8 +927,6 @@ public sealed class MainWindow: GladeWidget
                     isDicomFile ? 
                         ((DicomFile) DicomFile).MetaInformation.FilePreamble :
                         "(not defined)");
-                store.AppendValues("HasPixelData",
-                    DicomFile.HasPixelData ? "Yes" : "No");
                 store.AppendValues("ImageResolution",
                     DicomFile.HasPixelData ? 
                         DicomFile.PixelData.Columns.ToString() + "x" + 
@@ -813,7 +981,7 @@ public sealed class MainWindow: GladeWidget
         ExportAsFileChooserDialog exportAsFileChooserDialog = 
             new ExportAsFileChooserDialog();
         int response = exportAsFileChooserDialog.Self.Run();
-        if (response == -5)
+        if (response == -1)
         {
             string xmlFileName = exportAsFileChooserDialog.FileName;
             try
@@ -1010,7 +1178,11 @@ public sealed class MainWindow: GladeWidget
         if (File.Exists(Configuration.Global.GimpRemoteExecutable))
         {
             string tempFileName = Path.GetTempFileName();
-            ImageViewImage.Pixbuf.Save(tempFileName, "png");
+
+            Pixbuf pixbuf = new Pixbuf(images[imageIndex],
+                DicomFile.PixelData.Columns,
+                DicomFile.PixelData.Rows);
+            pixbuf.Save(tempFileName, "png");
             try
             {
                 Process.Start(Configuration.Global.GimpRemoteExecutable,
