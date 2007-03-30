@@ -3,7 +3,7 @@
 # $Id$
 
 
-IGNORE_WARNINGS=162
+IGNORE_WARNINGS=162,168
 
 
 SOURCES=$(shell find src -name *.cs)

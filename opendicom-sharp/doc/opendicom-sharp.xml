@@ -1204,6 +1204,12 @@
             DICOM value multiplicity (VM).
             </summary>
         </member>
+        <member name="P:openDicom.Registry.DataElementDictionaryEntry.IsRetired">
+            <summary>
+            Returns that this DICOM tag is not supposed to be in use within
+            new DICOM content, but available for downgrade compliance.
+            </summary>
+        </member>
         <member name="M:openDicom.Registry.DataElementDictionaryEntry.Equals(openDicom.Registry.DataElementDictionaryEntry)">
             <summary>
             Determines whether this instance is equal to another

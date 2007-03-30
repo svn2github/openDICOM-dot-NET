@@ -44,7 +44,7 @@ namespace openDicom.Registry
             get { return tag; }
         }
 
-        private string description;
+        private string description = string.Empty;
         /// <summary>
         ///     Human readable free text which describes a DICOM tag.
         /// </summary>
@@ -71,31 +71,47 @@ namespace openDicom.Registry
             get { return vm; }
         }
 
+        private bool isRetired = false;
+        /// <summary>
+        ///     Returns that this DICOM tag is not supposed to be in use within
+        ///     new DICOM content, but available for downgrade compliance.
+        /// </summary>
+        public bool IsRetired
+        {
+            get { return isRetired; }
+        }
+
 
         public DataElementDictionaryEntry(string tag): 
-            this(tag, null, null, null) {}
+            this(tag, null, null, null, null) {}
     
         public DataElementDictionaryEntry(Tag tag): 
-            this(tag, null, null, null) {}
+            this(tag, null, null, null, false) {}
 
         public DataElementDictionaryEntry(string tag, string description): 
-            this(tag, description, null, null) {}
+            this(tag, description, null, null, null) {}
     
         public DataElementDictionaryEntry(Tag tag, string description): 
-            this(tag, description, null, null) {}
+            this(tag, description, null, null, false) {}
 
         public DataElementDictionaryEntry(string tag, string description, 
-            string vr, string vm)
+            string vr, string vm, string retired)
         {
             this.tag = new Tag(tag);
             if (description == null) description = "";
             this.description = description.Trim();
             this.vr = ValueRepresentation.GetBy(vr, Tag);
             this.vm = new ValueMultiplicity(VR, vm);
+            if (retired != null) 
+            {
+                retired = retired.Trim().ToLower();
+                isRetired = (retired == "ret" || retired == "retired" ||
+                    retired == "true");
+            }
         }
 
         public DataElementDictionaryEntry(Tag tag, string description, 
-            ValueRepresentation vr, ValueMultiplicity vm)
+            ValueRepresentation vr, ValueMultiplicity vm, bool retired)
         {
             this.tag = tag;
             if (description == null) description = "";
@@ -108,6 +124,7 @@ namespace openDicom.Registry
                 this.vm = new ValueMultiplicity(VR);
             else
                 this.vm = vm;
+            isRetired = retired;
         }
 
         /// <summary>
