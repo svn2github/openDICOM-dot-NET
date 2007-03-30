@@ -3,7 +3,7 @@
 # $Id$
 
 
-IGNORE_WARNINGS=162,169
+IGNORE_WARNINGS=162,169,168
 
 
 DICOM_FILE_NAVI=dicom-file-navigator

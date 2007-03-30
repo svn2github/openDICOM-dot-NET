@@ -61,6 +61,8 @@ public sealed class MainWindow: GladeWidget
     private bool isSlideCycling = false;
     private uint slideCyclingIdleHandler;
 
+    private bool treeViewLoaded = false;
+
     private const double scaleStep = 0.10;
     private const double minScaleFactor = 0.10;
     private const double maxScaleFactor = 8.0;
@@ -73,6 +75,61 @@ public sealed class MainWindow: GladeWidget
     {
         get { return DicomFile.PixelData.Data.Value.IsSequence; }
     }
+
+    // officially not part of the DICOM data dictionary, but nice to have
+    private static readonly string[,] groupDescription =
+    {
+        { "0002", "File Meta Information" },
+        { "0003", "Directory Structuring" },
+        { "0008", "Identification" },
+        { "0010", "Patient Data" },
+        { "0012", "Clinical Trial" },
+        { "0013", "Modifying Physician" },
+        { "0018", "Acquisition" },
+        { "0020", "Image" },
+        { "0022", "Ophthalmologistic Data" },
+        { "0028", "Image Presentation" },
+        { "0032", "Study" },
+        { "0038", "Patient Administration" },
+        { "003A", "Waveform" },
+        { "0040", "Procedure" },
+        { "0050", "Calibration" },
+        { "0054", "Nuclear Acquisition" },
+        { "0060", "Histogram" },
+        { "0070", "Graphic" },
+        { "0088", "Storage" },
+        { "0100", "Authorization" },
+        { "0400", "Encryption" },
+        { "2000", "Media" },
+        { "2010", "Film Box" },
+        { "2020", "???" },
+        { "2030", "Annotation" },
+        { "2040", "Image Overlay Box" },
+        { "2050", "Presentation Look-Up-Table" },
+        { "2100", "Print Job" },
+        { "2110", "Printer Status" },
+        { "2120", "Printer Queue Status" },
+        { "2130", "Print Management" },
+        { "3002", "Radiotherapy Image" },
+        { "3004", "Dose Volume Histogram" },
+        { "3006", "Region Of Interest" },
+        { "3008", "Dose Control" },
+        { "300A", "Radiotherapy Acquisition" },
+        { "300C", "Radiotherapy Reference" },
+        { "300E", "Approval" },
+        { "4008", "Result" },
+        { "4FFE", "MAC Parameter" },
+        { "50xx", "Curve Data" },
+        { "5200", "Functional Group" },
+        { "5400", "Waveform" },
+        { "5600", "Spectroscopy" },
+        { "60xx", "Overlay" },
+        { "7FE0", "Pixel Data" },
+        { "FFFA", "Digital Signature" },
+        { "FFFC", "Trailing Padding" },
+        { "FFFE", "Item" }
+    };
+
 
     [WidgetAttribute]
     Notebook MainNotebook;
@@ -161,6 +218,12 @@ public sealed class MainWindow: GladeWidget
     [WidgetAttribute]
     ImageMenuItem ExportAsMenuItem;
 
+    [WidgetAttribute]
+    MenuItem ExpandTreeMenuItem;
+
+    [WidgetAttribute]
+    MenuItem CollapseTreeMenuItem;
+
 
     public MainWindow(string fileName): base("MainWindow")
     {
@@ -217,6 +280,8 @@ public sealed class MainWindow: GladeWidget
             "text", 1);
         ContentTextView.ModifyFont(
             Pango.FontDescription.FromString("Monospace"));
+        // raises page switch event
+        MainNotebook.Page = 1;
         LoadDicomFile(fileName);
     }
 
@@ -231,6 +296,16 @@ public sealed class MainWindow: GladeWidget
     {
         Configuration.Global.SlideCyclingSpeed = (int) CyclingSpeedHScale.Value;
         Application.Quit();
+    }
+
+    private void OnExpandTreeMenuItemActivate(object o, EventArgs args) 
+    {
+        MainTreeView.ExpandAll();
+    }
+
+    private void OnCollapseTreeMenuItemActivate(object o, EventArgs args) 
+    {
+        MainTreeView.CollapseAll();
     }
 
     private void OnAboutMenuItemActivate(object o, EventArgs args) 
@@ -843,14 +918,55 @@ public sealed class MainWindow: GladeWidget
             MainTreeView.Model = store;
             try
             {
+                string lastTagGroup = "";
+                string description = "";
+                TreeIter node = TreeIter.Zero;
+                TreeIter groupNode = TreeIter.Zero;
                 foreach (DataElement d in DicomFile.GetJointDataSets())
                 {
-                    TreeIter node = AppendNode(store, d);
+                    if (lastTagGroup != d.Tag.Group)
+                    {
+                        lastTagGroup = d.Tag.Group;
+                        description = "Unknown";
+                        for (int i = 0; i < groupDescription.Length / 2; i++)
+                        {
+                            if (lastTagGroup.Equals(groupDescription[i, 0]))
+                            {
+                                description = groupDescription[i, 1];
+                                break;
+                            }
+                            else if (Regex.IsMatch(groupDescription[i, 0], 
+                                "(50xx|60xx)"))
+                            {
+                                if (Regex.IsMatch(lastTagGroup, 
+                                    "(50|60)[0-9A-F]{2}"))
+                                {
+                                    description = groupDescription[i, 1];
+                                    break;
+                                }
+                            }
+                        }
+                        groupNode = store.AppendValues(
+                            "(" + lastTagGroup + ")",
+                            description,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            d.StreamPosition.ToString());
+                    } 
+                    node = AppendNode(groupNode, store, d);
                     AppendAllSubnodes(node, store, d);
                 }
+                ContentTextView.Buffer.Clear();
+                ExpandTreeMenuItem.Sensitive = true;
+                CollapseTreeMenuItem.Sensitive = true;
+                treeViewLoaded = true;
             }
             catch (Exception e)
             {
+                treeViewLoaded = false;
                 ExceptionDialog d = new ExceptionDialog(
                     "Unexpected problems refreshing data sets view.", e);
                 d.Self.Run();
@@ -865,7 +981,9 @@ public sealed class MainWindow: GladeWidget
         TreeSelection selection = MainTreeView.Selection;
         if (selection.GetSelected(out model, out node))
         {
+            string vr = (string) model.GetValue(node, 3);
             string valueLength = (string) model.GetValue(node, 5);
+            bool isGroup = (vr == "");            
             bool isMultiValue = (valueLength == "");
             int index = 0;
             if (isMultiValue)
@@ -878,12 +996,11 @@ public sealed class MainWindow: GladeWidget
             string tag = (string) model.GetValue(node, 0);
             string description = (string) model.GetValue(node, 1);
             string value = (string) model.GetValue(node, 2);
-            string vr = (string) model.GetValue(node, 3);
             string vm = (string) model.GetValue(node, 4);
             string systemType = (string) model.GetValue(node, 6);
             string streamPosition = (string) model.GetValue(node, 7);
             ContentTextView.Buffer.Text =  string.Format(
-                "Tag:             {0}\n" +
+                "{9}{0}\n" +
                 "Description:     {1}\n" +
                 "Value{8}{2}\n" +
                 "VR:              {3}\n" +
@@ -899,8 +1016,12 @@ public sealed class MainWindow: GladeWidget
                 valueLength,
                 systemType,
                 streamPosition,
-                isMultiValue ? "[" + index.ToString() + "]:        " :
-                    ":           ");
+                (isMultiValue && ! isGroup) ? 
+                    "[" + index.ToString() + "]:        " :
+                    ":           ",
+                isGroup ?
+                    "Group:           " :
+                    "Tag:             ");
         }
     }
 
@@ -1220,6 +1341,16 @@ public sealed class MainWindow: GladeWidget
 
     private void OnMainNotebookSwitchPage(object o, SwitchPageArgs args)
     {
+        if (args.PageNum == 1 && treeViewLoaded)
+        {
+            ExpandTreeMenuItem.Sensitive = true;
+            CollapseTreeMenuItem.Sensitive = true;
+        }
+        else
+        {
+            ExpandTreeMenuItem.Sensitive = false;
+            CollapseTreeMenuItem.Sensitive = false;
+        }
         if (args.PageNum == 2 && GimpToolButton.Sensitive)
         {
             // enable single image save option when changed to image view

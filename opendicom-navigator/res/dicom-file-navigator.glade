@@ -130,6 +130,34 @@
               </widget>
             </child>
             <child>
+              <widget class="GtkMenuItem" id="ViewMenuItem">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">_View</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="ViewMenuItem_menu">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkMenuItem" id="ExpandTreeMenuItem">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">E_xpand tree</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnExpandTreeMenuItemActivate"/>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkMenuItem" id="CollapseTreeMenuItem">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">_Collapes tree</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnCollapseTreeMenuItemActivate"/>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
               <widget class="GtkMenuItem" id="HelpMenuItem">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_Help</property>
