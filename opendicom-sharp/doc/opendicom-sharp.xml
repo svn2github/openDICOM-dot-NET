@@ -1487,6 +1487,12 @@
             DICOM UID type.
             </summary>
         </member>
+        <member name="P:openDicom.Registry.UidDictionaryEntry.IsRetired">
+            <summary>
+            Returns that this DICOM UID is not supposed to be in use within
+            new DICOM content, but available for downgrade compliance.
+            </summary>
+        </member>
         <member name="M:openDicom.Registry.UidDictionaryEntry.Equals(openDicom.Registry.UidDictionaryEntry)">
             <summary>
             Determines whether another UID dictionary entry instance equals

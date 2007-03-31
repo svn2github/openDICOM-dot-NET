@@ -1,11 +1,15 @@
 
 openDICOM#  0.1.1
 
+   * new features:
+      + DICOM 2007 dictionaries with better downgrade conformance by
+        retired attributes
+      + enhanced dictionary classes with retired property
    * fixed bugs:
       + added culture invariance to Decimal String (DS) encoding
       + added exclusion of Sequence and NestedDataSet within Value.IsArray
 
- -- Albert Gnandt (http://www.gnandt.com/)  2007-03-29
+ -- Albert Gnandt (http://www.gnandt.com/)  2007-03-30
 
 
 openDICOM#  0.1.0

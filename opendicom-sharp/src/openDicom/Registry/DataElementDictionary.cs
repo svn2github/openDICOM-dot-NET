@@ -333,6 +333,7 @@ namespace openDicom.Registry
             string retired = null;
             while (xmlTextReader.Read())
             {
+                retired = null;
                 switch(xmlTextReader.Name)
                 {
                     case "DictionaryEntry":

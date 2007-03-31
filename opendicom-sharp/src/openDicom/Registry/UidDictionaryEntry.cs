@@ -119,18 +119,30 @@ namespace openDicom.Registry
             get { return type; }
         }
 
+        private bool isRetired = false;
+        /// <summary>
+        ///     Returns that this DICOM UID is not supposed to be in use within
+        ///     new DICOM content, but available for downgrade compliance.
+        /// </summary>
+        public bool IsRetired
+        {
+            get { return isRetired; }
+        }
 
-        public UidDictionaryEntry(string uid): this(uid, null, null) {}
+
+        public UidDictionaryEntry(string uid): this(uid, null, null, null) {}
     
-        public UidDictionaryEntry(Uid uid): this(uid, null, UidType.Unknown) {}
+        public UidDictionaryEntry(Uid uid): 
+            this(uid, null, UidType.Unknown, false) {}
 
         public UidDictionaryEntry(string uid, string name): 
-            this(uid, name, null) {}
+            this(uid, name, null, null) {}
     
         public UidDictionaryEntry(Uid uid, string name): 
-            this(uid, name, UidType.Unknown) {}
+            this(uid, name, UidType.Unknown, false) {}
 
-        public UidDictionaryEntry(string uid, string name, string type)
+        public UidDictionaryEntry(string uid, string name, string type, 
+            string retired)
         {
             this.uid = new Uid(uid);
             if (name == null)
@@ -141,9 +153,16 @@ namespace openDicom.Registry
                 this.type = UidType.Unknown;
             else
                 this.type = (UidType) UidType.Parse(typeof(UidType), type);
+            if (retired != null) 
+            {
+                retired = retired.Trim().ToLower();
+                isRetired = (retired == "ret" || retired == "retired" ||
+                    retired == "true");
+            }
         }
 
-        public UidDictionaryEntry(Uid uid, string name, UidType type)
+        public UidDictionaryEntry(Uid uid, string name, UidType type, 
+            bool retired)
         {
             this.uid = uid;
             if (name == null)
@@ -151,6 +170,7 @@ namespace openDicom.Registry
             else
                 this.name = name.Trim();
             this.type = type;
+            isRetired = retired;
         }
 
         /// <summary>
