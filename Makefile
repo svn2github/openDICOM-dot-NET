@@ -44,30 +44,23 @@ uninstall:
 clean-packages:
 	@rm -f *.tar.gz *.zip *.deb
 
-md5sum:
-	@sh checksum.sh beagle
-	@sh checksum.sh lib
-	@sh checksum.sh doc
-	@sh checksum.sh utils
-	@sh checksum.sh navi
-
-debs: md5sum
-	@dpkg -b $(BEAGLE)_deb $(BEAGLE)_$(BEAGLE_RELEASE)_all.deb
-	@dpkg -b $(LIB)_deb $(LIB)_$(LIB_RELEASE)_all.deb
-	@dpkg -b $(DOC)_deb $(DOC)_$(DOC_RELEASE)_all.deb
-	@dpkg -b $(UTILS)_deb $(UTILS)_$(UTILS_RELEASE)_all.deb
-	@dpkg -b $(NAVI)_deb $(NAVI)_$(NAVI_RELEASE)_all.deb	
+debs:
+	@bash build-deb.sh beagle
+	@bash build-deb.sh lib
+	@bash build-deb.sh utils
+	@bash build-deb.sh navi
+	@bash build-deb.sh doc
 
 tar-balls:
-	@tar cvzf $(BEAGLE)_$(BEAGLE_RELEASE).tar.gz $(BEAGLE) > /dev/null
-	@tar cvzf $(LIB)_$(LIB_RELEASE).tar.gz $(LIB) > /dev/null
-	@tar cvzf $(UTILS)_$(UTILS_RELEASE).tar.gz $(UTILS) > /dev/null
-	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) > /dev/null
-	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) > /dev/null
+	@tar cvzf $(BEAGLE)_$(BEAGLE_RELEASE).tar.gz $(BEAGLE) --exclude=.svn > /dev/null
+	@tar cvzf $(LIB)_$(LIB_RELEASE).tar.gz $(LIB) --exclude=.svn > /dev/null
+	@tar cvzf $(UTILS)_$(UTILS_RELEASE).tar.gz $(UTILS) --exclude=.svn > /dev/null
+	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) --exclude=.svn > /dev/null
+	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) --exclude=.svn > /dev/null
 zips:
 	@sh check.sh --cmd -e zip
-	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE)
-	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB)
-	@zip -q -r $(UTILS)_$(UTILS_RELEASE).zip $(UTILS)
-	@zip -q -r $(NAVI)_$(NAVI_RELEASE).zip $(NAVI)
-	@zip -q -r $(DOC)_$(DOC_RELEASE).zip $(DOC)
+	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE) -x *.svn*
+	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB) -x *.svn*
+	@zip -q -r $(UTILS)_$(UTILS_RELEASE).zip $(UTILS) -x *.svn*
+	@zip -q -r $(NAVI)_$(NAVI_RELEASE).zip $(NAVI) -x *.svn*
+	@zip -q -r $(DOC)_$(DOC_RELEASE).zip $(DOC) -x *.svn*
