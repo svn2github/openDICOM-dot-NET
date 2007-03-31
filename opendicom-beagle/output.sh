@@ -4,7 +4,7 @@
 
 print_usage()
 {
-    echo "usage: sh output.sh {--red,-r|--light-red,-lr|--green,-g|--light-green,-lg|--brown,-w|--yellow,-y|--blue,-b|--light-blue,-lb|--magenta,-m|--light-magenta,-lm|--cyan,-c|--light-cyan,-lc} {--echo,-e|--no-echo|-n} <command>"
+    echo "usage: bash output.sh {--red,-r|--light-red,-lr|--green,-g|--light-green,-lg|--brown,-w|--yellow,-y|--blue,-b|--light-blue,-lb|--magenta,-m|--light-magenta,-lm|--cyan,-c|--light-cyan,-lc} {--echo,-e|--no-echo|-n} <command>"
     exit 1
 }
 

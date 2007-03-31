@@ -25,7 +25,7 @@ case "$1" in
         gedit --new-window `find $NAVI/src -name AssemblyInfo.cs` &
         ;;
     *)
-        echo "usage: sh edit.sh {beagle|lib|utils|navi}"
+        echo "usage: bash edit.sh {beagle|lib|utils|navi}"
         exit 1
         ;; 
 esac

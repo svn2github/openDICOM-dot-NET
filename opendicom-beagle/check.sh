@@ -1,6 +1,6 @@
 #!/bin/bash
 # written by Albert Gnandt (http://www.gnandt.com/)
-# $Id: check.sh 46 2007-03-28 12:48:37Z agnandt $
+# $Id: check.sh 77 2007-03-31 21:06:05Z agnandt $
 
 print_ok()
 {
@@ -115,7 +115,7 @@ check_lib_version()
 
 print_usage()
 {
-    echo "usage: sh check.sh {{--cmd,-c|--dir,-d|--lib,-l} {--exists,-e|--not-exists,-n} <name1> <name2> ... <nameN> | {--lib-version,-lv} {--greater-equals,-ge|--equals,-eq|--less-equals,-le} <version> <name>}"
+    echo "usage: bash check.sh {{--cmd,-c|--dir,-d|--lib,-l} {--exists,-e|--not-exists,-n} <name1> <name2> ... <nameN> | {--lib-version,-lv} {--greater-equals,-ge|--equals,-eq|--less-equals,-le} <version> <name>}"
     exit 1
 }
 

@@ -25,7 +25,7 @@ case "$1" in
         sudo make -C $NAVI uninstall install
         ;;
     *)
-        echo "usage: sh build.sh {beagle|lib|utils|navi}"
+        echo "usage: bash build.sh {beagle|lib|utils|navi}"
         exit 1
         ;;
 esac
