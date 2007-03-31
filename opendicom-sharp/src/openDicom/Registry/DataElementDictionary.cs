@@ -333,7 +333,6 @@ namespace openDicom.Registry
             string retired = null;
             while (xmlTextReader.Read())
             {
-                retired = null;
                 switch(xmlTextReader.Name)
                 {
                     case "DictionaryEntry":
@@ -405,7 +404,7 @@ namespace openDicom.Registry
                         throw new DicomException("Wrong entry at tag " +
                             tag + ": " + e.Message);
                     }
-                    tag = description = vr = vm = null;
+                    tag = description = vr = vm = retired = null;
                 }                
             }
             xmlTextReader.Close();

@@ -246,33 +246,39 @@ namespace openDicom.Registry
             string retired = null;
             while (xmlTextReader.Read())
             {
-                retired = null;
-                // TODO: Reading attribute "retired" does not work!
-                if (xmlTextReader.Name == "DictionaryEntry")
-                    retired = xmlTextReader["retired"];
-                xmlTextReader.MoveToContent();
-                if (xmlTextReader.HasValue)
+                switch(xmlTextReader.Name)
                 {
-                    if (uid == null) uid = xmlTextReader.Value;
-                    else if (name == null) 
-                        name = xmlTextReader.Value;
-                    else if (type == null) 
+                    case "DictionaryEntry":
+                        retired = xmlTextReader["retired"];
+                        break;
+                    case "Uid":
+                        xmlTextReader.MoveToContent();
+                        uid = xmlTextReader.ReadString();
+                        break;
+                    case "Name":
+                        xmlTextReader.MoveToContent();
+                        name = xmlTextReader.ReadString();
+                        break;
+                    case "Type":
+                        xmlTextReader.MoveToContent();
+                        type = xmlTextReader.ReadString();
+                        break;
+                }
+                if (uid != null && name != null && type != null)
+                {
+                    try
                     {
-                        type = xmlTextReader.Value;
-                        try
-                        {
-                            UidDictionaryEntry entry = 
-                                new UidDictionaryEntry(uid, name.Trim(),
-                                    type.Trim(), retired);
-                            Add(entry);
-                        }
-                        catch (Exception e)
-                        {
-                            throw new DicomException("Wrong entry at UID " +
-                                uid + ": " + e.Message);
-                        }
-                        uid = name = type = null;
+                        UidDictionaryEntry entry = 
+                            new UidDictionaryEntry(uid, name.Trim(),
+                                type.Trim(), retired);
+                        Add(entry);
                     }
+                    catch (Exception e)
+                    {
+                        throw new DicomException("Wrong entry at UID " +
+                            uid + ": " + e.Message);
+                    }
+                    uid = name = type = retired = null;
                 }                
             }
             xmlTextReader.Close();
