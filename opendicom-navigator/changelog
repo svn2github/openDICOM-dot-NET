@@ -3,10 +3,13 @@ opendicom-navigator  0.1.1
 
    * new features:
       + relies on openDICOM# 0.1.1
+      + new DICOM 2007 dictionaries with better downgrade conformance by
+        retired attributes
       + added cut'n'copy content field
       + added system type representation for API users
-      + added better look'n'feel of data set tree view for multi values
-      + added group nodes in data set tree view
+      + added better look'n'feel of data set tree view
+      + added group, UID, person name and multi-value nodes to data set
+        tree view
       + added expand/collapse tree view entry to main menu
       + replaced multi-value placeholder by concatenation of values
       + replaced binary content type representation by binary hex digest
@@ -21,7 +24,7 @@ opendicom-navigator  0.1.1
       + problems with data set tree subnodes: corrected recursion in data
         set tree view
 
- -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-29
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-30
 
 
 opendicom-navigator  0.1.0

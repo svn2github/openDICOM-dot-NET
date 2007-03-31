@@ -848,7 +848,7 @@ public sealed class MainWindow: GladeWidget
                     element.VR.Tag.GetDictionaryEntry().VM.ToString(),
                     element.Value.ValueLength.ToString(),
                     element.Value[0].GetType().ToString(),
-                    element.StreamPosition.ToString());            
+                    element.StreamPosition.ToString());
         }
         else
         {
@@ -883,6 +883,38 @@ public sealed class MainWindow: GladeWidget
                         "" : 
                         element.Value[0].GetType().ToString(),
                     element.StreamPosition.ToString());
+            if (element.Value.IsUid)
+            {
+                store.AppendValues(
+                    node,
+                    element.Tag.ToString(),
+                    element.VR.Tag.GetDictionaryEntry().Description,
+                    (element.Value[0] as Uid).GetDictionaryEntry().Name +
+                    " { " + 
+                    (element.Value[0] as Uid).GetDictionaryEntry().Type + " }",
+                    element.VR.ToLongString(),
+                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    "",
+                    element.Value[0].GetType().ToString(),
+                    element.Value.StreamPosition.ToString());
+            }
+            else if (element.Value.IsPersonName)
+            {
+                PersonName pn = (PersonName) element.Value[0];
+                for (int i = 0; i < 5; i++)
+                {
+                    store.AppendValues(
+                        node,
+                        element.Tag.ToString(),
+                        element.VR.Tag.GetDictionaryEntry().Description,
+                        pn[i],
+                        element.VR.ToLongString(),
+                        element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                        "",
+                        element.Value[0].GetType().ToString(),
+                        element.Value.StreamPosition.ToString());
+                }
+            }
         }
         return node;
     }
@@ -981,10 +1013,20 @@ public sealed class MainWindow: GladeWidget
         TreeSelection selection = MainTreeView.Selection;
         if (selection.GetSelected(out model, out node))
         {
+            string tag = (string) model.GetValue(node, 0);
+            string description = (string) model.GetValue(node, 1);
+            string value = (string) model.GetValue(node, 2);
             string vr = (string) model.GetValue(node, 3);
+            string vm = (string) model.GetValue(node, 4);
             string valueLength = (string) model.GetValue(node, 5);
+            string systemType = (string) model.GetValue(node, 6);
+            string streamPosition = (string) model.GetValue(node, 7);
+
             bool isGroup = (vr == "");            
-            bool isMultiValue = (valueLength == "");
+            bool isUid = (vr == "Unique Identifier (UI)" && valueLength == "");
+            bool isPersonName = (vr == "Person Name (PN)" && valueLength == "");
+            bool isMultiValue = (valueLength == "" && ! isGroup && ! isUid && 
+                ! isPersonName);
             int index = 0;
             if (isMultiValue)
             {
@@ -992,36 +1034,94 @@ public sealed class MainWindow: GladeWidget
                 if (path.Indices.Length > 0)
                     // row index in relation to lowest tree level
                     index = path.Indices[path.Indices.Length - 1];
+                ContentTextView.Buffer.Text =  string.Format(
+                    "Tag:             {0}\n" +
+                    "Description:     {1}\n" +
+                    "Value[{2:00}]:       {3}\n" +
+                    "VR:              {4}\n" +
+                    "VM:              {5}\n" +
+                    "System Type:     {6}\n" +
+                    "Stream Position: {7}", 
+                    tag, description, index, value, vr, vm, systemType, 
+                    streamPosition);
             }
-            string tag = (string) model.GetValue(node, 0);
-            string description = (string) model.GetValue(node, 1);
-            string value = (string) model.GetValue(node, 2);
-            string vm = (string) model.GetValue(node, 4);
-            string systemType = (string) model.GetValue(node, 6);
-            string streamPosition = (string) model.GetValue(node, 7);
-            ContentTextView.Buffer.Text =  string.Format(
-                "{9}{0}\n" +
-                "Description:     {1}\n" +
-                "Value{8}{2}\n" +
-                "VR:              {3}\n" +
-                "VM:              {4}\n" +
-                "Value Length:    {5}\n" +
-                "System Type:     {6}\n" +
-                "Stream Position: {7}", 
-                tag,
-                description,
-                value,
-                vr,
-                vm,
-                valueLength,
-                systemType,
-                streamPosition,
-                (isMultiValue && ! isGroup) ? 
-                    "[" + index.ToString() + "]:        " :
-                    ":           ",
-                isGroup ?
-                    "Group:           " :
-                    "Tag:             ");
+            else if (isUid)
+            {
+                TreePath path = model.GetPath(node);
+                path.Up();
+                model.GetIter(out node, path);
+                string uid = (string) model.GetValue(node, 2);
+                bool userDefined = (new Uid(uid)).IsUserDefined;
+                bool retired = false;
+                string s = "";
+                if (userDefined)
+                    s = "This UID is user defined.";
+                else if ((new Uid(uid)).GetDictionaryEntry().IsRetired)
+                    s = "This UID is retired.";
+                ContentTextView.Buffer.Text =  string.Format(
+                    "Tag:             {0}\n" +
+                    "Description:     {1}\n" +
+                    "UID Description: {2}\n" +
+                    "VR:              {3}\n" +
+                    "VM:              {4}\n" +
+                    "System Type:     {5}\n" +
+                    "Stream Position: {6}" +
+                    "{7}",
+                    tag, description, value, vr, vm, systemType, 
+                    streamPosition, 
+                    (s != "") ? "\n" + s : "");
+            }
+            else if (isPersonName)
+            {
+                TreePath path = model.GetPath(node);
+                if (path.Indices.Length > 0)
+                    // row index in relation to lowest tree level
+                    index = path.Indices[path.Indices.Length - 1];
+                string[] s = { "Family Name:", "Given Name:", "Middle Name:",
+                    "Name Prefix:", "Name Suffix:" };
+                ContentTextView.Buffer.Text =  string.Format(
+                    "Tag:             {0}\n" +
+                    "Description:     {1}\n" +
+                    "{2,-16} {3}\n" +
+                    "VR:              {4}\n" +
+                    "VM:              {5}\n" +
+                    "System Type:     {6}\n" +
+                    "Stream Position: {7}", 
+                    tag, description, s[index], value, vr, vm, systemType, 
+                    streamPosition);
+            }
+            else if (isGroup)
+            {
+                ContentTextView.Buffer.Text =  string.Format(
+                    "Group:           {0}\n" +
+                    "Description:     {1}\n" +
+                    "Stream Position: {2}{3}", 
+                    tag, description, streamPosition,
+                    (description == "Unknown") ? 
+                        "\nThis group is user defined." : "");
+            }
+            else
+            {
+                bool userDefined = (new Tag(tag)).IsUserDefined;
+                bool retired = false;
+                string s = "";
+                if (userDefined)
+                    s = "This tag is user defined.";
+                else if ((new Tag(tag)).GetDictionaryEntry().IsRetired)
+                    s = "This tag is retired.";
+                ContentTextView.Buffer.Text =  string.Format(
+                    "Tag:             {0}\n" +
+                    "Description:     {1}\n" +
+                    "Value:           {2}\n" +
+                    "VR:              {3}\n" +
+                    "VM:              {4}\n" +
+                    "ValueLength:     {5}\n" +
+                    "System Type:     {6}\n" +
+                    "Stream Position: {7}{8}", 
+                    tag, description, value, vr, vm, valueLength, systemType, 
+                    streamPosition,
+                    (s != "") ? "\n" + s : "");
+            }
         }
     }
 

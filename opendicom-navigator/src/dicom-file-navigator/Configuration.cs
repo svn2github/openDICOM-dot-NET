@@ -130,8 +130,8 @@ public sealed class Configuration
         {
             string defaultDir = 
                 "/usr/share/opendicom.net/opendicom-navigator/dd";
-            string defaultDataElementDic = "dicom-elements-2004.dic";
-            string defaultUidDic = "dicom-uids-2004.dic";
+            string defaultDataElementDic = "dicom-elements-2007.dic";
+            string defaultUidDic = "dicom-uids-2007.dic";
             try
             {
                 DataElementDictionary.LoadFrom(defaultDir + "/" + 

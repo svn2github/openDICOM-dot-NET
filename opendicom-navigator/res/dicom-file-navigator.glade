@@ -303,7 +303,7 @@
             <child>
               <widget class="GtkVPaned" id="MainTreeViewVPaned">
                 <property name="visible">True</property>
-                <property name="position">462</property>
+                <property name="position">444</property>
                 <child>
                   <widget class="GtkScrolledWindow" id="MainTreeViewScrolledWindow">
                     <property name="visible">True</property>
