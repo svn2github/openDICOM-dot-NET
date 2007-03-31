@@ -1,4 +1,32 @@
 
+opendicom-navigator  0.1.1
+
+   * new features:
+      + relies on openDICOM# 0.1.1
+      + new DICOM 2007 dictionaries with better downgrade conformance by
+        retired attributes
+      + added cut'n'copy content field
+      + added system type representation for API users
+      + added better look'n'feel of data set tree view
+      + added group, UID, person name and multi-value nodes to data set
+        tree view
+      + added expand/collapse tree view entry to main menu
+      + replaced multi-value placeholder by concatenation of values
+      + replaced binary content type representation by binary hex digest
+      + made GUI Glade 3.0 compliant
+   * fixed bugs:
+      + dialogs were not working: adapted response values of export-as-xml
+        and save-image dialog
+      + single image scale storage: corrected image size for single image
+        manipulation (GIMP) and storage of original image size
+      + processing with GIMP: added image preperation exception handling
+      + disabled single image storage when not in the image view
+      + problems with data set tree subnodes: corrected recursion in data
+        set tree view
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-30
+
+
 opendicom-navigator  0.1.0
 
    * initial release:
@@ -7,5 +35,5 @@ opendicom-navigator  0.1.0
       + play as movie function for multi-frame images
       + export of DICOM content to XML
 
- -- Albert Gnandt  <albert.gnandt@hs-heilbronn.de>  2006-04-24
+ -- Albert Gnandt  (http://www.gnandt.com/)  2006-04-24
 

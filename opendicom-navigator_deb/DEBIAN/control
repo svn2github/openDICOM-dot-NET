@@ -1,13 +1,30 @@
 Package: opendicom-navigator
 Version: 0.1.1
-Section: science
+Section: graphics
 Priority: optional
 Architecture: all
 Depends: mono (>= 1.1.17.1), opendicom-sharp (>= 0.1.1)
 Suggests: opendicom-sharp, opendicom-beagle, opendicom-utils
 Provides: opendicom-navigator
-Installed-Size: 464
-Maintainer: Albert Gnandt (http://www.gnandt.com/)
+Replaces: opendicom-navigator (= 0.1.0)
+Installed-Size: ???
+Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: Simple ACR-NEMA and DICOM file browser and transcoder for Mono
- This package is part of the openDICOM.NET project. Please take a look at
- http://www.opendicom.net/ for more detailed informations.
+ Small and easy to use GTK# ACR-NEMA and DICOM file browser for Mono
+ written in C#. Fits great in the GNOME desktop.
+ .
+ Features:
+  * Full support of ACR-NEMA and DICOM files
+  * Support of ACR-NEMA and DICOM export as XML file
+  * Support of ACR-NEMA and DICOM images export to different image formats
+  * Three views: file info, data set and image view
+  * Tree view of ACR-NEMA and DICOM content
+  * Cut'n'copy box with extra informations for openDICOM.NET API
+    (opendicom-sharp) users
+  * Image view with single and multiple frame support
+  * Supports image slide cycling (movie mode)
+  * Supports on-the-fly single image processing with GIMP
+  * Comes with full DICOM 2007 data and UID dictionaries
+ .
+ Homepage: http://www.opendicom.net/
+Bugs: mailto:agnandt@users.sourceforge.net
