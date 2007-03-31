@@ -1,5 +1,5 @@
 /*
-    openDICOM.NET Beagle Filter Plugin 0.1.0
+    openDICOM.NET Beagle Filter Plugin 0.1.1
 
     openDICOM.NET Beagle Filter Plugin makes DICOM file content available
     for the Beagle Desktop Search
@@ -40,6 +40,15 @@ namespace Beagle.Filters
 	
 	public class FilterDicom : Beagle.Daemon.Filter
     {
+        private static readonly string defaultDicDir =
+            "/usr/share/opendicom.net/opendicom-beagle/dd/";
+
+        // binaries!
+        private static readonly string defaultDataElementDicFileName =
+            "dicom-elements-2007.dic";
+        private static readonly string defaultUidDicFileName =
+            "dicom-uids-2007.dic";
+
         private bool isDicomFile = true;
         private AcrNemaFile dicomFile = null;
         private Sequence sequence = null;
@@ -52,13 +61,13 @@ namespace Beagle.Filters
             try
             {
                 string dataElementDicFileName =
-                    "/usr/share/opendicom.net/opendicom-beagle/dd/dicom-elements-2004.dic";
+                    defaultDicDir + defaultDataElementDicFileName;
                 string uidDicFileName =
-                    "/usr/share/opendicom.net/opendicom-beagle/dd/dicom-uids-2004.dic";
+                    defaultDicDir + defaultUidDicFileName;
                 if ( ! File.Exists(dataElementDicFileName))
-                    dataElementDicFileName = "dicom-elements-2004.dic";
+                    dataElementDicFileName = defaultDataElementDicFileName;
                 if ( ! File.Exists(uidDicFileName))
-                    uidDicFileName = "dicom-uids-2004.dic";
+                    uidDicFileName = defaultUidDicFileName;
                 DataElementDictionary dataElementDic = 
                     new DataElementDictionary();
                 UidDictionary uidDic = new UidDictionary();

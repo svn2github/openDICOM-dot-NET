@@ -11,8 +11,8 @@ BACKUPS=$(shell find -name *~)
 
 DOCS=README INSTALL GPL license copyright release changelog
 
-ELEMENT_DIC=dicom-elements-2004.dic
-UID_DIC=dicom-uids-2004.dic
+ELEMENT_DIC=dicom-elements-2007.dic
+UID_DIC=dicom-uids-2007.dic
 GROUP=opendicom.net
 NAME=opendicom-beagle
 DLL_NAME=FilterDicom.dll
