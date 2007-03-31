@@ -1,9 +1,9 @@
 /*
-    openDICOM.NET Utils 0.1.0
+    openDICOM.NET Utils 0.1.1
 
     openDICOM.NET Utils provides DICOM utility applications for DICOM
     related manipulation on Mono.
-    Copyright (C) 2006  Albert Gnandt
+    Copyright (C) 2006-2007  Albert Gnandt
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -39,8 +39,8 @@ public sealed class DicomDataDictionaryTransformer
     public static UidDictionary uidDic = new UidDictionary();
 
     public static string defaultFormat = "src:b:";
-    public static string defaultDataElementDic = "dicom-elements-2004.dic";
-    public static string defaultUidDic = "dicom-uids-2004.dic";
+    public static string defaultDataElementDic = "dicom-elements-2007.dic";
+    public static string defaultUidDic = "dicom-uids-2007.dic";
     public static string defaultLinuxDir = 
         "/usr/share/opendicom.net/opendicom-utils/dd/";
 

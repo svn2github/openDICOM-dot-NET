@@ -1,4 +1,13 @@
 
+opendicom-utils  0.1.1
+
+   * new features:
+      + DICOM 2007 dictionaries with better downgrade conformance by
+        retired attributes
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-30
+
+
 opendicom-utils  0.1.0
 
    * initial release:

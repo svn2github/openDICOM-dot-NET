@@ -1,9 +1,9 @@
 /*
-    openDICOM.NET Utils 0.1.0
+    openDICOM.NET Utils 0.1.1
 
     openDICOM.NET Utils provides DICOM utility applications for DICOM
     related manipulation on Mono.
-    Copyright (C) 2006  Albert Gnandt
+    Copyright (C) 2006-2007  Albert Gnandt
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("dicom-dd-transform.exe")]
-[assembly: AssemblyCopyright("Copyright (C) 2006  Albert Gnandt")]
+[assembly: AssemblyCopyright("Copyright (C) 2006-2007  Albert Gnandt")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -47,7 +47,7 @@ using System.Runtime.CompilerServices;
 // You can specify all values by your own or you can build default build and revision
 // numbers with the '*' character (the default):
 
-[assembly: AssemblyVersion("0.1.0")]
+[assembly: AssemblyVersion("0.1.1")]
 
 // The following attributes specify the key for the sign of your assembly. See the
 // .NET Framework documentation for more information about signing.
