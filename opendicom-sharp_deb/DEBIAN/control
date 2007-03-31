@@ -6,6 +6,7 @@ Architecture: all
 Depends: mono (>= 1.1.17.1)
 Suggests: opendicom-navigator, opendicom-beagle, opendicom-utils
 Provides: opendicom-sharp
+Replaces: opendicom-sharp (= 0.1.0)
 Installed-Size: ???
 Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: ACR-NEMA and DICOM library for Mono
@@ -22,5 +23,5 @@ Description: ACR-NEMA and DICOM library for Mono
   * Comes with full DICOM 2007 Data and UID dictionaries
   * Supports binary, XML, CSV and properties dictionary formats
  .
- This package is part of the openDICOM.NET project. Please take a look at
- http://www.opendicom.net/ for more detailed informations.
+ Homepage: http://www.opendicom.net/
+Bugs: mailto:agnandt@users.sourceforge.net
