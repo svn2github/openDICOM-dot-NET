@@ -24,6 +24,7 @@ DOCS=README INSTALL GPL license copyright release changelog
 ELEMENT_DIC=dicom-elements-2007.dic
 UID_DIC=dicom-uids-2007.dic
 LIB=opendicom-sharp
+LIB_VERSION=0.1.1
 NAME=opendicom-utils
 GROUP=opendicom.net
 
@@ -62,6 +63,7 @@ all: build
 build:
 	@sh check.sh --cmd -e mcs
 	@sh check.sh --lib -e $(LIB)
+	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
 	@sh output.sh --cyan -n "echo $(DICOM_DD_TRANSFORM_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_DD_TRANSFORM_COMPILE)"
 	@sh output.sh --cyan -n "echo $(DICOM_DD_QUERY_COMPILE)"
@@ -77,6 +79,7 @@ clean:
 install:
 	@sh check.sh --cmd -e mono
 	@sh check.sh --lib -e $(LIB)
+	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
 	@sh check.sh --dir -e /usr/lib/mono /usr/lib/pkgconfig
 	@mkdir -p /usr/share/$(GROUP)/$(NAME)/dd
 	@mkdir /usr/share/$(GROUP)/$(NAME)/bin

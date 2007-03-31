@@ -18,11 +18,14 @@ DOCS=README INSTALL GPL license copyright release changelog
 ELEMENT_DIC=dicom-elements-2007.dic
 UID_DIC=dicom-uids-2007.dic
 LIB=opendicom-sharp
+LIB_VERSION=0.1.1
 NAME=opendicom-navigator
 GROUP=opendicom.net
 
 GTK_SHARP=gtk-sharp-2.0
+GTK_VERSION=2.10
 GLADE_SHARP=glade-sharp-2.0
+GLADE_VERSION=2.10
 
 
 DICOM_FILE_NAVI_COMPILE=mcs -target:exe\
@@ -43,21 +46,14 @@ DICOM_FILE_NAVI_COMPILE=mcs -target:exe\
 	$(DICOM_FILE_NAVI_SOURCES)
 
 
-#DICOM_FILE_NAVI_COMPILE=mcs -target:exe\
-#        -nowarn:$(IGNORE_WARNINGS)\
-#        -pkg:$(LIB)\
-#        -pkg:$(GLADE_SHARP)\
-#        -pkg:$(GTK_SHARP)\
-#        -doc:doc/$(DICOM_FILE_NAVI).xml\
-#        -out:bin/$(DICOM_FILE_NAVI).exe\
-#        $(DICOM_FILE_NAVI_SOURCES)
-
-
 all: build
 
 build:
 	@sh check.sh --cmd -e mcs
 	@sh check.sh --lib -e $(LIB) $(GTK_SHARP) $(GLADE_SHARP)
+	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
+	@sh check.sh --lib-version -ge $(GTK_VERSION) $(GTK_SHARP)
+	@sh check.sh --lib-version -ge $(GLADE_VERSION) $(GLADE_SHARP)
 	@sh output.sh --cyan -n "echo $(DICOM_FILE_NAVI_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_FILE_NAVI_COMPILE)"
 
@@ -67,6 +63,9 @@ clean:
 install:
 	@sh check.sh --cmd -e mono
 	@sh check.sh --lib -e $(LIB) $(GTK_SHARP) $(GLADE_SHARP)
+	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
+	@sh check.sh --lib-version -ge $(GTK_VERSION) $(GTK_SHARP)
+	@sh check.sh --lib-version -ge $(GLADE_VERSION) $(GLADE_SHARP)
 	@mkdir -p /usr/share/$(GROUP)/$(NAME)/dd
 	@mkdir /usr/share/$(GROUP)/$(NAME)/bin
 	@mkdir -p /usr/share/doc/$(GROUP)/$(NAME)/

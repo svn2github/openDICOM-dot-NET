@@ -1037,13 +1037,13 @@ public sealed class MainWindow: GladeWidget
                 ContentTextView.Buffer.Text =  string.Format(
                     "Tag:             {0}\n" +
                     "Description:     {1}\n" +
-                    "Value[{2:00}]:       {3}\n" +
+                    "Value{2,-12}{3}\n" +
                     "VR:              {4}\n" +
                     "VM:              {5}\n" +
                     "System Type:     {6}\n" +
                     "Stream Position: {7}", 
-                    tag, description, index, value, vr, vm, systemType, 
-                    streamPosition);
+                    tag, description, "[" + index.ToString() + "]:", value, vr,
+                    vm, systemType, streamPosition);
             }
             else if (isUid)
             {
@@ -1069,7 +1069,7 @@ public sealed class MainWindow: GladeWidget
                     "{7}",
                     tag, description, value, vr, vm, systemType, 
                     streamPosition, 
-                    (s != "") ? "\n" + s : "");
+                    (s != "") ? "\nAnnotation:      " + s : "");
             }
             else if (isPersonName)
             {
@@ -1095,10 +1095,11 @@ public sealed class MainWindow: GladeWidget
                 ContentTextView.Buffer.Text =  string.Format(
                     "Group:           {0}\n" +
                     "Description:     {1}\n" +
-                    "Stream Position: {2}{3}", 
+                    "Stream Position: {2}" +
+                    "{3}", 
                     tag, description, streamPosition,
                     (description == "Unknown") ? 
-                        "\nThis group is user defined." : "");
+                        "\nAnnotation:      This group is user defined." : "");
             }
             else
             {
@@ -1117,10 +1118,11 @@ public sealed class MainWindow: GladeWidget
                     "VM:              {4}\n" +
                     "ValueLength:     {5}\n" +
                     "System Type:     {6}\n" +
-                    "Stream Position: {7}{8}", 
+                    "Stream Position: {7}" +
+                    "{8}", 
                     tag, description, value, vr, vm, valueLength, systemType, 
                     streamPosition,
-                    (s != "") ? "\n" + s : "");
+                    (s != "") ? "\nAnnotation:      " + s : "");
             }
         }
     }
