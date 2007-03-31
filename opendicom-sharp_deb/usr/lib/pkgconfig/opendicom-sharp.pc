@@ -5,5 +5,5 @@ libdir=${exec_prefix}/lib
 
 Name: openDICOM#
 Description: openDICOM# - DICOM Mono/.NET library
-Version: 0.1.0
+Version: 0.1.1
 Libs: -r:${libdir}/mono/opendicom-sharp/opendicom-sharp.dll

@@ -1,13 +1,26 @@
 Package: opendicom-sharp
 Version: 0.1.1
-Section: science
+Section: graphics
 Priority: optional
 Architecture: all
 Depends: mono (>= 1.1.17.1)
 Suggests: opendicom-navigator, opendicom-beagle, opendicom-utils
 Provides: opendicom-sharp
-Installed-Size: 340
-Maintainer: Albert Gnandt (http://www.gnandt.com/)
+Installed-Size: ???
+Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: ACR-NEMA and DICOM library for Mono
+ Easy to use object oriented API for ACR-NEMA and DICOM processing on Mono
+ written in C#.
+ .
+ Features:
+  * Supports ACR-NEMA and DICOM streaming
+  * Supports ACR-NEMA and DICOM files
+  * Supports Pixel Data processing
+  * Supports ACR-NEMA and DICOM as XML
+  * Supports ACR-NEMA and DICOM processing as class instance tree and
+    sequence
+  * Comes with full DICOM 2007 Data and UID dictionaries
+  * Supports binary, XML, CSV and properties dictionary formats
+ .
  This package is part of the openDICOM.NET project. Please take a look at
  http://www.opendicom.net/ for more detailed informations.
