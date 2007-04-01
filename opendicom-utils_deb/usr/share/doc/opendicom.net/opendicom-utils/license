@@ -3,7 +3,7 @@ openDICOM.NET Utils
 
 openDICOM.NET Utils provides DICOM utility applications for DICOM related
 manipulation on Mono.
-Copyright (C) 2006  Albert Gnandt
+Copyright (C) 2006-2007  Albert Gnandt
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

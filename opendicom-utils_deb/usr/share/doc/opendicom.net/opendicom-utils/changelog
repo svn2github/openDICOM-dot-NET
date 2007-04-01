@@ -1,4 +1,17 @@
 
+opendicom-utils  0.1.1
+
+   * new features:
+      + DICOM 2007 dictionaries with better downgrade conformance by
+        retired attributes
+      + made table cell width relative to search results
+      + added table column retired and reordered columns
+      + added retired and non-retired keywords for query
+      + renamed dict:data-element to dict:tag
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-30
+
+
 opendicom-utils  0.1.0
 
    * initial release:
@@ -11,5 +24,5 @@ opendicom-utils  0.1.0
       + dicom-file-transform: Transforms entire DICOM and ACR-NEMA files to
          XML files and provides support for DICOM pixel data extraction
 
- -- Albert Gnandt  <albert.gnandt@hs-heilbronn.de>  2006-03-02
+ -- Albert Gnandt  (http://www.gnandt.com/)  2006-03-02
 
