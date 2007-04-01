@@ -57,7 +57,7 @@ public sealed class DicomDataDictionaryQuery
     {
         Console.Error.WriteLine("openDICOM.NET Utils");
         Console.Error.WriteLine(
-            "Queries a DICOM ictionary for user specified informations.");
+            "Queries a DICOM data dictionary for user specified informations.");
         Console.Error.WriteLine();
         Console.Error.WriteLine(
             "Usage: dicom-dd-query dict:<type> [<format>:<src>] " +
@@ -86,7 +86,7 @@ public sealed class DicomDataDictionaryQuery
         Console.Error.WriteLine("             uid  - unique identifier");
         Console.Error.WriteLine("             name - description");
         Console.Error.WriteLine("             type - type");
-        Console.Error.WriteLine("          - All dictionaries:");
+        Console.Error.WriteLine("          - all dictionaries:");
         Console.Error.WriteLine("             retired     - retired entries");
         Console.Error.WriteLine(
             "             non-retired - non-retired entries");
