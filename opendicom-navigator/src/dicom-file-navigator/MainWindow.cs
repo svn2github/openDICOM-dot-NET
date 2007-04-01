@@ -640,7 +640,7 @@ public sealed class MainWindow: GladeWidget
                     CorrectIndex ? imageIndex : imageIndex + 1,
                     CorrectIndex ? images.Length - 1 : images.Length,
                     (int) (scaleFactor * 100),
-                    (int) ((Configuration.Global.ImageBrightnessFactor / 2) * 
+                    (int) ((Configuration.Global.ImageBrightnessFactor) * 
                         100)));
                 bool isJpegNotSupported = false;
                 Pixbuf pixbuf = null;

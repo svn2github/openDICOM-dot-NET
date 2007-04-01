@@ -610,22 +610,21 @@
     <child internal-child="vbox">
       <widget class="GtkVBox" id="AboutDialogVBox">
         <property name="width_request">322</property>
-        <property name="height_request">321</property>
+        <property name="height_request">409</property>
         <property name="visible">True</property>
         <child>
           <widget class="GtkFixed" id="AboutDialogFixed">
             <property name="visible">True</property>
             <child>
               <widget class="GtkImage" id="AboutDialogImage">
-                <property name="width_request">304</property>
-                <property name="height_request">88</property>
+                <property name="width_request">305</property>
+                <property name="height_request">144</property>
                 <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="yalign">0</property>
                 <property name="stock">gtk-missing-image</property>
               </widget>
               <packing>
                 <property name="x">8</property>
+                <property name="y">16</property>
               </packing>
             </child>
             <child>
@@ -649,7 +648,7 @@ http://www.opendicom.net/</property>
               </widget>
               <packing>
                 <property name="x">8</property>
-                <property name="y">96</property>
+                <property name="y">179</property>
               </packing>
             </child>
           </widget>
