@@ -1,13 +1,23 @@
 Package: opendicom-beagle
-Version: 0.1.0
-Section: science
+Version: 0.1.1
+Section: gnome
 Priority: optional
 Architecture: all
-Depends: opendicom-sharp (= 0.1.0), beagle (>= 0.2.9)
+Depends: opendicom-sharp (>= 0.1.1), beagle (>= 0.2.9)
 Suggests: opendicom-navigator
 Provides: opendicom-beagle
+Replaces: opendicom-beagle (= 0.1.0)
 Installed-Size: ???
-Maintainer: Albert Gnandt (http://www.gnandt.com/)
+Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: DICOM filter plugin for the Beagle desktop search
- This package is part of the openDICOM.NET project. Please take a look at
- http://www.opendicom.net/ for more detailed informations.
+ Enables desktop search of ACR-NEMA and DICOM content.
+ .
+ Features:
+  * Search for DICOM tags
+  * Search for DICOM tag description
+  * Search for DICOM values
+  * Search for DICOM value representations
+  * Comes with full DICOM 2007 dictionaries
+ .
+ Homepage: http://www.opendicom.net/
+Bugs: mailto:agnandt@users.sourceforge.net
