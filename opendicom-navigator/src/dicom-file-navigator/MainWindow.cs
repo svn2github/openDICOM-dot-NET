@@ -890,13 +890,14 @@ public sealed class MainWindow: GladeWidget
                     element.Tag.ToString(),
                     element.VR.Tag.GetDictionaryEntry().Description,
                     (element.Value[0] as Uid).GetDictionaryEntry().Name +
-                    " { " + 
-                    (element.Value[0] as Uid).GetDictionaryEntry().Type + " }",
-                    element.VR.ToLongString(),
-                    element.VR.Tag.GetDictionaryEntry().VM.ToString(),
+                    " [" + 
+                    (element.Value[0] as Uid).GetDictionaryEntry().Type + "]",
                     "",
-                    element.Value[0].GetType().ToString(),
-                    element.Value.StreamPosition.ToString());
+                    "",
+                    "",
+                    (element.Value[0] as Uid).
+                        GetDictionaryEntry().GetType().ToString(),
+                    "");
             }
             else if (element.Value.IsPersonName)
             {
@@ -1022,8 +1023,9 @@ public sealed class MainWindow: GladeWidget
             string systemType = (string) model.GetValue(node, 6);
             string streamPosition = (string) model.GetValue(node, 7);
 
-            bool isGroup = (vr == "");            
-            bool isUid = (vr == "Unique Identifier (UI)" && valueLength == "");
+            bool isUid = 
+                (systemType == "openDicom.Registry.UidDictionaryEntry");
+            bool isGroup = (vr == "" && ! isUid);
             bool isPersonName = (vr == "Person Name (PN)" && valueLength == "");
             bool isMultiValue = (valueLength == "" && ! isGroup && ! isUid && 
                 ! isPersonName);
@@ -1050,25 +1052,22 @@ public sealed class MainWindow: GladeWidget
                 TreePath path = model.GetPath(node);
                 path.Up();
                 model.GetIter(out node, path);
-                string uid = (string) model.GetValue(node, 2);
-                bool userDefined = (new Uid(uid)).IsUserDefined;
+                string uidString = (string) model.GetValue(node, 2);
+                Uid uid = new Uid(uidString);
+                bool userDefined = uid.IsUserDefined;
                 bool retired = false;
                 string s = "";
                 if (userDefined)
                     s = "This UID is user defined.";
-                else if ((new Uid(uid)).GetDictionaryEntry().IsRetired)
+                else if (uid.GetDictionaryEntry().IsRetired)
                     s = "This UID is retired.";
                 ContentTextView.Buffer.Text =  string.Format(
                     "Tag:             {0}\n" +
                     "Description:     {1}\n" +
-                    "UID Description: {2}\n" +
-                    "VR:              {3}\n" +
-                    "VM:              {4}\n" +
-                    "System Type:     {5}\n" +
-                    "Stream Position: {6}" +
-                    "{7}",
-                    tag, description, value, vr, vm, systemType, 
-                    streamPosition, 
+                    "UID Name [Type]: {2}\n" +
+                    "System Type:     {3}" +
+                    "{4}",
+                    tag, description, value, systemType, 
                     (s != "") ? "\nAnnotation:      " + s : "");
             }
             else if (isPersonName)
