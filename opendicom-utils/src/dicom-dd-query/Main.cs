@@ -25,6 +25,7 @@
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Collections;
 using openDicom.Registry;
 using openDicom.DataStructure;
 
@@ -49,11 +50,14 @@ public sealed class DicomDataDictionaryQuery
     public static string[] dic = new string[0];
     public static string[] keyAndPattern = new string[0];
 
+    public static string[] resultBuffer = new string[5];
+    public static ArrayList resultList = new ArrayList();
+
     public static int PrintUsage()
     {
         Console.Error.WriteLine("openDICOM.NET Utils");
         Console.Error.WriteLine(
-            "Queries a data dictionary for user specified informations.");
+            "Queries a DICOM ictionary for user specified informations.");
         Console.Error.WriteLine();
         Console.Error.WriteLine(
             "Usage: dicom-dd-query dict:<type> [<format>:<src>] " +
@@ -61,9 +65,9 @@ public sealed class DicomDataDictionaryQuery
         Console.Error.WriteLine();
         Console.Error.WriteLine("type      specified dictionary type");
         Console.Error.WriteLine(
-            "          data-element - data element dictionary");
+            "          tag - DICOM data element dictionary");
         Console.Error.WriteLine(
-            "          uid          - unique identifier dictionary");
+            "          uid - DICOM unique identifier dictionary");
         Console.Error.WriteLine("format    specified file format");
         Console.Error.WriteLine("          b - binary");
         Console.Error.WriteLine("          p - property");
@@ -78,14 +82,16 @@ public sealed class DicomDataDictionaryQuery
             "             vr          - value representation");
         Console.Error.WriteLine(
             "             vm          - value multiplicity");
-        Console.Error.WriteLine(
-            "             any         - look for matches overall keys");
         Console.Error.WriteLine("          - UID dictionary:");
         Console.Error.WriteLine("             uid  - unique identifier");
         Console.Error.WriteLine("             name - description");
         Console.Error.WriteLine("             type - type");
+        Console.Error.WriteLine("          - All dictionaries:");
+        Console.Error.WriteLine("             retired     - retired entries");
         Console.Error.WriteLine(
-            "             any  - look for matches overall keys");
+            "             non-retired - non-retired entries");
+        Console.Error.WriteLine(
+            "             any         - look for matches overall keys");
         Console.Error.WriteLine("pattern   query pattern corresponding to key");
         Console.Error.WriteLine(
             "          - wildcards (*) represent any substring");
@@ -97,7 +103,7 @@ public sealed class DicomDataDictionaryQuery
 
     public static int GetParameters(string[] args)
     {
-        string dicTypePattern = "^dict:(data-element|uid)$";
+        string dicTypePattern = "^dict:(tag|uid)$";
         string dicPattern = "^(b|B|p|P|x|X|c|C):[^:]+$";
         for (int i = 0; i < args.Length; i++)
         {
@@ -106,7 +112,8 @@ public sealed class DicomDataDictionaryQuery
             else if (Regex.IsMatch(args[i].ToLower(), dicPattern))
                 dic = args[i].Split(':');
             else if (Regex.IsMatch(args[i].ToLower(), 
-                "^(tag|description|vr|vm|uid|name|type|any):[^:]+$"))
+                "^(tag|description|vr|vm|uid|name|type|retired|non-retired" +
+                    "|any):[^:]+$"))
                 keyAndPattern = args[i].Split(':');
             else
                 return PrintUsage();
@@ -114,18 +121,18 @@ public sealed class DicomDataDictionaryQuery
         if (dicType.Length == 0) return PrintUsage();
         if (dic.Length == 0) 
         {
-            if (dicType[1].ToLower().Equals("data-element"))
+            if (dicType[1].ToLower().Equals("tag"))
                 dic = GetDefaultDic(defaultDataElementDic).Split(':');
             else
                 dic = GetDefaultDic(defaultUidDic).Split(':');
         }
         if (keyAndPattern.Length == 0) return PrintUsage();
-        if ((dicType[1].ToLower().Equals("data-element") && 
+        if ((dicType[1].ToLower().Equals("tag") && 
             ! Regex.IsMatch(keyAndPattern[0].ToLower(), 
-            "^(tag|description|vr|vm|any)$")) ||
+            "^(tag|description|vr|vm|retired|non-retired|any)$")) ||
             (dicType[1].ToLower().Equals("uid") && 
             ! Regex.IsMatch(keyAndPattern[0].ToLower(), 
-            "^(uid|name|type|any)$")))
+            "^(uid|name|type|retired|non-retired|any)$")))
             return PrintUsage();                
         return normalExitCode;
     }
@@ -170,13 +177,9 @@ public sealed class DicomDataDictionaryQuery
 
     public static int QueryDataElementDicMatches(string key, string pattern)
     {
-        Console.WriteLine("Query results:");
-        Console.WriteLine("{0,-11} | {1,-26} | {2,-4} | {3}", "(tag)", "(vr)", 
-            "(vm)", "(description)");
-        Console.Write("------------+-");
-        Console.Write("---------------------------+-");
-        Console.Write("-----+-");
-        Console.WriteLine("---------------");
+        resultBuffer = new string[5]
+            { "(tag)", "(description)", "(vr)", "(vm)", "(retired)" };
+        resultList.Add(resultBuffer);
         try
         {
             bool foundMatches = false;
@@ -189,7 +192,7 @@ public sealed class DicomDataDictionaryQuery
                         if (Regex.IsMatch(d.Tag.ToString().ToLower(),
                             pattern.Replace(" ", null)))
                         {
-                            Console.WriteLine(ToDataElementDicString(d));
+                            AddDataElementDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -200,7 +203,7 @@ public sealed class DicomDataDictionaryQuery
                     {
                         if (Regex.IsMatch(d.Description.ToLower(), pattern))
                         {
-                            Console.WriteLine(ToDataElementDicString(d));
+                            AddDataElementDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -212,7 +215,7 @@ public sealed class DicomDataDictionaryQuery
                         if (Regex.IsMatch(d.VR.ToLongString().ToLower(), 
                             pattern))
                         {
-                            Console.WriteLine(ToDataElementDicString(d));
+                            AddDataElementDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -223,7 +226,7 @@ public sealed class DicomDataDictionaryQuery
                     {
                         if (Regex.IsMatch(d.VM.Value, pattern))
                         {
-                            Console.WriteLine(ToDataElementDicString(d));
+                            AddDataElementDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -239,13 +242,87 @@ public sealed class DicomDataDictionaryQuery
                                 pattern) ||
                             Regex.IsMatch(d.VM.Value, pattern))
                         {
-                            Console.WriteLine(ToDataElementDicString(d));
+                            AddDataElementDicResult(d);
                             foundMatches = true;
+                        }
+                    }
+                    break;
+                case "retired":
+                    foreach (DataElementDictionaryEntry d in 
+                        dataElementDic.ToArray())
+                    {
+                        if (d.IsRetired)
+                        {
+                            if (Regex.IsMatch(d.Tag.ToString().ToLower(),
+                                pattern.Replace(" ", null)) ||
+                                Regex.IsMatch(d.Description.ToLower(), pattern) ||
+                                Regex.IsMatch(d.VR.ToLongString().ToLower(), 
+                                    pattern) ||
+                                Regex.IsMatch(d.VM.Value, pattern))
+                            {
+                                AddDataElementDicResult(d);
+                                foundMatches = true;
+                            }
+                        }
+                    }
+                    break;
+                case "non-retired":
+                    foreach (DataElementDictionaryEntry d in 
+                        dataElementDic.ToArray())
+                    {
+                        if ( ! d.IsRetired)
+                        {
+                            if (Regex.IsMatch(d.Tag.ToString().ToLower(),
+                                pattern.Replace(" ", null)) ||
+                                Regex.IsMatch(d.Description.ToLower(), pattern) ||
+                                Regex.IsMatch(d.VR.ToLongString().ToLower(), 
+                                    pattern) ||
+                                Regex.IsMatch(d.VM.Value, pattern))
+                            {
+                                AddDataElementDicResult(d);
+                                foundMatches = true;
+                            }
                         }
                     }
                     break;
             }
             if ( ! foundMatches) Console.WriteLine("No matches found.");
+            else
+            {
+                Console.WriteLine("Found {0} matches.", resultList.Count - 1);
+                Console.WriteLine("Query results:");
+                int[] maxLength = { 0, 0, 0, 0, 0 };
+                string[] result;
+                int i = 0;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    for (int k = 0; k < result.Length; k++)
+                    {
+                        if (maxLength[k] < result[k].Length)
+                            maxLength[k] = result[k].Length;
+                    }
+                }
+                string s;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    s = string.Format(
+                        "{0,-" + maxLength[0].ToString() + "} | " +
+                        "{1,-" + maxLength[1].ToString() + "} | " +
+                        "{2,-" + maxLength[2].ToString() + "} | " +
+                        "{3,-" + maxLength[3].ToString() + "} | " +
+                        "{4,-" + maxLength[4].ToString() + "}", 
+                        result[0], result[1], result[2], result[3], result[4]);
+                    Console.WriteLine(s);
+                    if (i == 0)
+                    {
+                        for (int k = 0; k < s.Length; k++)
+                            Console.Write("-");
+                        Console.WriteLine();
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
@@ -255,22 +332,20 @@ public sealed class DicomDataDictionaryQuery
         return normalExitCode;
     }
 
-    public static string ToDataElementDicString(
+    public static void AddDataElementDicResult(
         DataElementDictionaryEntry entry)
     {
-        return string.Format("{0} | {1,-26} | {2,-4} | {3}", entry.Tag, 
-            entry.VR.ToLongString(), entry.VM, entry.Description);
+        resultBuffer = new string[5] { entry.Tag.ToString(), entry.Description, 
+            entry.VR.ToLongString(), entry.VM.ToString(),
+            entry.IsRetired ? "RET" : "" };
+        resultList.Add(resultBuffer);
     }
 
     public static int QueryUidDicMatches(string key, string pattern)
     {
-        Console.WriteLine("Query results:");
-        Console.WriteLine("{0,-32} | {1,-66} | {2,-16}", "(uid)", "(name)", 
-            "(type)");
-        Console.Write("---------------------------------+-");
-        Console.Write(
-            "-------------------------------------------------------------------+-");
-        Console.WriteLine("---------------");
+        resultBuffer = new string[5] { "(uid)", "(name)", "(type)", 
+            "(retired)", "" };
+        resultList.Add(resultBuffer);
         try
         {
             bool foundMatches = false;
@@ -281,7 +356,7 @@ public sealed class DicomDataDictionaryQuery
                     {
                         if (Regex.IsMatch(d.Uid.ToString().ToLower(), pattern))
                         {
-                            Console.WriteLine(ToUidDicString(d));
+                            AddUidDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -291,7 +366,7 @@ public sealed class DicomDataDictionaryQuery
                     {
                         if (Regex.IsMatch(d.Name.ToLower(), pattern))
                         {
-                            Console.WriteLine(ToUidDicString(d));
+                            AddUidDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -302,7 +377,7 @@ public sealed class DicomDataDictionaryQuery
                         if (Regex.IsMatch(UidType.GetName(typeof(UidType),
                             d.Type).ToLower(), pattern))
                         {
-                            Console.WriteLine(ToUidDicString(d));
+                            AddUidDicResult(d);
                             foundMatches = true;
                         }
                     }
@@ -315,13 +390,80 @@ public sealed class DicomDataDictionaryQuery
                             Regex.IsMatch(UidType.GetName(typeof(UidType),
                                 d.Type).ToLower(), pattern))
                         {
-                            Console.WriteLine(ToUidDicString(d));
+                            AddUidDicResult(d);
                             foundMatches = true;
+                        }
+                    }
+                    break;
+                case "retired":
+                    foreach (UidDictionaryEntry d in uidDic.ToArray())
+                    {
+                        if (d.IsRetired)
+                        {
+                            if (Regex.IsMatch(d.Name.ToLower(), pattern) ||
+                                Regex.IsMatch(d.Uid.ToString().ToLower(), pattern) ||
+                                Regex.IsMatch(UidType.GetName(typeof(UidType),
+                                    d.Type).ToLower(), pattern))
+                            {
+                                AddUidDicResult(d);
+                                foundMatches = true;
+                            }
+                        }
+                    }
+                    break;
+                case "non-retired":
+                    foreach (UidDictionaryEntry d in uidDic.ToArray())
+                    {
+                        if ( ! d.IsRetired)
+                        {
+                            if (Regex.IsMatch(d.Name.ToLower(), pattern) ||
+                                Regex.IsMatch(d.Uid.ToString().ToLower(), pattern) ||
+                                Regex.IsMatch(UidType.GetName(typeof(UidType),
+                                    d.Type).ToLower(), pattern))
+                            {
+                                AddUidDicResult(d);
+                                foundMatches = true;
+                            }
                         }
                     }
                     break;
             }
             if ( ! foundMatches) Console.WriteLine("No matches found.");
+            else
+            {
+                Console.WriteLine("Found {0} matches.", resultList.Count - 1);
+                Console.WriteLine("Query results:");
+                int[] maxLength = { 0, 0, 0, 0, 0 };
+                string[] result;
+                int i = 0;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    for (int k = 0; k < result.Length; k++)
+                    {
+                        if (maxLength[k] < result[k].Length)
+                            maxLength[k] = result[k].Length;
+                    }
+                }
+                string s;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    s = string.Format(
+                        "{0,-" + maxLength[0].ToString() + "} | " +
+                        "{1,-" + maxLength[1].ToString() + "} | " +
+                        "{2,-" + maxLength[2].ToString() + "} | " +
+                        "{3,-" + maxLength[3].ToString() + "}", 
+                        result[0], result[1], result[2], result[3]);
+                    Console.WriteLine(s);
+                    if (i == 0)
+                    {
+                        for (int k = 0; k < s.Length; k++)
+                            Console.Write("-");
+                        Console.WriteLine();
+                    }
+                }
+            }
         }
         catch (Exception e)
         {
@@ -331,10 +473,12 @@ public sealed class DicomDataDictionaryQuery
         return normalExitCode;
     }
 
-    public static string ToUidDicString(UidDictionaryEntry entry)
+    public static void AddUidDicResult(UidDictionaryEntry entry)
     {
-        return string.Format("{0,-32} | {1,-66} | {2,-16}", entry.Uid, 
-            entry.Name, UidType.GetName(typeof(UidType), entry.Type));
+        resultBuffer = new string[5] { entry.Uid.ToString(), entry.Name, 
+            UidType.GetName(typeof(UidType), entry.Type), 
+            entry.IsRetired ? "RET" : "", "" };
+        resultList.Add(resultBuffer);
     }
 
     public static int Main(string[] args)
@@ -352,7 +496,7 @@ public sealed class DicomDataDictionaryQuery
             .Replace(",", "\\,") + "$";
         switch (dicType[1].ToLower())
         {
-            case "data-element":
+            case "tag":
                 exitCode = LoadDicFrom(dataElementDic, dic[0], dic[1]); 
                 if (exitCode == errorExitCode) return exitCode;
                 Console.WriteLine("Processed {0} dictionary entries.", 

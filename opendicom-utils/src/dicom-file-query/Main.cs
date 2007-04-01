@@ -24,6 +24,7 @@
 */
 using System;
 using System.IO;
+using System.Collections;
 using System.Text.RegularExpressions;
 using openDicom.Registry;
 using openDicom.DataStructure;
@@ -58,6 +59,8 @@ public sealed class DicomFileQuery
     public static string[] keyAndPattern = new string[0];
     public static string[] decodingMode = new string[0];
 
+    public static string[] resultBuffer = new string[8];
+    public static ArrayList resultList = new ArrayList();
 
     public static int PrintUsage()
     {
@@ -84,6 +87,9 @@ public sealed class DicomFileQuery
         Console.Error.WriteLine("          vm          - value multiplicity");
         Console.Error.WriteLine("          length      - length");
         Console.Error.WriteLine("          value       - value as string");
+        Console.Error.WriteLine("          retired     - retired entries");
+        Console.Error.WriteLine(
+            "          non-retired - non-retired entries");
         Console.Error.WriteLine(
             "          any         - look for matches overall keys");
         Console.Error.WriteLine("pattern   query pattern corresponding to key");
@@ -108,7 +114,8 @@ public sealed class DicomFileQuery
             else if (Regex.IsMatch(args[i].ToLower(), "^uid-dic:" + dicPattern))
                 uidDic = args[i].Split(':');
             else if (Regex.IsMatch(args[i].ToLower(), 
-                "^(tag|description|vr|vm|length|value|any):[^:]+$"))
+                "^(tag|description|vr|vm|length|value|retired|non-retired|" +
+                    "any):[^:]+$"))
                 keyAndPattern = args[i].Split(':');
             else if (Regex.IsMatch(args[i].ToLower(), "^decode:(strict|lax)$"))
                 decodingMode = args[i].Split(':');
@@ -171,15 +178,9 @@ public sealed class DicomFileQuery
 
     public static bool SearchFor(Sequence sequence, string key, string pattern)
     {
-        Console.WriteLine(ToString("(pos)", "(tag)", "(vr)", "(vm)", 
-            "(description)", "(length)", new string[1] { "(values)" }));
-        Console.Write("---------+-");
-        Console.Write("------------+-");
-        Console.Write("---------------------------+-");
-        Console.Write("-----+-");
-        Console.Write("---------------------------------------------+-");
-        Console.Write("---------+-");
-        Console.WriteLine("----------------------");
+        resultBuffer = new string[8] { "(offset)", "(tag)", "(description)", 
+            "(value)", "(vr)", "(length)", "(vm)", "(retired)" };
+        resultList.Add(resultBuffer);
         bool foundMatches = false;
         foreach (DataElement d in sequence)
         {
@@ -234,64 +235,136 @@ public sealed class DicomFileQuery
                         i++;
                     }                    
                     break;
+                case "retired": 
+                    if (d.Tag.GetDictionaryEntry().IsRetired)
+                    {
+                        isMatch = Regex.IsMatch(d.Tag.ToString().ToLower(),
+                            pattern.Replace(" ", null)) ||
+                            Regex.IsMatch(
+                                d.VR.Tag.GetDictionaryEntry().Description.ToLower(), 
+                                pattern) ||
+                            Regex.IsMatch(d.VR.ToLongString().ToLower(), pattern) ||
+                            Regex.IsMatch(d.VR.Tag.GetDictionaryEntry().VM.Value, 
+                                pattern) ||
+                            Regex.IsMatch(d.ValueLength.ToString(), pattern);
+                        i = 0;
+                        while ( ! isMatch && i < d.Value.Count)
+                        {
+                            isMatch = Regex.IsMatch(d.Value[i].ToString().ToLower(),
+                                pattern);
+                            i++;
+                        }     
+                    }               
+                    break;
+                case "non-retired": 
+                    if ( ! d.Tag.GetDictionaryEntry().IsRetired)
+                    {
+                        isMatch = Regex.IsMatch(d.Tag.ToString().ToLower(),
+                            pattern.Replace(" ", null)) ||
+                            Regex.IsMatch(
+                                d.VR.Tag.GetDictionaryEntry().Description.ToLower(), 
+                                pattern) ||
+                            Regex.IsMatch(d.VR.ToLongString().ToLower(), pattern) ||
+                            Regex.IsMatch(d.VR.Tag.GetDictionaryEntry().VM.Value, 
+                                pattern) ||
+                            Regex.IsMatch(d.ValueLength.ToString(), pattern);
+                        i = 0;
+                        while ( ! isMatch && i < d.Value.Count)
+                        {
+                            isMatch = Regex.IsMatch(d.Value[i].ToString().ToLower(),
+                                pattern);
+                            i++;
+                        }     
+                    }               
+                    break;
             }
             if (isMatch)
             {
-                Console.WriteLine(ToString(d));
+                AddResult(d);
                 foundMatches = true;
             }
         }
         return foundMatches;
     }
 
-    public static string ToString(string pos, string tag, string vr, string vm,
-        string description, string length, object[] value)
+    public static void AddResult(DataElement element)
     {
-        string result = string.Format(
-            "{0,-8} | {1,-11} | {2,-26} | {3,-4} | {4,-44} | {5,-8} | {6}",
-            pos, tag, vr, vm, description, length, value[0]);
-        for (int i = 1; i < value.Length; i++)
-            result += "\n" + string.Format(
-                "{0,-8} | {1,-11} | {2,-26} | {3,-4} | {4,-44} | {5,-8} | {6}",
-                "", "", "", "", "", "", value[i]);
-        return result;
-    }
-
-    public static string ToString(DataElement element)
-    {
-        string pos = string.Format("{0:X8}", element.StreamPosition);
-        string tag = element.Tag.ToString();
-        string vr = element.VR.ToLongString();
-        string vm = element.Tag.GetDictionaryEntry().VM.ToString();
-        string description = element.Tag.GetDictionaryEntry().Description;
-        string length = element.ValueLength.ToString();
-        string output = "";
-        if (element.Value.IsDate && ! element.Value.IsEmpty)
+        string value = "";
+        if (element.Value.IsDate)
         {
-            // hide zero valued time
-            string[] date = new string[element.Value.Count];
-            for (int i = 0; i < date.Length; i++)
-                date[i] = ((DateTime) element.Value[i]).ToShortDateString();
-            output = ToString(pos, tag, vr, vm, description, length, date);
+            value = ((DateTime) element.Value[0]).ToShortDateString();
         }
-        else if ( ! element.Value.IsEmpty)
-            output = ToString(pos, tag, vr, vm, description, length, 
-                element.Value.ToArray());
-        else
-            output = ToString(pos, tag, vr, vm, description, length, 
-                new string[1] { "" });
-        return output;
+        else if (element.Value.IsMultiValue)
+        {
+            value = element.Value[0].ToString();
+            for (int i = 1; i < element.Value.Count; i++)
+                value += "\\" + element.Value[i].ToString();
+        }
+        else if ( ! element.Value.IsArray && ! element.Value.IsSequence &&
+            ! element.Value.IsNestedDataSet)
+        {
+            value = element.Value[0].ToString();
+        }
+        resultBuffer = new string[8] {
+            string.Format("{0:X8}", element.StreamPosition),
+            element.Tag.ToString(),
+            element.Tag.GetDictionaryEntry().Description,
+            value,
+            element.VR.ToLongString(),
+            element.ValueLength.ToString(),
+            element.Tag.GetDictionaryEntry().VM.ToString(),
+            element.Tag.GetDictionaryEntry().IsRetired ? "RET" : "" };
+        resultList.Add(resultBuffer);
     }
 
     public static int QueryMatches(string key, string pattern)
     {
-        Console.WriteLine("Query results:");
         try
         {
             bool foundMatches = SearchFor(
                 dicomFile.GetJointDataSets().GetJointSubsequences(), key, 
                 pattern);
             if ( ! foundMatches) Console.WriteLine("No matches found.");
+            else
+            {
+                Console.WriteLine("Found {0} matches.", resultList.Count - 1);
+                Console.WriteLine("Query results:");
+                int[] maxLength = { 0, 0, 0, 0, 0, 0, 0, 0 };
+                string[] result;
+                int i = 0;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    for (int k = 0; k < result.Length; k++)
+                    {
+                        if (maxLength[k] < result[k].Length)
+                            maxLength[k] = result[k].Length;
+                    }
+                }
+                string s;
+                for (i = 0; i < resultList.Count; i++)
+                {
+                    result = (resultList[i] as string[]);
+                    s = string.Format(
+                        "{0,-" + maxLength[0].ToString() + "} | " +
+                        "{1,-" + maxLength[1].ToString() + "} | " +
+                        "{2,-" + maxLength[2].ToString() + "} | " +
+                        "{3,-" + maxLength[3].ToString() + "} | " +
+                        "{4,-" + maxLength[4].ToString() + "} | " +
+                        "{5,-" + maxLength[5].ToString() + "} | " +
+                        "{6,-" + maxLength[6].ToString() + "} | " +
+                        "{7,-" + maxLength[7].ToString() + "}", 
+                        result[0], result[1], result[2], result[3], result[4],
+                        result[5], result[6], result[7]);
+                    Console.WriteLine(s);
+                    if (i == 0)
+                    {
+                        for (int k = 0; k < s.Length; k++)
+                            Console.Write("-");
+                        Console.WriteLine();
+                    }
+                }
+            }
         }
         catch (Exception e)
         {

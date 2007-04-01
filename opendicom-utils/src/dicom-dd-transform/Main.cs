@@ -52,7 +52,7 @@ public sealed class DicomDataDictionaryTransformer
     {
         Console.Error.WriteLine("openDICOM.NET Utils");
         Console.Error.WriteLine(
-            "Transforms data dictionary files between different formats.");
+            "Transforms DICOM data dictionary files between different formats.");
         Console.Error.WriteLine();
         Console.Error.WriteLine(
             "Usage: dicom-dd-transform dict:<type> [src:<format>:<source>] " +
@@ -60,9 +60,9 @@ public sealed class DicomDataDictionaryTransformer
         Console.Error.WriteLine();
         Console.Error.WriteLine("type      specified dictionary type");
         Console.Error.WriteLine(
-            "          data-element - data element dictionary");
+            "          tag - DICOM data element dictionary");
         Console.Error.WriteLine(
-            "          uid          - unique identifier dictionary");
+            "          uid - DICOM unique identifier dictionary");
         Console.Error.WriteLine("format    specified file format");
         Console.Error.WriteLine("          b - binary");
         Console.Error.WriteLine("          p - property");
@@ -75,7 +75,7 @@ public sealed class DicomDataDictionaryTransformer
 
     public static int GetParameters(string[] args)
     {
-        string dicTypePattern = "^dict:(data-element|uid)$";
+        string dicTypePattern = "^dict:(tag|uid)$";
         string dicPattern = "(b|B|p|P|x|X|c|C):[^:]+$";
         for (int i = 0; i < args.Length; i++)
         {
@@ -92,7 +92,7 @@ public sealed class DicomDataDictionaryTransformer
         if (destDic.Length == 0) return PrintUsage();
         if (srcDic.Length == 0)
         {
-            if (dicType[1].ToLower().Equals("data-element"))
+            if (dicType[1].ToLower().Equals("tag"))
                 srcDic = GetDefaultDic(defaultDataElementDic).Split(':');
             else
                 srcDic = GetDefaultDic(defaultUidDic).Split(':');
@@ -183,7 +183,7 @@ public sealed class DicomDataDictionaryTransformer
         if (exitCode == errorExitCode) return exitCode;
         switch (dicType[1].ToLower())
         {
-            case "data-element":
+            case "tag":
                 exitCode = Transform(dataElementDic, srcDic, destDic); 
                 if (exitCode == errorExitCode) return exitCode;
                 Console.WriteLine("Processed {0} dictionary entries.", 

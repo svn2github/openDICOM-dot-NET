@@ -4,6 +4,10 @@ opendicom-utils  0.1.1
    * new features:
       + DICOM 2007 dictionaries with better downgrade conformance by
         retired attributes
+      + made table cell width relative to search results
+      + added table column retired and reordered columns
+      + added retired and non-retired keywords for query
+      + renamed dict:data-element to dict:tag
 
  -- Albert Gnandt  (http://www.gnandt.com/)  2007-03-30
 
