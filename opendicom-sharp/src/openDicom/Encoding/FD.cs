@@ -43,7 +43,7 @@ namespace openDicom.Encoding
 
         protected override Array DecodeImproper(byte[] bytes)
         {
-            byte[][] multiValue = ToImproperMultiValue(bytes, 4);
+            byte[][] multiValue = ToImproperMultiValue(bytes, 8);
             double[] number = new double[multiValue.Length];
             for (int i = 0; i < number.Length; i++)
                 number[i] = BitConverter.ToDouble(
@@ -53,7 +53,7 @@ namespace openDicom.Encoding
         
         protected override Array DecodeProper(byte[] bytes)
         {
-            byte[][] multiValue = ToProperMultiValue(bytes, 4);
+            byte[][] multiValue = ToProperMultiValue(bytes, 8);
             if (bytes.Length == 8 * multiValue.Length)
             {
                 double[] number = new double[multiValue.Length];
