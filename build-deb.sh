@@ -50,6 +50,7 @@ find usr -type f -print0 | xargs -0 md5sum > DEBIAN/md5sum
 # set installed size
 cd ..
 SIZE=`du -s $DIR | awk '{ print $1 }'`
+cat $DIR/DEBIAN/control | sed "s/^Version:.*$/Version: $RELEASE/" > $DIR/DEBIAN/control
 cat $DIR/DEBIAN/control | sed "s/^Installed-Size:.*$/Installed-Size: $SIZE/" > $DIR/DEBIAN/control
 
 # build package
