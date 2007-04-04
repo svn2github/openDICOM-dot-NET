@@ -370,6 +370,45 @@ public sealed class MainWindow: GladeWidget
         }
     }
 
+    private byte[] MapGrayImageToRgbImage(byte[] grayImage, int grayValueBits)
+    {
+        byte[] rgbImage;
+        if (grayValueBits <= 8)
+        {
+            rgbImage = new byte[grayImage.Length * 3];
+            for (int i = 0; i < grayImage.Length; i++)
+            {
+                rgbImage[i * 3] = grayImage[i];
+                rgbImage[i * 3 + 1] = grayImage[i];
+                rgbImage[i * 3 + 2] = grayImage[i];
+            }
+        }
+        else if (grayValueBits <= 16)
+        {
+            rgbImage = new byte[grayImage.Length * 3/2];
+            ushort word;
+            byte reducedValue;
+            ushort maxWordValue;
+            for (int i = 0; i < grayImage.Length / 2; i++)
+            {
+                word = BitConverter.ToUInt16(grayImage, i * 2);
+                maxWordValue = (ushort) ((1 << grayValueBits) - 1);
+                reducedValue = 
+                    (byte) Math.Round((word * (double) byte.MaxValue) / 
+                        (double) maxWordValue);
+                rgbImage[i * 3] = reducedValue;
+                rgbImage[i * 3 + 1] = reducedValue;
+                rgbImage[i * 3 + 2] = reducedValue;
+            }
+        }
+        else
+        {
+            rgbImage = new byte[grayImage.Length];
+            rgbImage = grayImage;
+        }
+        return rgbImage;
+    }
+
     private void PrepareImages()
     {
         if (DicomFile.HasPixelData)
@@ -422,11 +461,23 @@ public sealed class MainWindow: GladeWidget
                     "Unable to RLE decode images.");
             }
         }
+        if ( ! DicomFile.PixelData.IsJpeg && 
+            DicomFile.PixelData.BitsStored > 1 && 
+            DicomFile.PixelData.BitsStored < 24)
+        {
+            // blow up 1 byte gray value image to 3 byte (RGB) gray value image
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i] = MapGrayImageToRgbImage(
+                    images[i], DicomFile.PixelData.BitsStored);
+            }
+        }
     }
 
     private byte[] DecodeRLE(byte[] buffer)
     {
         // Implementation of the DICOM 3.0 2004 RLE Decoder
+        // TODO: seems not to work!
         ulong[] header = new ulong[16];
         for (int i = 0; i < header.Length; i++)
             header[i] = BitConverter.ToUInt64(buffer, i * 4);
@@ -597,7 +648,7 @@ public sealed class MainWindow: GladeWidget
 
     private Gdk.Image BrightenImage(Gdk.Image src, double brightnessFactor)
     {
-        // untested!
+        // TODO: untested!
         Gdk.Image image = src;
         for (int y = 0; y < image.Height; y++)
         {
@@ -646,13 +697,14 @@ public sealed class MainWindow: GladeWidget
                 Pixbuf pixbuf = null;
                 try
                 {
+                    // regular image format like JPEG
                     pixbuf = new Pixbuf(images[imageIndex],
                             DicomFile.PixelData.Columns,
                             DicomFile.PixelData.Rows);
                 }
                 catch (Exception exception)
                 {
-                    // fallback solution
+                    // fallback solution (raw image data)
                     if (DicomFile.PixelData.IsJpeg)
                     {
                         isJpegNotSupported = true;
@@ -667,12 +719,12 @@ public sealed class MainWindow: GladeWidget
                     else
                     {
                         pixbuf = new Pixbuf(images[imageIndex],
+                            Colorspace.Rgb,
                             false,
-                            DicomFile.PixelData.BitsStored,
+                            8, // per channel!
                             DicomFile.PixelData.Columns,
                             DicomFile.PixelData.Rows,
-                            DicomFile.PixelData.Columns * 
-                                (DicomFile.PixelData.BitsAllocated / 8),
+                            DicomFile.PixelData.Columns * 3,
                             null);
                     }
                 }
@@ -1400,12 +1452,30 @@ public sealed class MainWindow: GladeWidget
         {
             string tempFileName = Path.GetTempFileName();
             bool saveTempProblem = false;
+            Pixbuf pixbuf = null;
             try
             {
-                Pixbuf pixbuf = new Pixbuf(images[imageIndex],
+                // regular image format like JPEG
+                pixbuf = new Pixbuf(images[imageIndex],
                     DicomFile.PixelData.Columns,
                     DicomFile.PixelData.Rows);
-                pixbuf.Save(tempFileName, "png");
+            }
+            catch (Exception imageException)
+            {
+                // fallback solution (raw image data)
+                pixbuf = new Pixbuf(images[imageIndex],
+                    Colorspace.Rgb,
+                    false,
+                    8, // per channel!
+                    DicomFile.PixelData.Columns,
+                    DicomFile.PixelData.Rows,
+                    DicomFile.PixelData.Columns * 3,
+                    null);
+            }
+            try
+            {
+                if (pixbuf != null)
+                    pixbuf.Save(tempFileName, "png");
             }
             catch (Exception e1)
             {
