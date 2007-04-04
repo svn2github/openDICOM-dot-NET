@@ -386,16 +386,23 @@ public sealed class MainWindow: GladeWidget
         else if (grayValueBits <= 16)
         {
             rgbImage = new byte[grayImage.Length * 3/2];
-            ushort word;
+            ushort[] words = new ushort[grayImage.Length / 2];
             byte reducedValue;
-            ushort maxWordValue;
-            for (int i = 0; i < grayImage.Length / 2; i++)
+            ushort minWordValue = ushort.MaxValue;
+            ushort maxWordValue = ushort.MinValue;
+            int i;
+            for (i = 0; i < words.Length; i++)
             {
-                word = BitConverter.ToUInt16(grayImage, i * 2);
-                maxWordValue = (ushort) ((1 << grayValueBits) - 1);
-                reducedValue = 
-                    (byte) Math.Round((word * (double) byte.MaxValue) / 
-                        (double) maxWordValue);
+                words[i] = BitConverter.ToUInt16(grayImage, i * 2);
+                if (minWordValue > words[i]) minWordValue = words[i];
+                if (maxWordValue < words[i]) maxWordValue = words[i];
+            }
+            ushort wordRange = (ushort) (maxWordValue - minWordValue);
+            for (i = 0; i < words.Length; i++)
+            {
+                reducedValue = (byte) Math.Round(
+                    ((words[i] - minWordValue) * (double) byte.MaxValue) / 
+                    (double) wordRange);
                 rgbImage[i * 3] = reducedValue;
                 rgbImage[i * 3 + 1] = reducedValue;
                 rgbImage[i * 3 + 2] = reducedValue;
