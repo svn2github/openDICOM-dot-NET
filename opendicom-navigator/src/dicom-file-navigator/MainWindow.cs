@@ -372,15 +372,81 @@ public sealed class MainWindow: GladeWidget
 
     private byte[] MapGrayImageToRgbImage(byte[] grayImage, int grayValueBits)
     {
+        // Are Look-Up-Tables available?
+        Tag[] lutDescriptorTag =  { 
+            new Tag("0028", "1101"), 
+            new Tag("0028", "1102"), 
+            new Tag("0028", "1103") };
+        Tag[] lutDataTag = { 
+            new Tag("0028", "1201"), 
+            new Tag("0028", "1202"),
+            new Tag("0028", "1203") };
+        bool isColorized =
+            DicomFile.DataSet.Contains(lutDescriptorTag[0]) &&
+            DicomFile.DataSet.Contains(lutDescriptorTag[1]) &&
+            DicomFile.DataSet.Contains(lutDescriptorTag[2]) &&
+            DicomFile.DataSet.Contains(lutDataTag[0]) &&
+            DicomFile.DataSet.Contains(lutDataTag[1]) &&
+            DicomFile.DataSet.Contains(lutDataTag[2]);
+        int[] entryCount = new int[3];
+        int[] startValue = new int[3];
+        int[] lutBits = new int[3];
+        ushort[][] lutData = new ushort[3][];
+        ushort[] minLutValue = { ushort.MaxValue, ushort.MaxValue, 
+            ushort.MaxValue };
+        ushort[] maxLutValue = { ushort.MinValue, ushort.MinValue,
+            ushort.MinValue };
+        ushort[] lutValueRange = new ushort[3];
+        if (isColorized)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                entryCount[i] =
+                   (int) (ushort) DicomFile.DataSet[lutDescriptorTag[i]].
+                        Value[0];
+                startValue[i] =
+                   (int) (ushort) DicomFile.DataSet[lutDescriptorTag[i]].
+                        Value[1];
+                lutBits[i] =
+                   (int) (ushort) DicomFile.DataSet[lutDescriptorTag[i]].
+                        Value[2];
+                lutData[i] =
+                   (ushort[]) DicomFile.DataSet[lutDataTag[i]].Value[0];
+                for (int k = 0; k < lutData[i].Length; k++)
+                {
+                    if (minLutValue[i] > lutData[i][k]) 
+                        minLutValue[i] = lutData[i][k];
+                    if (maxLutValue[i] < lutData[i][k]) 
+                        maxLutValue[i] = lutData[i][k];
+                }
+                lutValueRange[i] = (ushort) (maxLutValue[i] - minLutValue[i]);
+            }
+        }
+
         byte[] rgbImage;
         if (grayValueBits <= 8)
         {
             rgbImage = new byte[grayImage.Length * 3];
             for (int i = 0; i < grayImage.Length; i++)
             {
-                rgbImage[i * 3] = grayImage[i];
-                rgbImage[i * 3 + 1] = grayImage[i];
-                rgbImage[i * 3 + 2] = grayImage[i];
+                if (isColorized)
+                {
+                    rgbImage[i * 3] = (byte) Math.Round(
+                        ((lutData[0][grayImage[i]] - minLutValue[0]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[0]);
+                    rgbImage[i * 3 + 1] = (byte) Math.Round(
+                        ((lutData[1][grayImage[i]] - minLutValue[1]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[1]);
+                    rgbImage[i * 3 + 2] = (byte) Math.Round(
+                        ((lutData[2][grayImage[i]] - minLutValue[2]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[2]);
+                }
+                else
+                {
+                    rgbImage[i * 3] = grayImage[i];
+                    rgbImage[i * 3 + 1] = grayImage[i];
+                    rgbImage[i * 3 + 2] = grayImage[i];
+                }
             }
         }
         else if (grayValueBits <= 16)
@@ -400,12 +466,27 @@ public sealed class MainWindow: GladeWidget
             ushort wordRange = (ushort) (maxWordValue - minWordValue);
             for (i = 0; i < words.Length; i++)
             {
-                reducedValue = (byte) Math.Round(
-                    ((words[i] - minWordValue) * (double) byte.MaxValue) / 
-                    (double) wordRange);
-                rgbImage[i * 3] = reducedValue;
-                rgbImage[i * 3 + 1] = reducedValue;
-                rgbImage[i * 3 + 2] = reducedValue;
+                if (isColorized)
+                {
+                    rgbImage[i * 3] = (byte) Math.Round(
+                        ((lutData[0][words[i]] - minLutValue[0]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[0]);
+                    rgbImage[i * 3 + 1] = (byte) Math.Round(
+                        ((lutData[1][words[i]] - minLutValue[1]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[1]);
+                    rgbImage[i * 3 + 2] = (byte) Math.Round(
+                        ((lutData[2][words[i]] - minLutValue[2]) * 
+                        (double) byte.MaxValue) / (double) lutValueRange[2]);
+                }
+                else
+                {
+                    reducedValue = (byte) Math.Round(
+                        ((words[i] - minWordValue) * (double) byte.MaxValue) / 
+                        (double) wordRange);
+                    rgbImage[i * 3] = reducedValue;
+                    rgbImage[i * 3 + 1] = reducedValue;
+                    rgbImage[i * 3 + 2] = reducedValue;
+                }
             }
         }
         else
@@ -468,9 +549,10 @@ public sealed class MainWindow: GladeWidget
                     "Unable to RLE decode images.");
             }
         }
-        if ( ! DicomFile.PixelData.IsJpeg && 
+        if ( ! DicomFile.PixelData.IsJpeg &&
+            DicomFile.PixelData.SamplesPerPixel == 1 && 
             DicomFile.PixelData.BitsStored > 1 && 
-            DicomFile.PixelData.BitsStored < 24)
+            DicomFile.PixelData.BitsStored <= 16)
         {
             // blow up 1 byte gray value image to 3 byte (RGB) gray value image
             for (int i = 0; i < images.Length; i++)
@@ -718,10 +800,12 @@ public sealed class MainWindow: GladeWidget
                         DeactivateImageView();
                         MessageDialog(MessageType.Error,
                             string.Format("JPEG format of image {0}/{1} is " +
-                                "not supported.",
+                                "not supported:\n\n{2}",
                                 CorrectIndex ? imageIndex : imageIndex + 1, 
                                 CorrectIndex ? images.Length - 1 : 
-                                    images.Length));
+                                    images.Length,
+                                DicomFile.DataSet.TransferSyntax.Uid.
+                                    GetDictionaryEntry().Name));
                     }
                     else
                     {
@@ -1207,6 +1291,27 @@ public sealed class MainWindow: GladeWidget
                     isDicomFile ? 
                         ((DicomFile) DicomFile).MetaInformation.FilePreamble :
                         "(not defined)");
+                Tag photometricInterpretationTag = new Tag("0028", "0004");
+                string photometricInterpretation = "";
+                if (DicomFile.DataSet.Contains(photometricInterpretationTag))
+                {
+                    photometricInterpretation = 
+                        DicomFile.DataSet[photometricInterpretationTag].
+                            Value[0].ToString();
+                }
+                string imageType = "(not defined)";
+                if (DicomFile.PixelData.SamplesPerPixel == 1)
+                {
+                    if (photometricInterpretation == "PALETTE COLOR")
+                        imageType = "Colorized Gray Value Image (RGB Look-Up-Table)";
+                    else
+                        imageType = "Gray Value Image";
+                }
+                else
+                {
+                    imageType = "Color Image (RGB)";
+                }
+                store.AppendValues("ImageType", imageType);
                 store.AppendValues("ImageResolution",
                     DicomFile.HasPixelData ? 
                         DicomFile.PixelData.Columns.ToString() + "x" + 
