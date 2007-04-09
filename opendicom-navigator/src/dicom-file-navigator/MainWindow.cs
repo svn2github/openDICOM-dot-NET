@@ -532,7 +532,7 @@ public sealed class MainWindow: GladeWidget
         }
         if (DicomFile.DataSet.TransferSyntax.Uid.Equals("1.2.840.10008.1.2.5"))
         {
-            // RLE
+            // RLE encoded
             int startIndex = CorrectIndex ? 1 : 0;
             byte[][] tempImages = images;
             try
@@ -566,42 +566,45 @@ public sealed class MainWindow: GladeWidget
     private byte[] DecodeRLE(byte[] buffer)
     {
         // Implementation of the DICOM 3.0 2004 RLE Decoder
-        // TODO: seems not to work!
-        ulong[] header = new ulong[16];
-        for (int i = 0; i < header.Length; i++)
-            header[i] = BitConverter.ToUInt64(buffer, i * 4);
+        uint[] header = new uint[16];
+        int i;
+        for (i = 0; i < header.Length; i++)
+        {
+            header[i] = BitConverter.ToUInt32(buffer, i * 4);
+        }
         int numberOfSegments = 1;
-        if (header[0] > 1 && header[0] <= (ulong) header.LongLength - 1)
+        if (header[0] > 1 && header[0] <= (uint) header.Length - 1)
             numberOfSegments = (int) header[0];
-        ulong[] offsetOfSegment = new ulong[numberOfSegments];
+        uint[] offsetOfSegment = new uint[numberOfSegments];
         Buffer.BlockCopy(header, 1, offsetOfSegment, 0, numberOfSegments);
-        ulong[] sizeOfSegment = new ulong[numberOfSegments];
+        uint[] sizeOfSegment = new uint[numberOfSegments];
         int sizeSum = 0;
-        for (int i = 0; i < numberOfSegments - 1; i++)
+        for (i = 0; i < numberOfSegments - 1; i++)
         {
             sizeOfSegment[i] = offsetOfSegment[i + 1] - offsetOfSegment[i];
             sizeSum += (int) sizeOfSegment[i];
         }
         sizeOfSegment[numberOfSegments - 1] =
-            (ulong) buffer.LongLength - offsetOfSegment[numberOfSegments - 1];
+            (uint) buffer.Length - offsetOfSegment[numberOfSegments - 1];
         sizeSum += (int) sizeOfSegment[numberOfSegments - 1];
-        ArrayList resultBuffer = new ArrayList(2 * sizeSum);
+        ArrayList resultBuffer = new ArrayList(10 * sizeSum);
         ArrayList byteSegment = new ArrayList();
-        for (int i = 0; i < numberOfSegments; i++)
+        for (i = 0; i < numberOfSegments; i++)
         {
             int offset = (int) offsetOfSegment[i];
             int size = (int) sizeOfSegment[i];
             byte[] rleSegment = new byte[size];
             Buffer.BlockCopy(buffer, offset, rleSegment, 0, size);
-            byteSegment.Capacity = 2 * size;
+            byteSegment.Capacity = 10 * size;
             sbyte n;
             int rleIndex = 0;
+            int j;
             while (rleIndex < size)
             {
                 n = (sbyte) rleSegment[rleIndex];
                 if (n >= 0 && n <= 127)
                 {
-                    for (int j = 0; j < n; j++)
+                    for (j = 0; j < n + 1; j++)
                     {
                         rleIndex++;
                         if (rleIndex >= size) break;
@@ -612,7 +615,7 @@ public sealed class MainWindow: GladeWidget
                 {
                     rleIndex++;
                     if (rleIndex >= size) break;
-                    for (int j = 0; j < -n; j++)
+                    for (j = 0; j < -n + 1; j++)
                         byteSegment.Add(rleSegment[rleIndex]);
                 }
                 rleIndex++;
