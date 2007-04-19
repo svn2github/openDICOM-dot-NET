@@ -545,8 +545,10 @@ public sealed class MainWindow: GladeWidget
                 images = tempImages;
                 tempImages = null;
                 System.GC.Collect();
-                MessageDialog(MessageType.Error, 
-                    "Unable to RLE decode images.");
+                ExceptionDialog d = new ExceptionDialog(
+                    "Problems decoding RLE encoded images:\n\n" + e.Message,
+                    e);
+                d.Self.Run();
             }
         }
         if ( ! DicomFile.PixelData.IsJpeg &&
@@ -565,20 +567,39 @@ public sealed class MainWindow: GladeWidget
 
     private byte[] DecodeRLE(byte[] buffer)
     {
-        // Implementation of the DICOM 3.0 2004 RLE Decoder
+        // Implementation of the DICOM 2007 RLE Decoder
+
+        // RLE encoded image structure:
+        //   [Header]
+        //   [RLE Segment 1]
+        //   [RLE Segment 2]
+        //          :
+        //   [RLE Segment N]
+
+        // Header structure:
+        //   [Number of Segments]
+        //   [Offset of RLE Segment 1]
+        //   [Offset of RLE Segment 2]
+        //          :
+        //   [Offset of RLE Segment N]
+
+        // Max(N) = 15
+
         uint[] header = new uint[16];
         int i;
+        // get header
         for (i = 0; i < header.Length; i++)
-        {
             header[i] = BitConverter.ToUInt32(buffer, i * 4);
-        }
         int numberOfSegments = 1;
         if (header[0] > 1 && header[0] <= (uint) header.Length - 1)
             numberOfSegments = (int) header[0];
         uint[] offsetOfSegment = new uint[numberOfSegments];
-        Buffer.BlockCopy(header, 1, offsetOfSegment, 0, numberOfSegments);
+        Array.Copy(header, 1, offsetOfSegment, 0, numberOfSegments);
+
         uint[] sizeOfSegment = new uint[numberOfSegments];
         int sizeSum = 0;
+        // calculate the size of each single RLE segment and the sum over all
+        // RLE segments
         for (i = 0; i < numberOfSegments - 1; i++)
         {
             sizeOfSegment[i] = offsetOfSegment[i + 1] - offsetOfSegment[i];
@@ -587,18 +608,27 @@ public sealed class MainWindow: GladeWidget
         sizeOfSegment[numberOfSegments - 1] =
             (uint) buffer.Length - offsetOfSegment[numberOfSegments - 1];
         sizeSum += (int) sizeOfSegment[numberOfSegments - 1];
-        ArrayList resultBuffer = new ArrayList(10 * sizeSum);
-        ArrayList byteSegment = new ArrayList();
+
+        // we don't know the resulting size of the decoded segments
+        // byte segments are the decoded RLE segments
+        ArrayList[] byteSegmentBuffer = new ArrayList[numberOfSegments];
+
+        int offset;
+        int size;
+        byte[] rleSegment;
+        sbyte n;
+        int rleIndex;
+        int j;
         for (i = 0; i < numberOfSegments; i++)
         {
-            int offset = (int) offsetOfSegment[i];
-            int size = (int) sizeOfSegment[i];
-            byte[] rleSegment = new byte[size];
+            offset = (int) offsetOfSegment[i];
+            size = (int) sizeOfSegment[i];
+            rleSegment = new byte[size];
             Buffer.BlockCopy(buffer, offset, rleSegment, 0, size);
-            byteSegment.Capacity = 10 * size;
-            sbyte n;
-            int rleIndex = 0;
-            int j;
+            rleIndex = 0;
+            byteSegmentBuffer[i] = new ArrayList();
+
+            // the decoding algorithm
             while (rleIndex < size)
             {
                 n = (sbyte) rleSegment[rleIndex];
@@ -608,7 +638,7 @@ public sealed class MainWindow: GladeWidget
                     {
                         rleIndex++;
                         if (rleIndex >= size) break;
-                        byteSegment.Add(rleSegment[rleIndex]);
+                        byteSegmentBuffer[i].Add(rleSegment[rleIndex]);
                     }
                 }
                 else if (n <= -1 && n >= -127)
@@ -616,16 +646,33 @@ public sealed class MainWindow: GladeWidget
                     rleIndex++;
                     if (rleIndex >= size) break;
                     for (j = 0; j < -n + 1; j++)
-                        byteSegment.Add(rleSegment[rleIndex]);
+                        byteSegmentBuffer[i].Add(rleSegment[rleIndex]);
                 }
                 rleIndex++;
             }
-            resultBuffer.AddRange(byteSegment);
-            byteSegment.Clear();
         }
-        byte[] result = (byte[]) resultBuffer.ToArray(typeof(byte));
-        resultBuffer.Clear();
-        return result;
+        
+        // creates an image from the decoded byte segments
+        // the composite pixel code image is a sequential merge of bytes
+        // from the same position from all byte segments
+        byte[][] byteSegment = new byte[numberOfSegments][];
+        for (i = 0; i < numberOfSegments; i++)
+        {
+            byteSegment[i] = 
+                (byte[]) byteSegmentBuffer[i].ToArray(typeof(byte));
+        }
+        byteSegmentBuffer = null;
+        byte[] compositePixelCodeImage = 
+            new byte[numberOfSegments * byteSegment[0].Length];
+        for (i = 0; i < byteSegment[0].Length; i++)
+        {
+            for (j = 0; j < numberOfSegments; j++)
+                compositePixelCodeImage[(i * numberOfSegments) + j] = 
+                    byteSegment[j][i];            
+        }
+        byteSegment = null;
+        System.GC.Collect();
+        return compositePixelCodeImage;
     }
 
     private void PostDicomFileLoad(string fileName)
@@ -687,12 +734,30 @@ public sealed class MainWindow: GladeWidget
         {
             string imageFileName = saveImageFileChooserDialog.FileName;
             string imageFileType = saveImageFileChooserDialog.FileType;
+            Pixbuf pixbuf = null;
             try
             {
-                Pixbuf pixbuf = new Pixbuf(images[imageIndex],
+                // regular image format like JPEG
+                pixbuf = new Pixbuf(images[imageIndex],
                     DicomFile.PixelData.Columns,
                     DicomFile.PixelData.Rows);
-                pixbuf.Save(imageFileName, imageFileType);
+            }
+            catch (Exception imageException)
+            {
+                // fallback solution (raw image data)
+                pixbuf = new Pixbuf(images[imageIndex],
+                    Colorspace.Rgb,
+                    false,
+                    8, // per channel!
+                    DicomFile.PixelData.Columns,
+                    DicomFile.PixelData.Rows,
+                    DicomFile.PixelData.Columns * 3,
+                    null);
+            }
+            try
+            {
+                if (pixbuf != null)
+                    pixbuf.Save(imageFileName, imageFileType);
             }
             catch (Exception e)
             {
@@ -834,7 +899,8 @@ public sealed class MainWindow: GladeWidget
                         (int) Math.Round(pixbuf.Height * scaleFactor),
                         InterpType.Bilinear);
                     // very important! prevents swapping to harddisk
-                    // tested: no feelable latency time between images
+                    // tested: no additional, feelable latency time between
+                    // images
                     System.GC.Collect();
                     ActivateImageView();
                 }
@@ -1306,7 +1372,8 @@ public sealed class MainWindow: GladeWidget
                 if (DicomFile.PixelData.SamplesPerPixel == 1)
                 {
                     if (photometricInterpretation == "PALETTE COLOR")
-                        imageType = "Colorized Gray Value Image (RGB Look-Up-Table)";
+                        imageType = 
+                            "Colorized Gray Value Image (RGB Look-Up-Table)";
                     else
                         imageType = "Gray Value Image";
                 }

@@ -10,7 +10,7 @@ opendicom-navigator  0.1.5
      + saves RLE encoded images in decoded form
      + added image type to file info view
 
- -- Albert Gnandt  (http://www.gnandt.com/)  2007-04-09
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-04-19
 
 
 opendicom-navigator  0.1.1
