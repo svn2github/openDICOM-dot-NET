@@ -1,4 +1,18 @@
 
+opendicom-navigator  0.1.5
+
+  * new features:
+     + shows <= 16 bit gray value images (raw images, no JPEG)
+     + uses color look-up-tables for gray value images, when defined
+       (raw images, no JPEG)
+     + shows RLE encoded images (raw images, no JPEG)
+     + saves <= 16 bit (colorized) gray value images
+     + saves RLE encoded images in decoded form
+     + added image type to file info view
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-04-19
+
+
 opendicom-navigator  0.1.1
 
    * new features:

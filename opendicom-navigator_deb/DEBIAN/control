@@ -1,12 +1,12 @@
 Package: opendicom-navigator
-Version: 0.1.1
+Version: 0.1.5
 Section: graphics
 Priority: optional
 Architecture: all
 Depends: mono (>= 1.1.17.1), opendicom-sharp (>= 0.1.1)
 Suggests: opendicom-sharp, opendicom-beagle, opendicom-utils
 Provides: opendicom-navigator
-Replaces: opendicom-navigator (= 0.1.0)
+Replaces: opendicom-navigator (<= 0.1.1)
 Installed-Size: ???
 Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: Simple ACR-NEMA and DICOM file browser and transcoder for Mono
@@ -22,6 +22,9 @@ Description: Simple ACR-NEMA and DICOM file browser and transcoder for Mono
   * Cut'n'copy box with extra informations for openDICOM.NET API
     (opendicom-sharp) users
   * Image view with single and multiple frame support
+  * Supports gray images with variable bit rates (<= 16 bit)
+  * Supports RGB Look-Up-Table for gray images
+  * Supports RLE encoded and JPEG images
   * Supports image slide cycling (movie mode)
   * Supports on-the-fly single image processing with GIMP
   * Comes with full DICOM 2007 data and UID dictionaries
