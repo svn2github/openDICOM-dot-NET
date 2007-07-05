@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -72,6 +72,25 @@ namespace openDicom.DataStructure.DataSet
                     Add(element);
                 element = new DataElement(stream, TransferSyntax);
             }
+        }
+
+        /// <summary>
+        ///     Saves a DICOM nested data set instance to specified
+        ///     DICOM input stream using <see cref="Sequence.TransferSyntax" />.
+        /// </summary>
+        public override void SaveTo(Stream stream)
+        {
+            streamPosition = stream.Position;
+            /*DataElement element = new DataElement(stream, TransferSyntax);
+            bool isTrailingPadding = false;
+            while ( ! element.Tag.Equals(DelimiterTag) &&
+                stream.Position < stream.Length)
+            {
+                isTrailingPadding = element.Tag.Equals("(0000,0000)");
+                if ( ! isTrailingPadding)
+                    Add(element);
+                element = new DataElement(stream, TransferSyntax);
+            }*/
         }
     }
 

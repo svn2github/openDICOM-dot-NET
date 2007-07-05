@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -301,6 +301,35 @@ namespace openDicom.DataStructure
                 vrName = ByteConvert.ToString(buffer, 
                     CharacterRepertoire.Default);
             }
+            DicomContext.Reset();
+        }
+
+        /// <summary>
+        ///     Saves this instance to a DICOM input stream.
+        /// </summary>
+        public void SaveTo(Stream stream)
+        {
+            streamPosition = stream.Position;
+            DicomContext.Set(stream, tag);
+            /*if (IsImplicit)
+            {
+                if (Tag.IsUserDefined)
+                    // implicit but unknown value representation
+                    vrName = "UN";
+                else
+                    // implicit but known value representation;
+                    // return new instance, dictionary entry do not have a
+                    // transfer syntax
+                    vrName = Tag.GetDictionaryEntry().VR.Name;
+            }
+            else
+            {
+                // explicit value representation
+                byte[] buffer = new byte[2];
+                stream.Read(buffer, 0, 2);
+                vrName = ByteConvert.ToString(buffer, 
+                    CharacterRepertoire.Default);
+            }*/
             DicomContext.Reset();
         }
 

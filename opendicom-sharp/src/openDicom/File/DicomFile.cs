@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -131,6 +131,21 @@ namespace openDicom.File
             Uid uid = (Uid) transferSyntaxDataElement.Value[0];
             dataSet = new DataSet(stream, new TransferSyntax(uid));
             pixelData = new PixelData(GetJointDataSets());
+        }
+
+
+        /// <summary>
+        ///     Saves this DICOM file instance to specified DICOM input
+        ///     stream.
+        /// </summary>
+        public override void SaveTo(Stream stream)
+        {
+            /*metaInformation = new FileMetaInformation(stream);
+            DataElement transferSyntaxDataElement = 
+                MetaInformation[TransferSyntax.UidTag];
+            Uid uid = (Uid) transferSyntaxDataElement.Value[0];
+            dataSet = new DataSet(stream, new TransferSyntax(uid));
+            pixelData = new PixelData(GetJointDataSets());*/
         }
 
 

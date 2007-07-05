@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -52,6 +52,12 @@ namespace openDicom.DataStructure
         ///     DICOM output stream.
         /// </summary>      
         void LoadFrom(Stream stream);
+
+        /// <summary>
+        ///     Saves a DICOM stream member instance to a specified
+        ///     DICOM input stream.
+        /// </summary>      
+        void SaveTo(Stream stream);
     }
     
 }

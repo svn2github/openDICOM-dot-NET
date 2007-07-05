@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -157,6 +157,57 @@ namespace openDicom.DataStructure
                 else
                     length = (int) len;
             }
+            DicomContext.Reset();
+        }
+
+        /// <summary>
+        ///     Saves this DICOM value length instance to specified DICOM
+        ///     input stream using <see cref="ValueLength.TransferSyntax" />.
+        /// </summary>
+        public void SaveTo(Stream stream)
+        {
+            streamPosition = stream.Position;
+            DicomContext.Set(stream, VR.Tag);
+            /*int count = 2;
+            bool isCertainVR = VR.Name.Equals("OB") || VR.Name.Equals("OW") ||
+                VR.Name.Equals("OF") || VR.Name.Equals("SQ") || 
+                VR.Name.Equals("UT") || VR.Name.Equals("UN");
+            if (isCertainVR && ! VR.IsImplicit)
+            {
+                // explicit value representation for certain VRs
+                byte[] reserved = new byte[2];
+                stream.Read(reserved, 0 , 2);
+                if (TransferSyntax.CorrectByteOrdering(
+                    BitConverter.ToUInt16(reserved, 0)) != 0)
+                    throw new ArgumentException("Reserved 2 bytes block is " +
+                        "not 0x0000.");
+                count = 4;
+            }
+            else if (VR.IsImplicit)
+                // implicit value representation
+                count = 4;
+            byte[] buffer = new byte[count];
+            stream.Read(buffer, 0, count);
+            if (count == 2)
+            {
+                length = TransferSyntax.CorrectByteOrdering(
+                    BitConverter.ToUInt16(buffer, 0));
+            }
+            else
+            {
+                uint len = TransferSyntax.CorrectByteOrdering(
+                    BitConverter.ToUInt32(buffer, 0));
+                if (len == 0xFFFFFFFF)
+                    // undefined length
+                    length = -1;
+                else if (len > int.MaxValue)
+                    // casting problem from uint32 to int32
+                    throw new DicomException("Value length is " +
+                        "too big for this implementation.", this.VR.Tag, "len", 
+                        len.ToString());
+                else
+                    length = (int) len;
+            }*/
             DicomContext.Reset();
         }
 

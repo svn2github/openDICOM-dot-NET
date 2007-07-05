@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -360,6 +360,54 @@ namespace openDicom.DataStructure
                         stream.Length.ToString() + ", " + 
                         ValueLength.Value.ToString());
             }
+            DicomContext.Reset();
+        }
+
+        /// <summary>
+        ///     Saves this DICOM value instance to specified DICOM
+        ///     input stream using <see cref="Value.TransferSyntax" />.
+        /// </summary>
+        public void SaveTo(Stream stream)
+        {
+            streamPosition = stream.Position;
+            DicomContext.Set(stream, VR.Tag);
+            /*if (ValueLength.IsUndefined)
+            {
+                // use of delimitation (undefined length)
+                if (IsSequence)
+                {
+                    // sequence delimitation
+                    Sequence sq = new Sequence(stream, TransferSyntax);
+                    Add(sq);
+                }
+                else if (IsNestedDataSet)
+                {
+                    // item delimitation
+                    NestedDataSet ds = new NestedDataSet(stream, 
+                        TransferSyntax);
+                    Add(ds);
+                }
+                else
+                    throw new DicomException(
+                        "Value length is undefined but value is whether " +
+                        "sequence nor data set.", this.VR.Tag);
+            }
+            else
+            {
+                if (stream.Position + valueLength.Value <= stream.Length)
+                {
+                    // use of length value
+                    byte[] buffer = new byte[ValueLength.Value];
+                    stream.Read(buffer, 0, ValueLength.Value);
+                    Array multiValue = VR.Decode(buffer);
+                    Add(multiValue);
+                }
+                else
+                    throw new DicomException("Value length is out of bounds.",
+                        "Value/stream.Length, Value/ValueLength.Value", 
+                        stream.Length.ToString() + ", " + 
+                        ValueLength.Value.ToString());
+            }*/
             DicomContext.Reset();
         }
 

@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -106,6 +106,49 @@ namespace openDicom.File
                 stream.Close();
                 throw new DicomException("Working with a non-valid DICOM file.");
             }
+            DicomContext.Reset();
+        }
+
+        /// <summary>
+        ///     Saves this DICOM file meta information instance to a DICOM
+        ///     input stream. The input stream position is assumed to be the
+        ///     DICOM stream's start position (mostly zero).
+        /// </summary>
+        public override void SaveTo(Stream stream)
+        {
+            base.streamPosition = stream.Position;
+            DicomContext.Set(stream, null);
+            byte[] buffer = new byte[132];
+            /*stream.Read(buffer, 0, 132);
+            filePreamble = TransferSyntax.ToString(buffer, 128);
+            filePreamble = filePreamble.Replace("\0", null);
+            string dicomPrefix = TransferSyntax.ToString(buffer, 128, 4);
+            if (dicomPrefix.Equals(DicomPrefix))
+            {
+                // group length
+                DataElement element = new DataElement(stream, TransferSyntax);
+                Add(element);
+                uint groupLength = (uint) element.Value[0];
+                long streamPosition = stream.Position;
+                // consider omission of current stream position
+                buffer = new byte[streamPosition + groupLength];
+                stream.Read(buffer, (int) streamPosition, (int) groupLength);
+                MemoryStream memoryStream = new MemoryStream(buffer);
+                try
+                {
+                    memoryStream.Seek(streamPosition, 0);
+                    base.LoadFrom(memoryStream);
+                }
+                finally
+                {
+                    memoryStream.Close();
+                }
+            }
+            else
+            {
+                stream.Close();
+                throw new DicomException("Working with a non-valid DICOM file.");
+            }*/
             DicomContext.Reset();
         }
 

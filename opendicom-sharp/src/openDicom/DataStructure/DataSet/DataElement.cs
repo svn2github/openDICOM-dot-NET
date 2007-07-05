@@ -1,6 +1,6 @@
 /*
    
-    openDICOM.NET openDICOM# 0.1.1
+    openDICOM.NET openDICOM# 0.2
 
     openDICOM# provides a library for DICOM related development on Mono.
     Copyright (C) 2006-2007  Albert Gnandt
@@ -170,6 +170,18 @@ namespace openDicom.DataStructure.DataSet
             vr = ValueRepresentation.LoadFrom(stream, Tag);
             valueLength = new ValueLength(stream, VR);
             value = new Value(stream, VR, ValueLength);
+        }
+
+        /// <summary>
+        ///     Saves this data element instance to specified DICOM
+        ///     input stream using <see cref="DataElement.TransferSyntax" />.
+        /// </summary>
+        public void SaveTo(Stream stream)
+        {
+            /*tag = new Tag(stream, TransferSyntax);
+            vr = ValueRepresentation.LoadFrom(stream, Tag);
+            valueLength = new ValueLength(stream, VR);
+            value = new Value(stream, VR, ValueLength);*/
         }
 
         /// <summary>
