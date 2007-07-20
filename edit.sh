@@ -4,6 +4,7 @@
 
 BEAGLE="opendicom-beagle"
 LIB="opendicom-sharp"
+GDK="opendicom-sharp-gdk"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
 
@@ -16,6 +17,9 @@ case "$1" in
         gedit --new-window `find $LIB/src -name *.cs | grep Encoding | grep -v AssemblyInfo.cs` &
         gedit --new-window `find $LIB/src -name AssemblyInfo.cs` &
         ;;
+    gdk)
+        gedit --new-window `find $GDK/src -name *.cs` &
+        ;;
     utils)
         gedit --new-window `find $UTILS/src -name *.cs | grep -v AssemblyInfo.cs` &
         gedit --new-window `find $UTILS/src -name AssemblyInfo.cs` &
@@ -25,7 +29,7 @@ case "$1" in
         gedit --new-window `find $NAVI/src -name AssemblyInfo.cs` &
         ;;
     *)
-        echo "usage: bash edit.sh {beagle|lib|utils|navi}"
+        echo "usage: bash edit.sh {beagle|lib|gdk|utils|navi}"
         exit 1
         ;; 
 esac

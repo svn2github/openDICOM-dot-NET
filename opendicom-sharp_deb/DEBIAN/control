@@ -1,12 +1,12 @@
 Package: opendicom-sharp
-Version: 0.1.1-1
+Version: 0.2
 Section: graphics
 Priority: optional
 Architecture: all
-Depends: mono (>= 1.1.17.1)
+Depends: mono (>= 1.2.3.1)
 Suggests: opendicom-navigator, opendicom-beagle, opendicom-utils
 Provides: opendicom-sharp
-Replaces: opendicom-sharp (= 0.1.0)
+Replaces: opendicom-sharp (<= 0.1.1-1)
 Installed-Size: ???
 Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: ACR-NEMA and DICOM library for Mono

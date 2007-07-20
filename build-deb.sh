@@ -5,6 +5,7 @@
 BEAGLE="opendicom-beagle"
 LIB="opendicom-sharp"
 DOC="opendicom-sharp-doc"
+GDK="opendicom-sharp-gdk"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
 
@@ -19,6 +20,9 @@ case "$1" in
     doc)
         NAME=$DOC
         ;;
+    gdk)
+        NAME=$GDK
+        ;;
     utils)
         NAME=$UTILS
         ;;
@@ -26,7 +30,7 @@ case "$1" in
         NAME=$NAVI
         ;;
     *)
-        echo "usage: bash build-deb.sh {beagle|lib|doc|utils|navi}"
+        echo "usage: bash build-deb.sh {beagle|lib|doc|gdk|utils|navi}"
         exit 1
         ;;
 esac

@@ -1,0 +1,10 @@
+
+openDICOM# GDK Layer  0.2
+
+   * initial release:
+      + depends on openDICOM# 0.2
+      + provides Gdk.Pixbuf subclass
+      + Gdk.Pixbuf load from and save as DICOM, ACR-NEMA and XML file support
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-07-18
+

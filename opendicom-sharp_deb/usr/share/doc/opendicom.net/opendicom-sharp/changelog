@@ -1,4 +1,15 @@
 
+openDICOM#  0.2
+
+   * new features:
+      + full write support of DICOM and ACR-NEMA files
+      + support of <= 16 bit gray value images
+      + support of RLE encoded images
+      + support of colorized (LUT) gray value images
+
+ -- Albert Gnandt (http://www.gnandt.com/)  2007-07-18
+
+
 openDICOM#  0.1.1
 
    * new features:
@@ -6,10 +17,11 @@ openDICOM#  0.1.1
         retired attributes
       + enhanced dictionary classes with retired property
    * fixed bugs:
+      + corrected wrong double length (FD.cs)
       + added culture invariance to Decimal String (DS) encoding
       + added exclusion of Sequence and NestedDataSet within Value.IsArray
 
- -- Albert Gnandt (http://www.gnandt.com/)  2007-03-30
+ -- Albert Gnandt (http://www.gnandt.com/)  2007-04-02
 
 
 openDICOM#  0.1.0

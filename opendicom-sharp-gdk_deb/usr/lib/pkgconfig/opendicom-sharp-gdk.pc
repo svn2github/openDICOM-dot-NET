@@ -1,0 +1,9 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+
+Name: openDICOM# GDK Layer
+Description: openDICOM# GDK - DICOM Mono/.NET GDK layer library
+Version: 0.2
+Libs: -r:${libdir}/mono/opendicom-sharp/opendicom-sharp-gdk.dll

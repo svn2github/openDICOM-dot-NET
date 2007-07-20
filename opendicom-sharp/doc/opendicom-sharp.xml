@@ -2211,6 +2211,71 @@
             with a single byte array entry will be returned.
             </remarks>
         </member>
+        <member name="T:openDicom.Image.PaletteColorLookupTable">
+            <summary>
+            Basic class for working with DICOM Palette Color Lookup Tables.
+            </summary>
+        </member>
+        <member name="M:openDicom.Image.PaletteColorLookupTable.#ctor(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Creates a palette color LUT instance from the specified data
+            set.
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.RedPaletteColorLutDescriptorTag">
+            <summary>
+            DICOM tag (0028,1101).
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.GreenPaletteColorLutDescriptorTag">
+            <summary>
+            DICOM tag (0028,1102).
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.BluePaletteColorLutDescriptorTag">
+            <summary>
+            DICOM tag (0028,1103).
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.RedPaletteColorLutDataTag">
+            <summary>
+            DICOM tag (0028,1201).
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.GreenPaletteColorLutDataTag">
+            <summary>
+            DICOM tag (0028,1202).
+            </summary>
+        </member>
+        <member name="F:openDicom.Image.PaletteColorLookupTable.BluePaletteColorLutDataTag">
+            <summary>
+            DICOM tag (0028,1203).
+            </summary>
+        </member>
+        <member name="M:openDicom.Image.PaletteColorLookupTable.LoadFrom(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Re-creates a palette color LUT instance from the specified data
+            set.
+            </summary>
+        </member>
+        <member name="M:openDicom.Image.PaletteColorLookupTable.IsValid(openDicom.DataStructure.DataSet.DataSet)">
+            <summary>
+            Determines whether specified data set contains the minimum
+            of necessary content for working with palette color LUT.
+            </summary>
+        </member>
+        <member name="T:openDicom.Image.Image">
+            <summary>
+            Basic class for working with DICOM images. This class is an
+            additional layer on top of DICOM pixel data in order to provide
+            enhanced image processing routines.
+            </summary>
+        </member>
+        <member name="M:openDicom.Image.Image.DecodeRLE(System.Byte[])">
+            <summary>
+            Implementation of the DICOM 2007 RLE Decoder.
+            </summary>
+        </member>
         <member name="T:openDicom.File.FileMetaInformation">
             <summary>
             This class represents DICOM file meta information.

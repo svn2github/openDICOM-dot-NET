@@ -1,4 +1,15 @@
 
+openDICOM#  0.2
+
+   * new features:
+      + full write support of DICOM and ACR-NEMA files
+      + support of <= 16 bit gray value images
+      + support of RLE encoded images
+      + support of colorized (LUT) gray value images
+
+ -- Albert Gnandt (http://www.gnandt.com/)  2007-07-18
+
+
 openDICOM#  0.1.1
 
    * new features:

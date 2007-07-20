@@ -1,0 +1,37 @@
+
+
+ ****************************
+ *** openDICOM# GDK Layer ***
+ ****************************
+
+
+Purpose:
+   openDICOM# provides a library (opendicom-sharp.dll) for DICOM related
+   development on Mono C#. This package provides integration support to
+   GTK# by a GDK Pixbuf Layer.
+
+Directories:
+   bin        built library location
+   doc        API documentation as XML
+   dd         data dictionary location
+   pkgconfig  pkg-config file for system wide installation
+   src        API source code files
+
+Build and installation:
+   see INSTALL
+
+Release or version:
+   see release
+
+Changes:
+   see changelog
+
+License:
+   see license and LGPL
+
+Copyright and disclaimer:
+   see copyright
+
+Contact:
+   http://www.gnandt.com/
+

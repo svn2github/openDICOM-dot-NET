@@ -13,6 +13,11 @@ echo
 echo "(lines) (words) (file)"
 wc -lw `find opendicom-sharp/src -name *.cs`
 echo
+echo "*** opendicom-sharp-gdk ***"
+echo
+echo "(lines) (words) (file)"
+wc -lw `find opendicom-sharp-gdk/src -name *.cs`
+echo
 echo "*** opendicom-utils ***"
 echo
 echo "(lines) (words) (file)"

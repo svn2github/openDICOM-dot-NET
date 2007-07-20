@@ -11,6 +11,10 @@ echo "*** opendicom-sharp ***"
 echo
 grep -n -R "TODO:" `find opendicom-sharp/src -name *.cs` | sed "s/[ \\/]*TODO://"
 echo
+echo "*** opendicom-sharp-gdk ***"
+echo
+grep -n -R "TODO:" `find opendicom-sharp-gdk/src -name *.cs` | sed "s/[ \\/]*TODO://"
+echo
 echo "*** opendicom-utils ***"
 grep -n -R "TODO:" `find opendicom-utils/src -name *.cs` | sed "s/[ \\/]*TODO://"
 echo

@@ -1,0 +1,21 @@
+Package: opendicom-sharp-gdk
+Version: 0.2
+Section: graphics
+Priority: optional
+Architecture: all
+Depends: opendicom-sharp (>= 0.2)
+Suggests: opendicom-navigator, opendicom-beagle, opendicom-utils
+Provides: opendicom-sharp-gdk
+Installed-Size: ???
+Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
+Description: ACR-NEMA and DICOM library GTK#/GDK layer for Mono
+ Pixbuf related API for GDK integration support of ACR-NEMA and DICOM 
+ processing on Mono written in C#.
+ .
+ Features:
+  * Provides a Gdk.Pixbuf subclass
+  * Provides Pixbuf load from and save as ACR-NEMA, DICOM and XML files
+  * Comes with full DICOM 2007 Data and UID dictionaries
+ .
+ Homepage: http://www.opendicom.net/
+Bugs: mailto:agnandt@users.sourceforge.net

@@ -4,6 +4,7 @@
 
 BEAGLE="opendicom-beagle"
 LIB="opendicom-sharp"
+GDK="opendicom-sharp-gdk"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
 
@@ -16,6 +17,10 @@ case "$1" in
         make -C $LIB clean build &&\
         sudo make -C $LIB uninstall install
         ;;
+    gdk)
+        make -C $GDK clean build &&\
+        sudo make -C $GDK uninstall install
+        ;;
     utils)
         make -C $UTILS clean build &&\
         sudo make -C $UTILS uninstall install
@@ -25,7 +30,7 @@ case "$1" in
         sudo make -C $NAVI uninstall install
         ;;
     *)
-        echo "usage: bash build.sh {beagle|lib|utils|navi}"
+        echo "usage: bash build.sh {beagle|lib|gdk|utils|navi}"
         exit 1
         ;;
 esac
