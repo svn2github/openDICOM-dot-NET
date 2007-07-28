@@ -1,4 +1,4 @@
-<Combine name="monodevelop" fileversion="2.0">
+<Combine name="opendicom.net" fileversion="2.0">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
  <Entry build="True" name="opendicom-sharp" configuration="Debug" /> <Entry build="True" name="opendicom-sharp-gdk" configuration="Debug" /> <Entry build="True" name="opendicom-utils" configuration="Debug" /> <Entry build="True" name="opendicom-navigator" configuration="Debug" /> <Entry build="True" name="opendicom-beagle" configuration="Debug" />
@@ -7,7 +7,7 @@
  <Entry build="True" name="opendicom-sharp" configuration="Release" /> <Entry build="True" name="opendicom-sharp-gdk" configuration="Release" /> <Entry build="True" name="opendicom-utils" configuration="Release" /> <Entry build="True" name="opendicom-navigator" configuration="Release" /> <Entry build="True" name="opendicom-beagle" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="opendicom-sharp" single="True">
+  <StartMode startupentry="opendicom-sharp" single="False">
  <Execute type="None" entry="opendicom-sharp" /> <Execute type="None" entry="opendicom-sharp-gdk" /> <Execute type="None" entry="opendicom-utils" /> <Execute type="None" entry="opendicom-navigator" /> <Execute type="None" entry="opendicom-beagle" />
   </StartMode>
   <Entries>

@@ -1,4 +1,4 @@
-<Combine name="monodevelop" fileversion="2.0">
+<Combine name="opendicom.net" fileversion="2.0">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
 {{DEBUG}}
@@ -7,7 +7,7 @@
 {{RELEASE}}
     </Configuration>
   </Configurations>
-  <StartMode startupentry="{{STARTUP_ENTRY}}" single="True">
+  <StartMode startupentry="{{STARTUP_ENTRY}}" single="False">
 {{STARTUP}}
   </StartMode>
   <Entries>

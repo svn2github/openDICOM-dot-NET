@@ -19,4 +19,14 @@
   <References>
  <ProjectReference type="Project" localcopy="True" refto="opendicom-sharp" />  
   </References>
+  <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="True" RelativeMakefileName="./Makefile">
+    <BuildFilesVar />
+    <DeployFilesVar />
+    <ResourcesVar />
+    <OthersVar />
+    <GacRefVar />
+    <AsmRefVar />
+    <ProjectRefVar />
+  </MonoDevelop.Autotools.MakefileInfo>
+  <Deployment.LinuxDeployData generatePcFile="False" />
 </Project>

@@ -2281,6 +2281,11 @@
             This class represents DICOM file meta information.
             </summary>
         </member>
+        <member name="M:openDicom.File.FileMetaInformation.#ctor">
+            <summary>
+            Creates a default DICOM file meta information instance.
+            </summary>
+        </member>
         <member name="M:openDicom.File.FileMetaInformation.#ctor(System.IO.Stream)">
             <summary>
             Creates a DICOM file meta information instance from a DICOM
@@ -2415,6 +2420,25 @@
             complement one another.
             </remarks>
         </member>
+        <member name="T:openDicom.File.File">
+            <summary>
+            This class provides simple access to ACR-NEMA, DICOM and compliant
+            XML files.
+            </summary>
+        </member>
+        <member name="M:openDicom.File.File.LoadDictionariesFrom(System.String,System.String,openDicom.Registry.DictionaryFileFormat)">
+            <summary>
+            Loads the global dictionaries <see cref="T:openDicom.Registry.DataElementDictionary" />
+            and <see cref="T:openDicom.Registry.UidDictionary" />.
+            </summary>
+        </member>
+        <member name="M:openDicom.File.File.LoadFrom(System.String)">
+            <summary>
+            Determines, whether a file is a DICOM, an ACR-NEMA or compliant
+            XML file and loads it. Returns 'null' if specified file is
+            not any of the mentioned file types.
+            </summary>
+        </member>
         <member name="T:openDicom.File.DicomFile">
             <summary>
             This class represents a DICOM file.
@@ -2501,6 +2525,17 @@
             The representation of DICOM content as XML is not standardized.
             </remarks>
         </member>
+        <member name="M:openDicom.File.XmlFile.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a XML file instance from a ACR-NEMA-/DICOM-XML output
+            stream.
+            </summary>
+        </member>
+        <member name="M:openDicom.File.XmlFile.#ctor(System.String)">
+            <summary>
+            Creates a XML file instance from a ACR-NEMA-/DICOM-XML file.
+            </summary>
+        </member>
         <member name="M:openDicom.File.XmlFile.#ctor(openDicom.File.AcrNemaFile)">
             <summary>
             Creates a XML file instance from the given ACR-NEMA or
@@ -2543,10 +2578,21 @@
             ACR-NEMA- or DICOM-XML file.
             </summary>
         </member>
+        <member name="M:openDicom.File.XmlFile.LoadFrom(System.String,System.Boolean)">
+            <summary>
+            Loads <see cref="T:openDicom.File.AcrNemaFile" /> as XML file by the
+            specified file name.
+            </summary>
+        </member>
         <member name="M:openDicom.File.XmlFile.SaveTo(System.String)">
             <summary>
             Saves <see cref="T:openDicom.File.AcrNemaFile" /> as XML file with the
             specified file name.
+            </summary>
+        </member>
+        <member name="M:openDicom.File.XmlFile.LoadFrom(System.IO.Stream)">
+            <summary>
+            Loads <see cref="T:openDicom.File.AcrNemaFile" /> as XML to specified input stream.
             </summary>
         </member>
         <member name="M:openDicom.File.XmlFile.SaveTo(System.IO.Stream)">
