@@ -59,17 +59,17 @@ debs:
 	@bash build-deb.sh doc
 
 tar-balls:
-	@tar cvzf $(BEAGLE)_$(BEAGLE_RELEASE).tar.gz $(BEAGLE) --exclude=.svn > /dev/null
-	@tar cvzf $(LIB)_$(LIB_RELEASE).tar.gz $(LIB) --exclude=.svn > /dev/null
-	@tar cvzf $(GDK)_$(GDK_RELEASE).tar.gz $(GDK) --exclude=.svn > /dev/null
-	@tar cvzf $(UTILS)_$(UTILS_RELEASE).tar.gz $(UTILS) --exclude=.svn > /dev/null
-	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) --exclude=.svn > /dev/null
-	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) --exclude=.svn > /dev/null
+	@tar cvzf $(BEAGLE)_$(BEAGLE_RELEASE).tar.gz $(BEAGLE) --exclude=.svn --exclude=*.pidb > /dev/null
+	@tar cvzf $(LIB)_$(LIB_RELEASE).tar.gz $(LIB) --exclude=.svn --exclude=*.pidb > /dev/null
+	@tar cvzf $(GDK)_$(GDK_RELEASE).tar.gz $(GDK) --exclude=.svn --exclude=*.pidb > /dev/null
+	@tar cvzf $(UTILS)_$(UTILS_RELEASE).tar.gz $(UTILS) --exclude=.svn --exclude=*.pidb > /dev/null
+	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) --exclude=.svn --exclude=*.pidb > /dev/null
+	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) --exclude=.svn --exclude=*.pidb > /dev/null
 zips:
 	@sh check.sh --cmd -e zip
-	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE) -x *.svn*
-	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB) -x *.svn*
-	@zip -q -r $(GDK)_$(GDK_RELEASE).zip $(GDK) -x *.svn*
-	@zip -q -r $(UTILS)_$(UTILS_RELEASE).zip $(UTILS) -x *.svn*
-	@zip -q -r $(NAVI)_$(NAVI_RELEASE).zip $(NAVI) -x *.svn*
-	@zip -q -r $(DOC)_$(DOC_RELEASE).zip $(DOC) -x *.svn*
+	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE) -x *.svn* -x *.pidb
+	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB) -x *.svn* -x *.pidb
+	@zip -q -r $(GDK)_$(GDK_RELEASE).zip $(GDK) -x *.svn* -x *.pidb
+	@zip -q -r $(UTILS)_$(UTILS_RELEASE).zip $(UTILS) -x *.svn* -x *.pidb
+	@zip -q -r $(NAVI)_$(NAVI_RELEASE).zip $(NAVI) -x *.svn* -x *.pidb
+	@zip -q -r $(DOC)_$(DOC_RELEASE).zip $(DOC) -x *.svn* -x *.pidb
