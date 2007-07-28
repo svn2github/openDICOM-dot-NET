@@ -86,6 +86,31 @@ namespace openDicom.File
             get { return isPixelDataExcluded; }
         }
 
+        /// <summary>
+        ///     Creates a XML file instance from a ACR-NEMA-/DICOM-XML output
+        ///     stream.
+        /// </summary>
+        public XmlFile(Stream stream) 
+        {
+            LoadFrom(stream);
+        }
+
+        /// <summary>
+        ///     Creates a XML file instance from a ACR-NEMA-/DICOM-XML file.
+        /// </summary>
+        public XmlFile(string fileName) 
+        {
+            FileStream fileStream = new FileStream(fileName, FileMode.Open, 
+                FileAccess.Read);
+            try
+            {
+                LoadFrom(fileStream);
+            }
+            finally
+            {
+                fileStream.Close();
+            }
+        }
 
         /// <summary>
         ///     Creates a XML file instance from the given ACR-NEMA or
@@ -93,7 +118,7 @@ namespace openDicom.File
         /// </summary>
         public XmlFile(AcrNemaFile acrNemaFile)
         {
-            this.acrNemaFile = acrNemaFile;
+            AcrNemaFile = acrNemaFile;
         }
 
         /// <summary>
@@ -129,6 +154,26 @@ namespace openDicom.File
             catch (Exception e)
             {
                 return false;
+            }
+            finally
+            {
+                fileStream.Close();
+            }
+        }
+
+        /// <summary>
+        ///     Loads <see cref="AcrNemaFile" /> as XML file by the
+        ///     specified file name.
+        /// </summary>
+        public void LoadFrom(string fileName, bool isDicomFile)
+        {
+            AcrNemaFile = isDicomFile ? new DicomFile() : new AcrNemaFile();
+
+            FileStream fileStream = new FileStream(fileName, FileMode.Open, 
+                FileAccess.Read);
+            try
+            {
+                LoadFrom(fileStream);
             }
             finally
             {
@@ -276,6 +321,53 @@ namespace openDicom.File
             xml.WriteEndElement();
         }
 
+        /// <summary>
+        ///     Loads <see cref="AcrNemaFile" /> as XML to specified input stream.
+        /// </summary>
+        public virtual void LoadFrom(Stream stream)
+        {
+            XmlTextReader xml = new XmlTextReader(stream, 
+                System.Text.Encoding.UTF8);
+            try
+            {
+                xml.WriteStartDocument();
+                xml.WriteComment(" " + fileComment + " ");
+                if (IsDicomFile)
+                {
+                    xml.WriteStartElement("DicomFile");
+                    xml.WriteStartElement("MetaInformation");
+                    AddTransferSyntaxToXml(xml,
+                        ((DicomFile) AcrNemaFile).MetaInformation.TransferSyntax);
+                    xml.WriteElementString("FilePreamble",
+                        ((DicomFile) AcrNemaFile).MetaInformation.FilePreamble);
+                    AddDataSetToXml(xml, ((DicomFile) AcrNemaFile).MetaInformation);
+                    xml.WriteEndElement();
+                    xml.WriteStartElement("DataSet");
+                    AddTransferSyntaxToXml(xml,
+                        AcrNemaFile.DataSet.TransferSyntax);
+                    AddDataSetToXml(xml, AcrNemaFile.DataSet);
+                    // DataSet
+                    xml.WriteEndElement();
+                    // DicomFile
+                    xml.WriteEndElement();                
+                }
+                else
+                {
+                    xml.WriteStartElement("AcrNemaFile");
+                    AddTransferSyntaxToXml(xml,
+                        AcrNemaFile.DataSet.TransferSyntax);
+                    AddDataSetToXml(xml, AcrNemaFile.DataSet);
+                    xml.WriteEndElement();
+                }
+                xml.WriteEndDocument();
+                xml.Close();
+            }
+            finally
+            {
+                xml.Close();
+            }
+        }
+ 
         /// <summary>
         ///     Saves <see cref="AcrNemaFile" /> as XML to specified input stream.
         /// </summary>

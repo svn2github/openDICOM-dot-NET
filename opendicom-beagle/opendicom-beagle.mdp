@@ -1,0 +1,22 @@
+<Project name="opendicom-beagle" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin" assembly="opendicom-beagle" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin" assembly="opendicom-beagle" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+<File name="src/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/FilterDicom.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+ <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Util.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Beagle.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/BeagleDaemonPlugins.dll" />  
+  </References>
+</Project>

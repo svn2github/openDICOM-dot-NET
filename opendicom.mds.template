@@ -1,0 +1,16 @@
+<Combine name="monodevelop" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+{{DEBUG}}
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+{{RELEASE}}
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="{{STARTUP_ENTRY}}" single="True">
+{{STARTUP}}
+  </StartMode>
+  <Entries>
+{{ENTRIES}}
+  </Entries>
+</Combine>

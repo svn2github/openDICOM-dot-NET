@@ -1,0 +1,16 @@
+<Combine name="monodevelop" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+ <Entry build="True" name="opendicom-sharp" configuration="Debug" /> <Entry build="True" name="opendicom-sharp-gdk" configuration="Debug" /> <Entry build="True" name="opendicom-utils" configuration="Debug" /> <Entry build="True" name="opendicom-navigator" configuration="Debug" /> <Entry build="True" name="opendicom-beagle" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+ <Entry build="True" name="opendicom-sharp" configuration="Release" /> <Entry build="True" name="opendicom-sharp-gdk" configuration="Release" /> <Entry build="True" name="opendicom-utils" configuration="Release" /> <Entry build="True" name="opendicom-navigator" configuration="Release" /> <Entry build="True" name="opendicom-beagle" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="opendicom-sharp" single="True">
+ <Execute type="None" entry="opendicom-sharp" /> <Execute type="None" entry="opendicom-sharp-gdk" /> <Execute type="None" entry="opendicom-utils" /> <Execute type="None" entry="opendicom-navigator" /> <Execute type="None" entry="opendicom-beagle" />
+  </StartMode>
+  <Entries>
+ <Entry filename="./opendicom-sharp/opendicom-sharp.mdp" /> <Entry filename="./opendicom-sharp-gdk/opendicom-sharp-gdk.mdp" /> <Entry filename="./opendicom-utils/opendicom-utils.mdp" /> <Entry filename="./opendicom-navigator/opendicom-navigator.mdp" /> <Entry filename="./opendicom-beagle/opendicom-beagle.mdp" />
+  </Entries>
+</Combine>

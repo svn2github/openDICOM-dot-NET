@@ -1,4 +1,13 @@
 
+opendicom-utils  0.2
+
+   * new features:
+      + dicom-file-transform: Support of transcoding any file type
+         to any other (ACR-NEMA, DICOM and XML)
+
+ -- Albert Gnandt  (http://www.gnandt.com/)  2007-07-22
+
+
 opendicom-utils  0.1.1
 
    * new features:

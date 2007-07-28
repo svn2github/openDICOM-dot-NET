@@ -59,6 +59,16 @@ namespace openDicom.File
 
 
         /// <summary>
+        ///     Creates a default DICOM file meta information instance.
+        /// </summary>
+        public FileMetaInformation()
+        {
+            DataElement element = new DataElement(stream, TransferSyntax);
+            Add(element);
+
+        }
+
+        /// <summary>
         ///     Creates a DICOM file meta information instance from a DICOM
         ///     output stream. The stream position is assumed to be the DICOM
         ///     output stream's start position (mostly zero).

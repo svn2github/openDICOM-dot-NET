@@ -1,12 +1,12 @@
 Package: opendicom-utils
-Version: 0.1.1
+Version: 0.2
 Section: graphics
 Priority: optional
 Architecture: all
-Depends: mono (>= 1.1.17.1), opendicom-sharp (>= 0.1.1)
+Depends: mono (>= 1.2.3.1), opendicom-sharp (>= 0.2)
 Suggests: opendicom-sharp, opendicom-navigator, opendicom-beagle
 Provides: opendicom-utils
-Replaces: opendicom-utils (= 0.1.0)
+Replaces: opendicom-utils (<= 0.2)
 Installed-Size: ???
 Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: A collection of ACR-NEMA and DICOM console tools for Mono
@@ -20,7 +20,7 @@ Description: A collection of ACR-NEMA and DICOM console tools for Mono
     and properties file formats
   * Supports search for pattern within ACR-NEMA and DICOM files
   * Supports DICOM Pixel Data export as JPEG and raw files
-  * Supports transcoding of ACR-NEMA and DICOM files to XML
+  * Supports transcoding between ACR-NEMA, DICOM and DICOM as XML files
   * Comes with full DICOM 2007 data dictionaries
  .
  Homepage: http://www.opendicom.net/

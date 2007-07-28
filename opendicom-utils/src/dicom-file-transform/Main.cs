@@ -1,5 +1,5 @@
 /*
-    openDICOM.NET Utils 0.1.1
+    openDICOM.NET Utils 0.2
 
     openDICOM.NET Utils provides DICOM utility applications for DICOM related
     manipulation on Mono
@@ -69,12 +69,12 @@ public sealed class DicomFileTransform
     {
         Console.Error.WriteLine("openDICOM.NET Utils");
         Console.Error.WriteLine(
-            "Transforms a DICOM file content to XML, raw and image data " +
-            "file(s).");
+            "Transforms between DICOM, ACR-NEMA and compliant XML file(s). " +
+            "Extracts images as raw data and image file(s).");
         Console.Error.WriteLine();
         Console.Error.WriteLine(
             "Usage: dicom-file-transform [element-dic:<format>:<src>] " +
-            "[uid-dic:<format>:<src>] <dcm-file> " +
+            "[uid-dic:<format>:<src>] <src-file> " +
             "target:<target>[:<dest-file>] [decode:<mode>]");
         Console.Error.WriteLine();
         Console.Error.WriteLine("format    specified dictionary file format");
@@ -83,8 +83,11 @@ public sealed class DicomFileTransform
         Console.Error.WriteLine("          x - xml");
         Console.Error.WriteLine("          c - csv");
         Console.Error.WriteLine("src       local dictionary file");
-        Console.Error.WriteLine("dcm-file  DICOM file");
+        Console.Error.WriteLine(
+            "src-file  ACR-NEMA, DICOM or XML file to transcode");
         Console.Error.WriteLine("target    specified targets of transcoding");
+        Console.Error.WriteLine("          acr    - ACR-NEMA file");
+        Console.Error.WriteLine("          dcm    - DICOM file");
         Console.Error.WriteLine("          xml    - XML file");
         Console.Error.WriteLine(
             "          xml-pd - XML file without pixel data");
@@ -109,7 +112,7 @@ public sealed class DicomFileTransform
             else if (Regex.IsMatch(args[i].ToLower(), "^uid-dic:" + dicPattern))
                 uidDic = args[i].Split(':');
             else if (Regex.IsMatch(args[i].ToLower(), 
-                "^target:(xml|xml-pd|raw|img)(:[^:]+)?$"))
+                "^target:(acr|dcm|xml|xml-pd|raw|img)(:[^:]+)?$"))
                 target = args[i].Split(':');
             else if (Regex.IsMatch(args[i].ToLower(), "^decode:(strict|lax)$"))
                 decodingMode = args[i].Split(':');
@@ -290,8 +293,10 @@ public sealed class DicomFileTransform
             {
                 Console.WriteLine(
                     "Found DICOM-/ACR-NEMA-XML file instead of DICOM file.");
-                Console.Error.WriteLine("This function is not implemented.");
-                return errorExitCode;
+                long startTicks = DateTime.Now.Ticks;
+                dicomFile = new AcrNemaFile(dicomFileName, useStrictDecoding);
+                Console.WriteLine("Reading took {0} ms.",
+                    (DateTime.Now.Ticks - startTicks) / 10000);
             }            
             else
             {
@@ -304,6 +309,49 @@ public sealed class DicomFileTransform
             if (target.Length == 3) targetFileName = target[2];
             switch (targetType)
             {
+                case "acr":
+                    if (dicomFile is DicomFile)
+                    {
+                        // TODO: Reset TransferSyntax and re-code entire DICOM content
+                        Console.Error.WriteLine("Transcoding from DICOM to " +
+                            "ACR-NEMA is not supported yet.");
+                        return errorExitCode;
+                    }
+                    if (targetFileName == string.Empty)
+                    {
+                        targetFileName = dicomFileName;
+                    }
+                    if ( ! Regex.IsMatch(targetFileName.ToLower(), "\\.(acr|acr-nema)$"))
+                    {
+                        targetFileName += ".acr";
+                    }
+                    long startTicks = DateTime.Now.Ticks;
+                    dicomFile.SaveTo(targetFileName);
+                    Console.WriteLine("Writing took {0} ms.",
+                        (DateTime.Now.Ticks - startTicks) / 10000);
+                    break;
+                case "dcm":
+                    if (dicomFile is AcrNemaFile)
+                    {
+                        DicomFile recoderContent = new DicomFile();
+                        recoderContent.MetaInformation = 
+                            new FileMetaInformation();
+                        recoderContent.DataSet = dicomFile.DataSet;
+                        dicomFile = recoderContent;
+                    }
+                    if (targetFileName == string.Empty)
+                    {
+                        targetFileName = dicomFileName;
+                    }
+                    if ( ! Regex.IsMatch(targetFileName.ToLower(), "\\.(dcm|dicom)$"))
+                    {
+                        targetFileName += ".dcm";
+                    }
+                    long startTicks = DateTime.Now.Ticks;
+                    dicomFile.SaveTo(targetFileName);
+                    Console.WriteLine("Writing took {0} ms.",
+                        (DateTime.Now.Ticks - startTicks) / 10000);
+                    break;
                 case "xml":
                 case "xml-pd":
                     bool includePixelData = target[1].ToLower().Equals("xml");

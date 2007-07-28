@@ -1,0 +1,22 @@
+<Project name="opendicom-navigator" fileversion="2.0" language="C#" clr-version="Net_1_1" ctype="DotNetProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin" assembly="opendicom-navigator" />
+      <Build debugmode="True" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release" ctype="DotNetProjectConfiguration">
+      <Output directory="./bin" assembly="opendicom-navigator" />
+      <Build debugmode="False" target="Exe" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_1_1" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+<File name="src/dicom-file-navigator/LicenseDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/GladeWidget.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/SaveImageFileChooserDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/Main.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/MainWindow.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/Resources.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/GenericOpenFileChooserDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/Configuration.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/ExportAsFileChooserDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/AboutDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/ExceptionDialog.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-navigator/PreferencesDialog.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+ <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" /> <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />  
+  </References>
+</Project>

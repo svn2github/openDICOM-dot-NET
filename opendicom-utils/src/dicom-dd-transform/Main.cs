@@ -1,5 +1,5 @@
 /*
-    openDICOM.NET Utils 0.1.1
+    openDICOM.NET Utils 0.2
 
     openDICOM.NET Utils provides DICOM utility applications for DICOM
     related manipulation on Mono.
