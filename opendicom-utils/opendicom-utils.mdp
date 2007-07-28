@@ -17,6 +17,6 @@
 <File name="src/dicom-dd-transform/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-dd-transform/Main.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-query/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-query/Main.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-dd-query/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-dd-query/Main.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-transform/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/dicom-file-transform/Main.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
-  
+ <ProjectReference type="Project" localcopy="True" refto="opendicom-sharp" />  
   </References>
 </Project>

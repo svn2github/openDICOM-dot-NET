@@ -17,6 +17,6 @@
 <File name="src/AssemblyInfo.cs" subtype="Code" buildaction="Compile" /> <File name="src/FilterDicom.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
- <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Util.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Beagle.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/BeagleDaemonPlugins.dll" />  
+ <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Util.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/Beagle.dll" /> <ProjectReference type="Assembly" localcopy="True" refto="/usr/lib/beagle/BeagleDaemonPlugins.dll" /> <ProjectReference type="Project" localcopy="True" refto="opendicom-sharp" />  
   </References>
 </Project>

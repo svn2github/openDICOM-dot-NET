@@ -26,7 +26,10 @@ generate_mdp()
 
     for NAME in $3; do
 
-        if [ -e $NAME ]; then
+        if [ -e "$NAME/$NAME.mdp" ]; then
+            REF_TYPE="Project"
+            REF_TO="$NAME"
+        elif [ -e "$NAME" ]; then
             REF_TYPE="Assembly"
             REF_TO="$NAME"
         else
@@ -74,10 +77,10 @@ generate_mds()
 
 
 generate_mdp $LIB Library
-generate_mdp $GDK Library "gdk-sharp"
-generate_mdp $UTILS Exe
-generate_mdp $NAVI Exe "gtk-sharp glade-sharp"
-generate_mdp $BEAGLE Exe "$BEAGLE_HOME/Util.dll $BEAGLE_HOME/Beagle.dll $BEAGLE_HOME/BeagleDaemonPlugins.dll"
+generate_mdp $GDK Library "gdk-sharp $LIB"
+generate_mdp $UTILS Exe "$LIB"
+generate_mdp $NAVI Exe "gtk-sharp glade-sharp $LIB $GDK"
+generate_mdp $BEAGLE Exe "$BEAGLE_HOME/Util.dll $BEAGLE_HOME/Beagle.dll $BEAGLE_HOME/BeagleDaemonPlugins.dll $LIB"
 
 generate_mds $LIB $GDK $UTILS $NAVI $BEAGLE
 
