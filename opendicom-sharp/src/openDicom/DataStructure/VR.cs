@@ -521,11 +521,16 @@ namespace openDicom.DataStructure
             return new byte[1][] { bytes };
         }
 
-        protected virtual Array DecodeImproper(byte[] bytes)
+		protected virtual Array DecodeImproper(byte[] bytes)
         {
             return new byte[1][] { bytes };
         }
         
+        protected virtual byte[] Encode(Array array)
+        {
+            return new byte[1] { array[0] as byte[] };
+        }
+
         /// <summary>
         ///     Determines the correct type and multiplicity of a DICOM value.
         /// </summary>

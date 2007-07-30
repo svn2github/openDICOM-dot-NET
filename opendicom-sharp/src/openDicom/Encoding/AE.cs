@@ -74,6 +74,29 @@ namespace openDicom.Encoding
             }
             return applicationName;
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+        	string[] applicationName = array as string[];
+        	string[] multiValue = new string[applicationName.Length];
+			for (int i = 0; i < applicationName.Length; i++)
+			{
+			    string item = applicationName[i];
+			    if (item.Length > 16)
+                    throw new EncodingException(
+                        "A value of max. 16 bytes is only allowed.", Tag,
+                        Name + "/item", item);
+                else if (Regex.IsMatch(item, "^[\\s]{16}$"))
+                    throw new EncodingException(
+                        "No application name specified.", Tag, Name + "/item",
+                        item);
+                else if (item.Length > 0)
+                    item = item.Trim();
+				multiValue[i] = item;
+			}
+			string s = ToJointMultiValue(multiValue);
+			return TransferSyntax.ToBytes(s);
+		}
     }
 
 }

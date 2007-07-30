@@ -86,6 +86,18 @@ namespace openDicom.Encoding
             }
             return age;
         }
+
+        protected override byte[] Encode(Array array)
+        {
+        	Age[] age = array as Age[];
+        	string[] multiValue = new string[age.Length];
+			for (int i = 0; i < age.Length; i++)
+			{
+				multiValue[i] = age[i].ToString();
+			}
+			string s = ToJointMultiValue(multiValue);
+			return TransferSyntax.ToBytes(s);
+		}
     }
 
 }
