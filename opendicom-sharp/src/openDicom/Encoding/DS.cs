@@ -101,6 +101,26 @@ namespace openDicom.Encoding
             }
             return decimalValue;
         }
+
+        protected override byte[] Encode(Array array)
+        {
+            decimal[] decimalValue = array as decimal[];
+            string[] multiValue = new string[decimalValue.Length];
+            for (int i = 0; i < decimalValue.Length; i++)
+            {
+                string item = decimalValue[i].ToString();
+                if (item.Length > 16)
+                {
+                    int n = int.Parse(item[15]);
+                    if (int.Parse(item[16]) >= 5) n++;
+                    item[15] = n.ToString();
+                    item = item.Remove(16, item.Length - 16);
+                }
+                multiValue[i] = item;
+            }
+            string s = ToJointMultiValue(multiValue);
+            return TransferSyntax.ToBytes(s);
+        }
     }
 
 }

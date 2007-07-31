@@ -105,6 +105,22 @@ namespace openDicom.Encoding
             }
             return date;
         }
+
+        protected override byte[] Encode(Array array)
+        {
+            System.DateTime[] date = array as Date[];            
+            string[] multiValue = new string[date.Length];
+            for (int i = 0; i < date.Length; i++)
+            {
+                System.DateTime d = date[i];
+                multiValue[i] = 
+                    d.Year.ToString() +
+                    d.Month.ToString() + 
+                    d.Day.ToString();
+            }
+            string s = ToJointMultiValue(multiValue);
+            return TransferSyntax.ToString(s);
+        }
     }
 
 }

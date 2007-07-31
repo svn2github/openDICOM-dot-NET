@@ -151,6 +151,28 @@ namespace openDicom.Encoding
             }
             return dateTime;
         }
+
+        protected override byte[] Encode(Array array)
+        {
+            System.DateTime[] dateTime = array as Date[];            
+            string[] multiValue = new string[dateTime.Length];
+            for (int i = 0; i < dateTime.Length; i++)
+            {
+                System.DateTime dt = date[i];
+                multiValue[i] = 
+                    dt.Year.ToString() +
+                    dt.Month.ToString() + 
+                    dt.Day.ToString() +
+                    dt.Hour.ToString() +
+                    dt.Minute.ToString() + 
+                    dt.Second.ToString() +
+                    dt.Millisecond == 0 ?
+                        string.Empty : "." + dt.Millisecond.ToString();
+                // TODO: What about the TimeZone?
+            }
+            string s = ToJointMultiValue(multiValue);
+            return TransferSyntax.ToString(s);
+        }
     }
 
 }

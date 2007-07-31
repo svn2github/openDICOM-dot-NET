@@ -69,6 +69,26 @@ namespace openDicom.Encoding
             }
             return code;
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+        	string[] code = array as string[];
+        	string[] multiValue = new string[code.Length];
+			for (int i = 0; i < code.Length; i++)
+			{
+                string item = code[i];
+                if (item.Length > 16)
+                    throw new EncodingException(
+                        "A value of max. 16 bytes is only allowed.", Tag,
+                        Name + "/item", item);
+                else if (item.Length > 0)
+                    item = item.Trim();
+                multiValue[i] = item;
+
+			}
+			string s = ToJointMultiValue(multiValue);
+			return TransferSyntax.ToBytes(s);
+		}
     }
 
 }
