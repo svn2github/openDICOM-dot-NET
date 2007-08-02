@@ -67,6 +67,20 @@ namespace openDicom.Encoding
                     "A value of multiple 4 bytes is only allowed.", Tag,
                     Name + "/value.Length", bytes.Length.ToString());
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+        	float[] number = array as float[];
+        	byte[][] multiValue = new byte[number.Length][];
+			for (int i = 0; i < number.Length; i++)
+			{
+				byte[] buffer = TransferSyntax.CorrectByteOrdering(
+				    BitConverter.GetBytes(number[i]));
+Console.WriteLine ("FL.Encode: GetBytes(float).Length = " + buffer.Length);				    
+				multiValue[i] = buffer;
+			}
+		    return ToJointMultiValue(multiValue);
+        }
     }
 
 }
