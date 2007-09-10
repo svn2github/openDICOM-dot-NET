@@ -4,6 +4,8 @@
 
 print_usage()
 {
+    echo "Environment variable OPENDICOM_COLOR_OUTPUT=1 has to be set. Otherwise, colorization is ignored."
+    echo
     echo "usage: bash output.sh {--red,-r|--light-red,-lr|--green,-g|--light-green,-lg|--brown,-w|--yellow,-y|--blue,-b|--light-blue,-lb|--magenta,-m|--light-magenta,-lm|--cyan,-c|--light-cyan,-lc} {--echo,-e|--no-echo|-n} <command>"
     exit 1
 }
@@ -60,10 +62,18 @@ esac
 
 case "$2" in
     --echo|-e)
-        echo "\33[${COLOR}m${3}\n`${3}`\33[0m"
+        if [ "$OPENDICOM_COLOR_OUTPUT" = "1" ]; then
+            echo "\33[${COLOR}m${3}\n`${3}`\33[0m"
+        else 
+            echo "${3}\n`${3}`"
+        fi
         ;;
     --no-echo|-n)
-        echo "\33[${COLOR}m`${3}`\33[0m"
+        if [ "$OPENDICOM_COLOR_OUTPUT" = "1" ]; then
+            echo "\33[${COLOR}m`${3}`\33[0m"
+        else
+            ${3}
+        fi
         ;;
     *)
         print_usage

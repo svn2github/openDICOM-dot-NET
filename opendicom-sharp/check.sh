@@ -115,6 +115,8 @@ check_lib_version()
 
 print_usage()
 {
+    echo "Environment variable OPENDICOM_COLOR_OUTPUT=1 has to be set. Otherwise, colorization is ignored."
+    echo
     echo "usage: bash check.sh {{--cmd,-c|--dir,-d|--lib,-l} {--exists,-e|--not-exists,-n} <name1> <name2> ... <nameN> | {--lib-version,-lv} {--greater-equals,-ge|--equals,-eq|--less-equals,-le} <version> <name>}"
     exit 1
 }
