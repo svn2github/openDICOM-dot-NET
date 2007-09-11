@@ -60,6 +60,19 @@ namespace openDicom.Encoding
                     "Multiple values are not allowed within this field.", Tag,
                     Name + "/VM", vm.ToString());
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+            // TODO: How to get trailing zero padding from byte array?
+            ValueMultiplicity vm = Tag.GetDictionaryEntry().VM;
+            if (vm.Equals(1) || vm.IsUndefined)
+                // TODO: Get allowed length from transfer syntax
+                return (array as byte[][])[0];
+            else
+                throw new EncodingException(
+                    "Multiple values are not allowed within this field.", Tag,
+                    Name + "/VM", vm.ToString());            
+        }
     }
 
 }

@@ -69,6 +69,20 @@ namespace openDicom.Encoding
             }
             return shortName;
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+            string[] shortName = array as string[];
+            for (int i = 0; i < shortName.Length; i++)
+            {
+                if (shortName[i].Length > 16)
+                    throw new EncodingException(
+                        "A value of max. 16 characters is only allowed.",
+                        Tag, Name + "/item", shortName[i]);
+            }
+            string s = ToJointMultiValue(shortName);
+            return TransferSyntax.ToBytes(s);
+        }        
     }
 
 }

@@ -43,18 +43,36 @@ namespace openDicom.Encoding
             return "Sequence Of Items (SQ)";
         }
 
+        /// <summary>
+        ///     Sequences are special cases that are normally taken care of by
+        ///     the class Value, use this method if you know what you are doing.
+        /// </summary>
         protected override Array DecodeImproper(byte[] bytes)
         {
             return DecodeProper(bytes);
         }
-        
+ 
+        /// <summary>
+        ///     Sequences are special cases that are normally taken care of by
+        ///     the class Value, use this method if you know what you are doing.
+        /// </summary>
         protected override Array DecodeProper(byte[] bytes)
         {
-            // sequences are special cases that are normally taken care of by
-            // the class Value, use this method if you know what you are doing
             MemoryStream memoryStream = new MemoryStream(bytes);
             Sequence sq = new Sequence(memoryStream);
             return new Sequence[1] { sq };
+        }
+                
+        /// <summary>
+        ///     Sequences are special cases that are normally taken care of by
+        ///     the class Value, use this method if you know what you are doing.
+        /// </summary>
+        protected override byte[] Encode (Array array)
+        {
+            Sequence sq = (array as Sequence[])[0];
+            MemoryStream memoryStream = new MemoryStream();
+            sq.SaveTo(memoryStream);
+            return memoryStream.ToArray();
         }
     }
 

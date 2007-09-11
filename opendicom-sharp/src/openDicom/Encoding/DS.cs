@@ -111,10 +111,9 @@ namespace openDicom.Encoding
                 string item = decimalValue[i].ToString();
                 if (item.Length > 16)
                 {
-                    int n = int.Parse(item[15]);
-                    if (int.Parse(item[16]) >= 5) n++;
-                    item[15] = n.ToString();
-                    item = item.Remove(16, item.Length - 16);
+                    throw new EncodingException(
+                        "A value of max. 16 bytes is only allowed.",
+                        Tag, Name + "/item", item);
                 }
                 multiValue[i] = item;
             }

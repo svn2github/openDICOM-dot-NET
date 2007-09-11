@@ -69,6 +69,22 @@ namespace openDicom.Encoding
             }
             return longString;
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+            string[] longString = array as string[];
+            for (int i = 0; i < longString.Length; i++)
+            {
+                if (longString[i].Length > 64)
+                {
+                    throw new EncodingException(
+                        "A value of max. 64 characters is only allowed.", Tag,
+                        Name + "/item", longString[i]);
+                }
+            }
+            string s = ToJointMultiValue(longString);
+            return TransferSyntax.ToBytes(s);
+        }        
     }
 
 }

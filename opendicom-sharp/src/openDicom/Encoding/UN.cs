@@ -50,6 +50,12 @@ namespace openDicom.Encoding
         {
             return new byte[1][] { bytes };
         }
+        
+        protected override byte[] Encode (Array array)
+        {
+            return (array as byte[][])[0];
+        }
+
     }
 
 }

@@ -68,6 +68,26 @@ namespace openDicom.Encoding
                     Tag, Name + "/longText", longText);
             return new string[] { longText };
         }
+        
+        protected override byte[] Encode(Array array)
+        {
+            string[] longText = array as string[];
+            ValueMultiplicity vm = Tag.GetDictionaryEntry().VM;
+            if (vm.Equals(1) || vm.IsUndefined)
+            {
+                if (longText.Length > 10240)
+                {
+                    throw new EncodingException(
+                        "A value of max. 10240 characters is only allowed.",
+                        Tag, Name + "/longText", longText);                       
+                }
+            }
+            else
+                throw new EncodingException(
+                    "Multiple values are not allowed within this field.",
+                    Tag, Name + "/longText", longText);
+            return TransferSyntax.ToBytes(longText);
+        }        
     }
 
 }
