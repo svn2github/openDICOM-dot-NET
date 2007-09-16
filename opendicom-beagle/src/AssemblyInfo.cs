@@ -25,6 +25,11 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+using Beagle.Filters;
+
+// Registration as Beagle Filter Plugin
+[assembly: Beagle.Daemon.FilterTypes(typeof (FilterDicom))]
+
 // Information about this assembly is defined by the following
 // attributes.
 //

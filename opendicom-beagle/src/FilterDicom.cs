@@ -38,7 +38,7 @@ using openDicom.File;
 namespace Beagle.Filters
 {
 	
-	public class FilterDicom : Beagle.Daemon.Filter
+    public class FilterDicom : Beagle.Daemon.Filter
     {
         private static readonly string defaultDicDir =
             "/usr/share/opendicom.net/opendicom-beagle/dd/";
@@ -56,8 +56,6 @@ namespace Beagle.Filters
 
 		public FilterDicom()
 		{
-			AddSupportedFlavor(
-                FilterFlavor.NewFromMimeType("application/dicom"));
             try
             {
                 string dataElementDicFileName =
@@ -82,6 +80,12 @@ namespace Beagle.Filters
                 Error();
             }
 		}
+
+        override protected void RegisterSupportedTypes()
+        {
+			AddSupportedFlavor(
+                FilterFlavor.NewFromMimeType("application/dicom"));
+        }
 
 		override protected void DoOpen(FileInfo info)
 		{
