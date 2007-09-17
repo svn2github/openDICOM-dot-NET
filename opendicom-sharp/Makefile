@@ -11,6 +11,8 @@ BACKUPS=$(shell find -name *~)
 
 DOCS=README INSTALL LGPL license copyright release changelog
 
+OUTPUT_DIRS=bin doc
+
 ELEMENT_DIC=dicom-elements-2007.dic
 UID_DIC=dicom-uids-2007.dic
 GROUP=opendicom.net
@@ -29,12 +31,13 @@ all: build
 
 build: 
 	@sh check.sh --cmd -e mcs
+	@for DIR in $(OUTPUT_DIRS); do mkdir -p $$DIR; done
 	@sh output.sh --cyan -n "echo $(DICOM_SHARP_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_SHARP_COMPILE)"
 	@chmod -x bin/$(NAME).dll
 
 clean:
-	@rm -Rf bin/$(NAME).dll doc/$(NAME).xml doc/monodoc/* $(BACKUPS)
+	@rm -Rf $(OUTPUT_DIRS) $(BACKUPS)
 
 monodoc:
 	@sh check.sh --cmd -e monodocer

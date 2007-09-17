@@ -14,6 +14,8 @@ BACKUPS=$(shell find -name *~)
 
 DOCS=README INSTALL GPL license copyright release changelog
 
+OUTPUT_DIRS=bin
+
 ELEMENT_DIC=dicom-elements-2007.dic
 UID_DIC=dicom-uids-2007.dic
 LIB=opendicom-sharp
@@ -37,12 +39,13 @@ build:
 	@sh check.sh --cmd -e gmcs
 	@sh check.sh --lib -e $(LIB)
 	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
+	@for DIR in $(OUTPUT_DIRS); do mkdir -p $$DIR; done
 	@sh output.sh --cyan -n "echo $(DICOM_BEAGLE_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_BEAGLE_COMPILE)"
 	@chmod -x bin/$(DLL_NAME)
 
 clean:
-	@rm -Rf bin/$(DLL_NAME) $(BACKUPS)
+	@rm -Rf $(OUTPUT_DIRS) $(BACKUPS)
 
 install:
 	@sh check.sh --dir -e $(BEAGLE_HOME)/Filters

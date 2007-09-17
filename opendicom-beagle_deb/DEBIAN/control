@@ -1,12 +1,12 @@
 Package: opendicom-beagle
-Version: 0.1.1
+Version: 0.1.1-1
 Section: gnome
 Priority: optional
 Architecture: all
-Depends: opendicom-sharp (>= 0.1.1), beagle (>= 0.2.9)
+Depends: opendicom-sharp (>= 0.1.1-1), beagle (>= 0.2.9)
 Suggests: opendicom-navigator
 Provides: opendicom-beagle
-Replaces: opendicom-beagle (= 0.1.0)
+Replaces: opendicom-beagle (<= 0.1.1)
 Installed-Size: ???
 Maintainer: Albert Gnandt <agnandt@users.sourceforge.net>
 Description: DICOM filter plugin for the Beagle desktop search

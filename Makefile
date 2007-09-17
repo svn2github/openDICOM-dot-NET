@@ -27,25 +27,25 @@ clean: clean-packages
 	@make -C $(NAVI) clean
 
 build:
-	@make -C $(BEAGLE) build
 	@make -C $(LIB) build
 	@make -C $(GDK) build
 	@make -C $(UTILS) build
 	@make -C $(NAVI) build
+	@make -C $(BEAGLE) build
 
 install:
-	@make -C $(BEAGLE) install
 	@make -C $(LIB) install
 	@make -C $(GDK) install
 	@make -C $(UTILS) install
 	@make -C $(NAVI) install
+	@make -C $(BEAGLE) install
 
 uninstall:
 	@make -C $(BEAGLE) uninstall
-	@make -C $(LIB) uninstall
-	@make -C $(GDK) uninstall
-	@make -C $(UTILS) uninstall
 	@make -C $(NAVI) uninstall
+	@make -C $(UTILS) uninstall
+	@make -C $(GDK) uninstall
+	@make -C $(LIB) uninstall
 
 clean-packages:
 	@rm -f *.tar.gz *.zip *.deb
@@ -66,7 +66,7 @@ tar-balls:
 	@tar cvzf $(NAVI)_$(NAVI_RELEASE).tar.gz $(NAVI) --exclude=.svn --exclude=*.pidb > /dev/null
 	@tar cvzf $(DOC)_$(DOC_RELEASE).tar.gz $(DOC) --exclude=.svn --exclude=*.pidb > /dev/null
 zips:
-	@sh check.sh --cmd -e zip
+	@bash check.sh --cmd -e zip
 	@zip -q -r $(BEAGLE)_$(BEAGLE_RELEASE).zip $(BEAGLE) -x *.svn* -x *.pidb
 	@zip -q -r $(LIB)_$(LIB_RELEASE).zip $(LIB) -x *.svn* -x *.pidb
 	@zip -q -r $(GDK)_$(GDK_RELEASE).zip $(GDK) -x *.svn* -x *.pidb

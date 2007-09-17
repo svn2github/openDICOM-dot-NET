@@ -20,6 +20,7 @@ BACKUPS=$(shell find -name *~)
 
 DOCS=README INSTALL GPL license copyright release changelog
 
+OUTPUT_DIRS=bin doc
 
 ELEMENT_DIC=dicom-elements-2007.dic
 UID_DIC=dicom-uids-2007.dic
@@ -64,6 +65,7 @@ build:
 	@sh check.sh --cmd -e mcs
 	@sh check.sh --lib -e $(LIB)
 	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
+	@for DIR in $(OUTPUT_DIRS); do mkdir -p $$DIR; done
 	@sh output.sh --cyan -n "echo $(DICOM_DD_TRANSFORM_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_DD_TRANSFORM_COMPILE)"
 	@sh output.sh --cyan -n "echo $(DICOM_DD_QUERY_COMPILE)"
@@ -74,7 +76,7 @@ build:
 	@sh output.sh --brown -n "$(DICOM_FILE_TRANSFORM_COMPILE)"
 
 clean:
-	@rm -f bin/*.exe doc/*.xml $(BACKUPS)
+	@rm -Rf $(OUTPUT_DIRS) $(BACKUPS)
 
 install:
 	@sh check.sh --cmd -e mono
