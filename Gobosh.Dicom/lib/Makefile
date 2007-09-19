@@ -9,8 +9,6 @@ DIC=dd-ps3-2006.xml
 SOURCES=$(shell find src -name *.cs)
 BACKUPS=$(shell find -name *~)
 
-DOCS=changelog copyright GPL INSTALL license release
-
 OUTPUT_DIRS=bin doc
 
 DICOM_SHARP_COMPILE=mcs -target:library\
@@ -37,8 +35,6 @@ monodoc:
 install:
 	@mkdir /usr/lib/mono/$(NAME)
 	@mkdir -p /usr/share/$(GROUP)/$(NAME)/dd
-	@mkdir -p /usr/share/doc/$(GROUP)/$(NAME)/
-	@cp $(DOCS) /usr/share/doc/$(GROUP)/$(NAME)/
 	@cp bin/$(NAME).dll /usr/share/$(GROUP)/$(NAME)/
 	@ln -s /usr/share/$(GROUP)/$(NAME)/$(NAME).dll /usr/lib/mono/$(NAME)/$(NAME).dll
 	@cp dd/$(DIC) /usr/share/$(GROUP)/$(NAME)/dd/
@@ -49,7 +45,6 @@ install:
 uninstall:
 	@rm -Rf /usr/lib/mono/$(NAME)
 	@rm -Rf /usr/share/$(GROUP)/$(NAME)
-	@rm -Rf /usr/share/doc/$(GROUP)/$(NAME)
 	@rmdir --ignore-fail-on-non-empty /usr/share/$(GROUP)
 	@rmdir --ignore-fail-on-non-empty /usr/share/doc/$(GROUP)
 	@rm -f /usr/lib/pkgconfig/$(NAME).pc
