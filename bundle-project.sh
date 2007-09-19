@@ -7,6 +7,7 @@ LIB="opendicom-sharp"
 DOC="opendicom-sharp-doc"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
+GOBOSH="Gobosh.Dicom"
 
 
 bundle_sources()
@@ -49,7 +50,7 @@ bundle_sources()
 
 print_usage()
 {
-    echo "usage: bash bundle-project.sh {--tgz|--zip} {beagle|lib|doc|utils|navi}"
+    echo "usage: bash bundle-project.sh {--tgz|--zip} {beagle|lib|doc|utils|navi|gobosh}"
 }
 
 
@@ -68,6 +69,9 @@ case "$2" in
         ;;
     navi)
         bundle_sources $1 $NAVI
+        ;;
+    gobosh)
+        bundle_sources $1 $GOBOSH
         ;;
     *)
         print_usage
