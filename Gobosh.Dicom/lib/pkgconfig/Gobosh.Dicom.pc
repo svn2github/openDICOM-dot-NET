@@ -1,0 +1,9 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+
+
+Name: Gobosh.Dicom
+Description: Gobosh.Dicom - DICOM Mono/.NET library
+Version: 0.1
+Libs: -r:${libdir}/mono/Gobosh.Dicom/Gobosh.Dicom.dll

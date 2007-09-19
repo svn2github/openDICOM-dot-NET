@@ -1,0 +1,17 @@
+<Combine name="GtkDicomViewer" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="GtkDicomViewer" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="GtkDicomViewer" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <DeployTargets />
+  <StartMode startupentry="GtkDicomViewer" single="True">
+    <Execute type="None" entry="GtkDicomViewer" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./GtkDicomViewer/GtkDicomViewer.mdp" />
+  </Entries>
+</Combine>

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="DataDictionary">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" name="DataElement">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="group" type="xs:string" use="required" />
+                <xs:attribute name="tag" type="xs:string" use="required" />
+                <xs:attribute name="vr" type="xs:string" use="required" />
+                <xs:attribute name="min" type="xs:unsignedByte" use="required" />
+                <xs:attribute name="retired" type="xs:string" use="optional" />
+                <xs:attribute name="max" type="xs:string" use="optional" />
+                <xs:attribute name="tupel" type="xs:unsignedByte" use="optional" />
+                <xs:attribute name="tagrange" type="xs:unsignedByte" use="optional" />
+                <xs:attribute name="grouprange" type="xs:unsignedByte" use="optional" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="version" type="xs:string" use="required" />
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,82 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{75EFDA71-437B-45D1-9F82-AF6BAAAD2B9C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gobosh.DICOM</RootNamespace>
+    <AssemblyName>Gobosh.DICOM</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\lib\src\datadictionary.cs">
+      <Link>datadictionary.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomconsts.cs">
+      <Link>dicomconsts.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomdataelements.cs">
+      <Link>dicomdataelements.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomdataelementvalues.cs">
+      <Link>dicomdataelementvalues.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomdocument.cs">
+      <Link>dicomdocument.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomencodings.cs">
+      <Link>dicomencodings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomproperties.cs">
+      <Link>dicomproperties.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomreader.cs">
+      <Link>dicomreader.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomtree.cs">
+      <Link>dicomtree.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomwriter.cs">
+      <Link>dicomwriter.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\dicomxml.cs">
+      <Link>dicomxml.cs</Link>
+    </Compile>
+    <Compile Include="..\..\lib\src\Utils.cs">
+      <Link>Utils.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

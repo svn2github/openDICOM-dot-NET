@@ -1,0 +1,11 @@
+
+Gobosh.Dicom  0.1
+
+   * initial release:
+      + support of DICOM 2006 data element dictionary
+      + read and write support of DICOM and ACR-NEMA files
+      + read and write support for DICOM as XML
+      + demo apps for console, windows.forms, gtk and Windows CE
+
+ -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-09-19
+
