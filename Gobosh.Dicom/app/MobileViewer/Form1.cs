@@ -112,21 +112,21 @@ namespace MobileViewer
                             // just catch it and try the next
                             myDocument = null;
                         }
-                        // load the Lb.DICOM XML variant
-                        if (myDocument == null)
-                        {
-                            XmlDocument myXml = new XmlDocument();
-                            myXml.Load(myFileName);
-                            myDocument = null;
-                            myDocument = new Document();
-                            myDocument.SetDataDictionary(myPath + DataDictionaryToUse);
-                            // use current culture
+                        //// load the Lb.DICOM XML variant
+                        //if (myDocument == null)
+                        //{
+                        //    XmlDocument myXml = new XmlDocument();
+                        //    myXml.Load(myFileName);
+                        //    myDocument = null;
+                        //    myDocument = new Document();
+                        //    myDocument.SetDataDictionary(myPath + DataDictionaryToUse);
+                        //    // use current culture
 
-                            myDocument.LoadFromLbDicomXML(myXml, System.Globalization.CultureInfo.CurrentCulture.Name, Path.GetDirectoryName(myFileName));
+                        //    myDocument.LoadFromLbDicomXML(myXml, System.Globalization.CultureInfo.CurrentCulture.Name, Path.GetDirectoryName(myFileName));
 
-                            myXml = null;
-                            PopulateTree(Path.GetFileName(myFileName));
-                        }
+                        //    myXml = null;
+                        //    PopulateTree(Path.GetFileName(myFileName));
+                        //}
                     }
                     else
                     {

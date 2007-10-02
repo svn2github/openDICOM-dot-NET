@@ -7,5 +7,11 @@ Gobosh.Dicom  0.1
       + read and write support for DICOM as XML
       + demo apps for console, windows.forms, gtk and Windows CE
 
- -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-09-19
+   * maintenance (2007-10-02)
+      + added support for data dictionaries as embedded resources
+      + embedded the 2006 data dictionary to the library and the
+        Windows CE project (supports Windows Mobile 6 now)
+
+ -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-10-02
+
 

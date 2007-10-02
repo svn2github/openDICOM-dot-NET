@@ -1,7 +1,7 @@
 
 Gobosh.DICOM
 
-a C# library to handle DICOM Documents.
+a cross-platform C# library to handle DICOM Documents.
 
 Copyright (C) 2006,2007  Timo Kaluza
 
