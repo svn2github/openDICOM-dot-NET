@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("gobosh.net")]
 [assembly: AssemblyProduct("Gobosh.DICOM")]
 [assembly: AssemblyCopyright("Copyright ©  2007 Timo Kaluza")]
-[assembly: AssemblyTrademark("DICOM(r) NEMA")]
+[assembly: AssemblyTrademark("DICOM is a trademark of NEMA")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die mit einer Assembly verknüpft sind.
 [assembly: AssemblyTitle("MobileViewer")]
-[assembly: AssemblyDescription("TestDicomViewer for mobile devices")]
+[assembly: AssemblyDescription("Example DicomViewer for mobile devices")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Gobosh")]
 [assembly: AssemblyProduct("GOBOSH.DICOM")]
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      Buildnummer
 //      Revision
 //
-[assembly: AssemblyVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
 
