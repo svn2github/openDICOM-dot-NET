@@ -1051,15 +1051,18 @@ namespace Gobosh
 							}
 							if ( isItemDelimitationItem() )
 							{
+                                // FFFE,E00D
 								setSyntaxState(SyntaxParserState.kPopIVRSequence,0);
 							}
 							else
 							{
+                                // FFFE,E0DD
+                                popSequenceStack();
 								// next state is Continuation
 								setSyntaxState(SyntaxParserState.kReadIVRGroupNumber,2);
+                                
 							}
-							// end of the sequence
-							popSequenceStack();
+							// end of the sequence							
 							break;
 
 						case SyntaxParserState.kPopIVRSequence:							

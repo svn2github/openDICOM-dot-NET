@@ -15,6 +15,13 @@ Gobosh.Dicom  0.2
         Windows CE project (supports Windows Mobile 6 now)
       + demo projects now compile and run out of the box (embedded data dictionary)
 
- -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-10-03
+Gobosh.Dicom  0.3
+
+   * bugfix release:
+      + fixed a bug in handling of Sequence of Items in implicit
+        encoding with items with undefined length and item delimitation
+        tags (was causing an "Empty Stack" exception)
+
+ -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-12-05
 
 
