@@ -432,7 +432,7 @@ namespace Gobosh
                         // iterate through the Values
                         foreach (DataElementATValue a in Values)
                         {
-                            index = a.WriteToRawBuffer(RawData, index, IsLittleEndian);
+                            index = a.WriteToRawBuffer(RawData, index, NodeIsLittleEndian);
                         }
                     }
                     else
@@ -1512,7 +1512,7 @@ namespace Gobosh
                         foreach (object k in Values)
                         {
                             DataElementIntegerValue l = (DataElementIntegerValue)(k);
-                            Utils.WriteInt16(l.getValueAsInteger(), RawData, i, IsLittleEndian);
+                            Utils.WriteInt16(l.getValueAsInteger(), RawData, i, NodeIsLittleEndian);
                             i += 2;
                         }
                     }
@@ -1722,7 +1722,7 @@ namespace Gobosh
 				{
 					if ( DataValueState != DataState.IsRawAndDecoded && DataValueState != DataState.IsDecodedOnly )
 					{
-						Decode(IsLittleEndian);
+						Decode(NodeIsLittleEndian);
 					}
 
 					StringBuilder myNewString = new StringBuilder(Values.Count*17);
@@ -1836,7 +1836,7 @@ namespace Gobosh
 
                         foreach (DataElementIntegerValue k in Values)
                         {
-                            Utils.WriteInt32(k.getValueAsInteger(), RawData, i, IsLittleEndian);
+                            Utils.WriteInt32(k.getValueAsInteger(), RawData, i, NodeIsLittleEndian);
                             i += 4;
                         }
                     }
@@ -2001,7 +2001,7 @@ namespace Gobosh
                     int i = 0;
                     foreach (DataElementIntegerValue k in Values)
                     {
-                        Utils.WriteUInt16((UInt16) k.getValueAsInteger(), RawData, i, IsLittleEndian);
+                        Utils.WriteUInt16((UInt16) k.getValueAsInteger(), RawData, i, NodeIsLittleEndian);
                         i += 2;
                     }
                     ValueLength = newsize;

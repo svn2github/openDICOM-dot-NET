@@ -22,6 +22,14 @@ Gobosh.Dicom  0.3
         encoding with items with undefined length and item delimitation
         tags (was causing an "Empty Stack" exception)
 
+Gobosh.Dicom  0.4
+
+   * maintenance release
+      + added experimental decoding of "IMAGE PIXEL MACRO ATTRIBUTES"
+        (see PS3.3-2006, C.7-11b)
+      + Utils class is now public
+      + Introduced "IsLittleEndian()" function for DataElement nodes
+
  -- Timo Kaluza  (tkaluza@users.sourceforge.net)  2007-12-05
 
 

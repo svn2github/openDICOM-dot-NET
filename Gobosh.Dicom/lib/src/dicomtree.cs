@@ -98,7 +98,7 @@ namespace Gobosh
 			/// <summary>
 			/// True, if RawBuffer be encoded little endian
 			/// </summary>
-			protected bool IsLittleEndian;
+			protected bool NodeIsLittleEndian;
 
 			/// <summary>
 			/// The values that are stored in the Data Element. Access is protected
@@ -194,7 +194,7 @@ namespace Gobosh
 				}
 				this.IsInitialized = true;
 				this.UsedEncoding = encodingUsed;
-				this.IsLittleEndian = isLittleEndian;
+				this.NodeIsLittleEndian = isLittleEndian;
 				//this.Values = new ArrayList();
 			}
 
@@ -385,7 +385,7 @@ namespace Gobosh
 				// if no values are decoded, decode them
 				if ( DataValueState == DataState.IsRawOnly )
 				{
-					Decode( IsLittleEndian );
+					Decode( NodeIsLittleEndian );
 					// now both representations exist
                     // TODO: check why this is commented out
                     // DataValueState = DataState.IsRawAndDecoded;
@@ -594,11 +594,11 @@ namespace Gobosh
                  * the raw buffer is cleared. It will be recoded
                  * when necessary
                  */
-                if (IsLittleEndian != isLittleEndian)
+                if (NodeIsLittleEndian != isLittleEndian)
                 {
                     CallPrepareDecodedValues();
                     PurgeRawData();
-                    IsLittleEndian = isLittleEndian;
+                    NodeIsLittleEndian = isLittleEndian;
                 }
                 foreach (DataElement c in List)
                 {
@@ -635,11 +635,11 @@ namespace Gobosh
                 }
 
                 // check if the transfersyntax needs to be updated
-                if (IsLittleEndian != isLittleEndian)
+                if (NodeIsLittleEndian != isLittleEndian)
                 {
                     CallPrepareDecodedValues();
                     PurgeRawData();
-                    IsLittleEndian = isLittleEndian;
+                    NodeIsLittleEndian = isLittleEndian;
                 }
 
 				// check if Prepare Raw Buffer is neccessary
@@ -1211,6 +1211,15 @@ namespace Gobosh
             public DataDictionary GetDataDictionary()
             {
                 return UsedDataDictionary;
+            }
+
+            /// <summary>
+            /// Gets the endianess of the node
+            /// </summary>
+            /// <returns>true, if the node is little endian</returns>
+            public bool IsLittleEndian()
+            {
+                return NodeIsLittleEndian;
             }
 
             /// <summary>

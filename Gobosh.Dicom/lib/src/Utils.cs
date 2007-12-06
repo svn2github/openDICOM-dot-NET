@@ -28,7 +28,8 @@ namespace Gobosh
 	/// The Utils class provides several static functions to read and write distinct data types
 	/// from a stream in a given endianess.
 	/// </summary>
-	sealed class Utils
+    /// <remarks>The Utils class is made public so it can be used even when the library is used as DLL</remarks>
+	public sealed class Utils
 	{
 
 		/// <summary>

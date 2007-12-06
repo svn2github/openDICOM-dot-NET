@@ -1,5 +1,5 @@
 /*  DicomViewer
- *  v.0.4
+ *  v.0.5
  *  
  * (C) 2006,2007 Timo Kaluza
  * tk@gobosh.net
@@ -19,8 +19,13 @@
  * 
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
  *
- * 
+ *  ******************************************************************************************
  *  This is an application to test and debug the Gobosh.DICOM namespace and its functionality.
+ *  Especially decoding the actual pixel data is incomplete and does not suit any professional
+ *  accuracy or performance needs!
+ *  ******************************************************************************************
+ * 
+ *  Feel free to participate.
  * 
  * 
  */
@@ -33,6 +38,7 @@ using System.Windows.Forms;
 using System.Data;
 using System.Xml;
 using System.IO;
+using Gobosh;
 using Gobosh.DICOM;
 
 namespace DicomViewer
@@ -283,7 +289,7 @@ namespace DicomViewer
             this.Controls.Add(this.treeView1);
             this.Menu = this.mainMenu1;
             this.Name = "Form1";
-            this.Text = "Dicom Test Viewer 0.4";
+            this.Text = "Dicom Test Viewer 0.5";
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -429,6 +435,10 @@ namespace DicomViewer
 			{
                 if (k.RawData != null)
                 {
+                    if (pictureBox1.Image == null)
+                    {
+                        pictureBox1.Image = null;
+                    }
                     MemoryStream m = new MemoryStream(k.RawData, 0, k.ValueLength, false, true);
                     try
                     {
@@ -436,9 +446,19 @@ namespace DicomViewer
                     }
                     catch
                     {
-                        pictureBox1.Image = null;
+                        // pictureBox1.Image = null;
                     }
-                    m = null;
+                    if (pictureBox1.Image == null)
+                    {
+                        try
+                        {
+                            DecodeStandardPixeldata();
+                        }
+                        catch
+                        {
+                        }
+                    }
+                    m.Dispose();
                 }
 			}
 			else
@@ -502,13 +522,130 @@ namespace DicomViewer
 
         private void menuItem5_Click(object sender, EventArgs e)
         {
-            // test routine
-            //if (currentNode is Gobosh.DICOM.DataElements.AS)
-            //{
-            //    Gobosh.DICOM.DataElements.AS k = ( Gobosh.DICOM.DataElements.AS ) currentNode;
-            //    ((Gobosh.DICOM.DataElementAgeStringValue)(k.GetValue(0))).GetProperty("AgeNumber").Set(21);
-            //    k.WriteToByteArray(true, false) ;
-            //}
+
+        }
+
+        private void DecodeStandardPixeldata()
+        {
+            // *******************************************************************************
+            // this is just a quick hack implementation and not suitable for production:
+            // it solely demonstrates the access to several DataElements and the possible
+            // use in the decoding.
+            // Actual decoding is planned to be an on-top layer for the current implementation
+            // *******************************************************************************
+
+            int Rows, Cols, BitsAllocated, BitsStored, HighBit;
+            int smallestGrey, highestGray;
+
+            // get the root node
+            Gobosh.DICOM.DataElement myRoot = myDocument.GetRootNode();
+            Gobosh.DICOM.DataElement aNode;
+
+            // get the image dimensions
+            Rows = ((Gobosh.DICOM.DataElementIntegerValue)myRoot.GetChildByTag(0x0028, 0x0010).GetValue()).getValueAsInteger();
+            Cols = ((Gobosh.DICOM.DataElementIntegerValue)myRoot.GetChildByTag(0x0028, 0x0011).GetValue()).getValueAsInteger();
+            BitsAllocated = ((Gobosh.DICOM.DataElementIntegerValue)myRoot.GetChildByTag(0x0028, 0x0100).GetValue()).getValueAsInteger();
+            BitsStored = ((Gobosh.DICOM.DataElementIntegerValue)myRoot.GetChildByTag(0x0028, 0x0101).GetValue()).getValueAsInteger();
+            HighBit = ((Gobosh.DICOM.DataElementIntegerValue)myRoot.GetChildByTag(0x0028, 0x0102).GetValue()).getValueAsInteger();
+
+            // grey values
+            aNode = myRoot.GetChildByTag(0x0028, 0x0106);
+            if (aNode != null)
+            {
+                smallestGrey = ((Gobosh.DICOM.DataElementIntegerValue)aNode.GetValue()).getValueAsInteger();
+            }
+            else
+            {
+                smallestGrey = 0;
+            }
+
+            aNode = myRoot.GetChildByTag(0x0028, 0x0107);
+            if (aNode != null)
+            {
+                highestGray = ((Gobosh.DICOM.DataElementIntegerValue)aNode.GetValue()).getValueAsInteger();
+            }
+            else
+            {
+                highestGray = 0;    // need to determine
+                aNode = myRoot.GetChildByTag(0x7fe0, 0x0010); 
+                int gxx;
+                bool endian = aNode.IsLittleEndian();
+                for (int i = 0; i < Rows * Cols; i++)
+                {
+                    if (BitsAllocated > 8)
+                    {
+                        gxx = Utils.ReadUInt16(aNode.RawData, i * 2, endian);
+                    }
+                    else
+                    {
+                        gxx = aNode.RawData[i];
+                    }
+                    if (gxx > highestGray)
+                    {
+                        highestGray = gxx;
+                    }
+                }
+                
+            }
+
+            pictureBox1.Visible = true;
+            richTextBox1.Visible = false;
+
+            aNode = myRoot.GetChildByTag(0x7fe0, 0x0010); 
+
+            // make me a bitmap
+            // System.Drawing.Bitmap img
+                this.pictureBox1.Image = new System.Drawing.Bitmap(Cols, Rows, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                Graphics g = Graphics.FromImage(pictureBox1.Image);
+
+            int BytesAllocated = 1;
+
+            if (BitsAllocated > 8)
+            {
+                BytesAllocated = 2;
+            }           
+            int offset = 0;
+            bool isLittleEndian = aNode.IsLittleEndian();
+            int myMask = (int)((Math.Pow(2, BitsStored)) - 1);
+
+            for (int y = 0; y < Rows; y++)
+            {
+                for (int x = 0; x < Cols; x++)
+                {
+                    // ** experimental **
+                    // the inner loop of this is not very fast, especially
+                    // plotting the pixels via DrawLine() is bad style.
+                    int greyvalue;
+                    if (BytesAllocated > 1)
+                    {
+                        greyvalue = Utils.ReadUInt16(aNode.RawData, offset, isLittleEndian);
+                    }
+                    else
+                    {
+                        greyvalue = aNode.RawData[offset];
+                    }
+                    offset += BytesAllocated;       // increase offset to the next pixel
+
+                    // unmask and shift the value (this is possible to be wrong)
+                    greyvalue = greyvalue >> (BitsStored - (HighBit + 1));
+                    greyvalue = greyvalue & myMask;
+                    if (greyvalue > highestGray)
+                    {
+                        greyvalue = highestGray;    // partially this is exceeded
+                    }
+                    greyvalue = (greyvalue * 255) / (highestGray /* - smallestGrey */);
+                    if (greyvalue > 255)
+                    {
+                        greyvalue = 255;
+                    }
+                    Pen p = new Pen(Color.FromArgb(greyvalue, greyvalue, greyvalue));
+                    g.DrawLine(p, x, y, x+1, y);    // +1 because of the GDI+ behaviour not to draw lines from and to the same point
+                    p.Dispose();
+                }
+            }
+
+            g.Flush();
+            g.Dispose();
         }
 
         private void SelectDD2006_Click(object sender, EventArgs e)
@@ -556,6 +693,10 @@ namespace DicomViewer
                 if (n is Gobosh.DICOM.DataElements.PN)
                 {
                     n.SetValue("Onymous^A^N^^");
+                }
+                if (n is Gobosh.DICOM.DataElements.DT)
+                {
+                    n.SetValue("1900.01.01");
                 }
                 if (n.Count > 0)
                 {
