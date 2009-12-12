@@ -7,7 +7,6 @@ LIB="opendicom-sharp"
 DOC="opendicom-sharp-doc"
 UTILS="opendicom-utils"
 NAVI="opendicom-navigator"
-GOBOSH="Gobosh.Dicom"
 
 
 bundle_sources()
@@ -32,11 +31,11 @@ bundle_sources()
     case "$1" in
         --tgz)
             BUNDLE="$NAME.tar.gz"
-            tar cvzf $BUNDLE $NAME --exclude=.svn --exclude=*.pidb > /dev/null
+            tar cvzf $BUNDLE $NAME --exclude=.svn --exclude=*.pidb --exclude=*.suo > /dev/null
             ;;
         --zip)
             BUNDLE="$NAME.zip"
-            zip -q -r $BUNDLE $NAME -x *.svn* -x *.pidb
+            zip -q -r $BUNDLE $NAME -x *.svn* -x *.pidb -x *.suo
             ;;
     esac
 
@@ -50,7 +49,7 @@ bundle_sources()
 
 print_usage()
 {
-    echo "usage: bash bundle-project.sh {--tgz|--zip} {beagle|lib|doc|utils|navi|gobosh}"
+    echo "usage: bash bundle-project.sh {--tgz|--zip} {beagle|lib|doc|utils|navi}"
 }
 
 
@@ -69,9 +68,6 @@ case "$2" in
         ;;
     navi)
         bundle_sources $1 $NAVI
-        ;;
-    gobosh)
-        bundle_sources $1 $GOBOSH
         ;;
     *)
         print_usage
