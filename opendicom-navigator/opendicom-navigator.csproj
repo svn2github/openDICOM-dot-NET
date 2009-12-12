@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="2.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>src</AppDesignerFolder>
+    <RootNamespace>opendicom-navigator</RootNamespace>
+    <AssemblyName>opendicom-navigator</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+ <Reference Include="System" /> <Reference Include="System.XML" /> <Reference Include="atk-sharp" /> <Reference Include="glib-sharp" /> <Reference Include="gdk-sharp" /> <Reference Include="gtk-sharp" /> <Reference Include="glade-sharp" /> <Reference Include="pango-sharp" /> <Reference Include="opendicom-sharp"><HintPath>..\opendicom-sharp\bin\opendicom-sharp.dll</HintPath></Reference> <Reference Include="opendicom-sharp-gdk"><HintPath>..\opendicom-sharp-gdk\bin\opendicom-sharp-gdk.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+<Compile Include="src\dicom-file-navigator\ExportAsFileChooserDialog.cs" /> <Compile Include="src\dicom-file-navigator\SaveImageFileChooserDialog.cs" /> <Compile Include="src\dicom-file-navigator\Main.cs" /> <Compile Include="src\dicom-file-navigator\AssemblyInfo.cs" /> <Compile Include="src\dicom-file-navigator\LicenseDialog.cs" /> <Compile Include="src\dicom-file-navigator\Configuration.cs" /> <Compile Include="src\dicom-file-navigator\Resources.cs" /> <Compile Include="src\dicom-file-navigator\GenericOpenFileChooserDialog.cs" /> <Compile Include="src\dicom-file-navigator\AboutDialog.cs" /> <Compile Include="src\dicom-file-navigator\PreferencesDialog.cs" /> <Compile Include="src\dicom-file-navigator\GladeWidget.cs" /> <Compile Include="src\dicom-file-navigator\MainWindow.cs" /> <Compile Include="src\dicom-file-navigator\ExceptionDialog.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

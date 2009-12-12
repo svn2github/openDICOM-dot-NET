@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C# Express 2008
+
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-sharp", "opendicom-sharp\opendicom-sharp.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-sharp-gdk", "opendicom-sharp-gdk\opendicom-sharp-gdk.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-utils", "opendicom-utils\opendicom-utils.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-navigator", "opendicom-navigator\opendicom-navigator.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="2.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>src</AppDesignerFolder>
+    <RootNamespace>opendicom-utils</RootNamespace>
+    <AssemblyName>opendicom-utils</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkSubset>
+    </TargetFrameworkSubset>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+ <Reference Include="System" /> <Reference Include="System.XML" /> <Reference Include="opendicom-sharp"><HintPath>..\opendicom-sharp\bin\opendicom-sharp.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+<Compile Include="src\dicom-dd-query\Main.cs" /> <Compile Include="src\dicom-dd-query\AssemblyInfo.cs" /> <Compile Include="src\dicom-dd-transform\Main.cs" /> <Compile Include="src\dicom-dd-transform\AssemblyInfo.cs" /> <Compile Include="src\dicom-file-query\Main.cs" /> <Compile Include="src\dicom-file-query\AssemblyInfo.cs" /> <Compile Include="src\dicom-file-transform\Main.cs" /> <Compile Include="src\dicom-file-transform\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
