@@ -740,13 +740,11 @@
             DICOM tag (0028,1203).
             </summary>
         </member>
-        <member name="M:openDicom.Image.PaletteColorLookupTable.LoadFrom(openDicom.DataStructure.DataSet.DataSet)">
+        <member name="M:openDicom.Image.PaletteColorLookupTable.IsValid(openDicom.DataStructure.DataSet.DataSet)">
             <summary>
             Re-creates a palette color LUT instance from the specified data
             set.
             </summary>
-        </member>
-        <member name="M:openDicom.Image.PaletteColorLookupTable.IsValid(openDicom.DataStructure.DataSet.DataSet)">
             <summary>
             Determines whether specified data set contains the minimum
             of necessary content for working with palette color LUT.
@@ -2462,6 +2460,24 @@
         <member name="T:openDicom.Encoding.SequenceOfItems">
             <summary>
             This class represents the specific DICOM VR Sequence of Items (SQ).
+            </summary>
+        </member>
+        <member name="M:openDicom.Encoding.SequenceOfItems.DecodeImproper(System.Byte[])">
+            <summary>
+            Sequences are special cases that are normally taken care of by
+            the class Value, use this method if you know what you are doing.
+            </summary>
+        </member>
+        <member name="M:openDicom.Encoding.SequenceOfItems.DecodeProper(System.Byte[])">
+            <summary>
+            Sequences are special cases that are normally taken care of by
+            the class Value, use this method if you know what you are doing.
+            </summary>
+        </member>
+        <member name="M:openDicom.Encoding.SequenceOfItems.Encode(System.Array)">
+            <summary>
+            Sequences are special cases that are normally taken care of by
+            the class Value, use this method if you know what you are doing.
             </summary>
         </member>
         <member name="T:openDicom.Encoding.SignedShort">

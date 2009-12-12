@@ -14,17 +14,41 @@ SLN_TEMPLATE="opendicom.sln.template"
 
 generate_csproj()
 {
-    FILES=`find $1/src -name *.cs | \
-        sed 's#^'"$1"'/##' | \
-		sed 's#/#\\\\\\\\#g' | \
-        awk '{ print "<Compile Include=\"" $0 "\" />" }'`
+    ASSEMBLIES=`find $1/src -name AssemblyInfo.cs`
+
+    if [ `echo $ASSEMBLIES | sed 's# #\n#g' | wc -l` -gt 1 ]; then
+        ASSEMBLIES=`echo $ASSEMBLIES | sed 's#'"$1"'/src/##g' | sed 's#/AssemblyInfo.cs##g'`
+        for PROJECT in $ASSEMBLIES; do
+            generate_single_csproj $PROJECT $1 $2 $3
+        done
+    else
+        generate_single_csproj $1 $1 $2 $3
+    fi
+}
+
+generate_single_csproj()
+{
+    if [ "$1" != "$2" ]; then
+        FILES=`find $2/src/$1 -name *.cs`
+    else
+        FILES=`find $2/src -name *.cs`
+    fi
+
+    COMPILE=""
+    for F in $FILES; do
+        F=`echo $F | \
+            sed 's#'"$2"'/##g' | \
+            sed 's#/#\\\\\\\\#g' | \
+            awk '{ print "<Compile Include=\""$0"\" />" }'`
+        COMPILE="$COMPILE $F"
+    done
 
     # replace file list seperators
-    FILES=`echo $FILES | sed 's/ / /'`
+    FILES=`echo $COMPILE | sed 's/ / /'`
 
     REFS=""
 
-    for NAME in $3; do
+    for NAME in `echo $4 | sed 's#,# #g'`; do
         if [ -e "$NAME/$NAME.csproj" ]; then
             # project
             REF_TO="$NAME"
@@ -43,18 +67,21 @@ generate_csproj()
 
     cat $CSPROJ_TEMPLATE | \
         sed 's/{{PROJECT}}/'"$1"'/g' | \
-        sed 's/{{TARGET}}/'"$2"'/g' | \
+        sed 's/{{TARGET}}/'"$3"'/g' | \
         sed 's#{{FILES}}#'"$FILES"'#g' | \
-        sed 's#{{REFS}}#'"$REFS"'#g' > $1/$1.csproj
+        sed 's#{{REFS}}#'"$REFS"'#g' > $2/$1.csproj
 }
-
 
 generate_sln()
 {
     ENTRIES=""
 
     for PROJECT in $@; do
-        ENTRIES="$ENTRIES\nProject(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"$PROJECT\", \"$PROJECT\\\\$PROJECT.csproj\", \"{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}\"\nEndProject"
+        FILES=`ls -A1 $PROJECT/*.csproj`
+        for F in $FILES; do
+            F=`echo $F | sed -e 's#^'"$PROJECT"'/##' -e 's#\.csproj$##'`
+            ENTRIES="$ENTRIES\nProject(\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\") = \"$F\", \"$PROJECT\\\\$F.csproj\", \"{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}\"\nEndProject"
+        done
     done
 
     SLN_FILE=`echo $SLN_TEMPLATE | sed 's/\.template//'`
@@ -64,10 +91,10 @@ generate_sln()
 }
 
 
-generate_csproj $LIB Library "System System.XML"
-generate_csproj $GDK Library "glib-sharp gdk-sharp $LIB"
-generate_csproj $UTILS Exe "System System.XML $LIB"
-generate_csproj $NAVI WinExe "System System.XML atk-sharp glib-sharp gdk-sharp gtk-sharp glade-sharp pango-sharp $LIB $GDK"
+generate_csproj $LIB Library "System,System.XML"
+generate_csproj $GDK Library "glib-sharp,gdk-sharp,$LIB"
+generate_csproj $UTILS Exe "System,System.XML,$LIB"
+generate_csproj $NAVI WinExe "System,System.XML,atk-sharp,glib-sharp,gdk-sharp,gtk-sharp,glade-sharp,pango-sharp,$LIB,$GDK"
 
 generate_sln $LIB $GDK $UTILS $NAVI
 

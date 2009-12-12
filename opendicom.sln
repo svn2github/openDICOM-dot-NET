@@ -6,6 +6,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-sharp", "opendico
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-sharp-gdk", "opendicom-sharp-gdk\opendicom-sharp-gdk.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dicom-dd-query", "opendicom-utils\dicom-dd-query.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dicom-dd-transform", "opendicom-utils\dicom-dd-transform.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dicom-file-query", "opendicom-utils\dicom-file-query.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dicom-file-transform", "opendicom-utils\dicom-file-transform.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-utils", "opendicom-utils\opendicom-utils.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "opendicom-navigator", "opendicom-navigator\opendicom-navigator.csproj", "{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}"

@@ -6,10 +6,10 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9DEFBD13-B7C7-48D9-8AC8-FAE3B547AC8B}</ProjectGuid>
-    <OutputType>{{TARGET}}</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>src</AppDesignerFolder>
-    <RootNamespace>{{PROJECT}}</RootNamespace>
-    <AssemblyName>{{PROJECT}}</AssemblyName>
+    <RootNamespace>dicom-file-query</RootNamespace>
+    <AssemblyName>dicom-file-query</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkSubset>
@@ -33,10 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-{{REFS}}
+ <Reference Include="System" /> <Reference Include="System.XML" /> <Reference Include="opendicom-sharp"><HintPath>..\opendicom-sharp\bin\opendicom-sharp.dll</HintPath></Reference>
   </ItemGroup>
   <ItemGroup>
-{{FILES}}
+<Compile Include="src\dicom-file-query\Main.cs" /> <Compile Include="src\dicom-file-query\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
