@@ -62,7 +62,6 @@ generate_single_csproj()
             REF_TO="$NAME"
             REFS="$REFS <Reference Include=\"$REF_TO\" />"
         fi
-
     done
 
     cat $CSPROJ_TEMPLATE | \
