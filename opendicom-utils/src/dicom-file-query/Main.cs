@@ -140,7 +140,7 @@ public sealed class DicomFileQuery
 
     public static string GetDefaultDic(string fileName, string format)
     {
-        if (File.Exists(defaultLinuxDir + fileName))
+        if (System.IO.File.Exists(defaultLinuxDir + fileName))
             return format + defaultLinuxDir + fileName;
         else
             return format + fileName;

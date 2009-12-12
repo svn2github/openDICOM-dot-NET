@@ -71,7 +71,7 @@ namespace openDicom.Encoding
         
         protected override byte[] Encode(Array array)
         {
-            string[] longText = array as string[];
+            string longText = (array as string[])[0];
             ValueMultiplicity vm = Tag.GetDictionaryEntry().VM;
             if (vm.Equals(1) || vm.IsUndefined)
             {
@@ -87,7 +87,7 @@ namespace openDicom.Encoding
                     "Multiple values are not allowed within this field.",
                     Tag, Name + "/longText", longText);
             return TransferSyntax.ToBytes(longText);
-        }        
+        }
     }
 
 }

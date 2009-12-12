@@ -29,7 +29,7 @@ GLADE_SHARP=glade-sharp-2.0
 GLADE_VERSION=2.10
 
 
-DICOM_FILE_NAVI_COMPILE=mcs -target:exe\
+DICOM_FILE_NAVI_COMPILE=gmcs -target:exe\
 	-nowarn:$(IGNORE_WARNINGS)\
 	-pkg:$(LIB)\
 	-pkg:$(GLADE_SHARP)\
@@ -50,7 +50,7 @@ DICOM_FILE_NAVI_COMPILE=mcs -target:exe\
 all: build
 
 build:
-	@sh check.sh --cmd -e mcs
+	@sh check.sh --cmd -e gmcs
 	@sh check.sh --lib -e $(LIB) $(GTK_SHARP) $(GLADE_SHARP)
 	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
 	@sh check.sh --lib-version -ge $(GTK_VERSION) $(GTK_SHARP)

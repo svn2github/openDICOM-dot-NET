@@ -18,7 +18,7 @@ UID_DIC=dicom-uids-2007.dic
 GROUP=opendicom.net
 NAME=opendicom-sharp
 
-DICOM_SHARP_COMPILE=mcs -target:library\
+DICOM_SHARP_COMPILE=gmcs -target:library\
 	-nowarn:$(IGNORE_WARNINGS)\
 	-doc:doc/$(NAME).xml\
 	-out:bin/$(NAME).dll\
@@ -30,7 +30,7 @@ DICOM_SHARP_MONODOC=monodocer -assembly:bin/$(NAME).dll -path:doc -updateto:doc/
 all: build 
 
 build: 
-	@sh check.sh --cmd -e mcs
+	@sh check.sh --cmd -e gmcs
 	@for DIR in $(OUTPUT_DIRS); do mkdir -p $$DIR; done
 	@sh output.sh --cyan -n "echo $(DICOM_SHARP_COMPILE)"
 	@sh output.sh --brown -n "$(DICOM_SHARP_COMPILE)"

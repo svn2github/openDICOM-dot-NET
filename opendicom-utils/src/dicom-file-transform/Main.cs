@@ -138,7 +138,7 @@ public sealed class DicomFileTransform
 
     public static string GetDefaultDic(string fileName, string format)
     {
-        if (File.Exists(defaultLinuxDir + fileName))
+        if (System.IO.File.Exists(defaultLinuxDir + fileName))
             return format + defaultLinuxDir + fileName;
         else
             return format + fileName;
@@ -347,7 +347,7 @@ public sealed class DicomFileTransform
                     {
                         targetFileName += ".dcm";
                     }
-                    long startTicks = DateTime.Now.Ticks;
+                    startTicks = DateTime.Now.Ticks;
                     dicomFile.SaveTo(targetFileName);
                     Console.WriteLine("Writing took {0} ms.",
                         (DateTime.Now.Ticks - startTicks) / 10000);
@@ -364,7 +364,7 @@ public sealed class DicomFileTransform
                     if (targetFileName.Equals(""))
                         targetFileName = dicomFileName + ".xml";
                     Console.WriteLine("Writing {0}.", targetFileName); 
-                    long startTicks = DateTime.Now.Ticks;
+                    startTicks = DateTime.Now.Ticks;
                     XmlFile xml = new XmlFile(dicomFile, ! includePixelData);
                     xml.SaveTo(targetFileName);
                     Console.WriteLine("Writing took {0} ms.",

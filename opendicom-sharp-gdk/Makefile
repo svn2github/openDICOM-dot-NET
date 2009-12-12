@@ -24,7 +24,7 @@ LIB_VERSION=0.2
 GTK_SHARP=gtk-sharp-2.0
 GTK_VERSION=2.10
 
-DICOM_SHARP_COMPILE=mcs -target:library\
+DICOM_SHARP_COMPILE=gmcs -target:library\
 	-nowarn:$(IGNORE_WARNINGS)\
 	-pkg:$(GTK_SHARP)\
 	-doc:doc/$(NAME).xml\
@@ -37,7 +37,7 @@ DICOM_SHARP_MONODOC=monodocer -assembly:bin/$(NAME).dll -path:doc -updateto:doc/
 all: build 
 
 build: 
-	@sh check.sh --cmd -e mcs
+	@sh check.sh --cmd -e gmcs
 	@sh check.sh --lib -e $(LIB) $(GTK_SHARP)
 	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
 	@sh check.sh --lib-version -ge $(GTK_VERSION) $(GTK_SHARP)

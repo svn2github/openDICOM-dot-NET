@@ -62,9 +62,9 @@ namespace Beagle.Filters
                     defaultDicDir + defaultDataElementDicFileName;
                 string uidDicFileName =
                     defaultDicDir + defaultUidDicFileName;
-                if ( ! File.Exists(dataElementDicFileName))
+                if ( ! System.IO.File.Exists(dataElementDicFileName))
                     dataElementDicFileName = defaultDataElementDicFileName;
-                if ( ! File.Exists(uidDicFileName))
+                if ( ! System.IO.File.Exists(uidDicFileName))
                     uidDicFileName = defaultUidDicFileName;
                 DataElementDictionary dataElementDic = 
                     new DataElementDictionary();

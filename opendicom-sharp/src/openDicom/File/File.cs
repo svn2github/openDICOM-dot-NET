@@ -57,7 +57,7 @@ namespace openDicom.File
         /// </summary>
         public static AcrNemaFile LoadFrom(string fileName)
         {
-            if (DicomFile.IsDicomFile(fileName))
+/*            if (DicomFile.IsDicomFile(fileName))
             {
                 return new DicomFile(fileName, useStrictDecoding);
             } 
@@ -72,7 +72,8 @@ namespace openDicom.File
             else
             {
                 return null;
-            }
+            }*/
+			return null;
         }
     }
 

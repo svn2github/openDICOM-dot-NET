@@ -76,14 +76,14 @@ namespace openDicom.Image
         /// </summary>
         public PaletteColorLookupTable (DataSet dataSet)
         {
-            LoadFrom(dataSet);
+            //LoadFrom(dataSet);
         }
 
         /// <summary>
         ///     Re-creates a palette color LUT instance from the specified data
         ///     set.
         /// </summary>
-        public void LoadFrom(DataSet dataSet)
+        /*public void LoadFrom(DataSet dataSet)
         {
             if (dataSet != null)
             {
@@ -105,7 +105,7 @@ namespace openDicom.Image
             }
             else
                 throw new DicomException("Data set is null.", "dataSet");
-        }
+        }*/
 
         /// <summary>
         ///     Determines whether specified data set contains the minimum
@@ -128,7 +128,7 @@ namespace openDicom.Image
             int grayValueBits)
         {
             // Are Look-Up-Tables available?
-            Tag[] lutDescriptorTag =  { 
+/*            Tag[] lutDescriptorTag =  { 
                 RedPaletteColorLutDescriptorTag, 
                 GreenPaletteColorLutDescriptorTag, 
                 BluePaletteColorLutDescriptorTag };
@@ -249,7 +249,8 @@ namespace openDicom.Image
                 rgbImage = new byte[grayImage.Length];
                 rgbImage = grayImage;
             }
-            return rgbImage;
+            return rgbImage;*/
+			return null;
         }
     }
 }

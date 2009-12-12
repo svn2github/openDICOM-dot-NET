@@ -400,7 +400,7 @@ namespace openDicom.DataStructure
             byte[][] result = null;
             if (jointMultiValue.Length > valueLength)
             {
-                int count = (int) Math.Floor(jointMultiValue.Length / valueLength);
+                int count = (int) Math.Floor((double)jointMultiValue.Length / valueLength);
                 result = new byte[count][];
                 for (int i = 0; i < count; i++)
                 {
@@ -528,7 +528,8 @@ namespace openDicom.DataStructure
         
         protected virtual byte[] Encode(Array array)
         {
-            return new byte[1] { array[0] as byte[] };
+            //return new byte[1] { array[0] as byte[] };
+			return null;
         }
 
         /// <summary>

@@ -318,7 +318,7 @@ public sealed class MainWindow: GladeWidget
     {
         if (fileName != null && fileName != "")
         {
-            if (File.Exists(fileName))
+            if (System.IO.File.Exists(fileName))
             {
                 if (Configuration.Global.AreDictionariesAvailable)
                 {
@@ -716,7 +716,7 @@ public sealed class MainWindow: GladeWidget
             GenericOpenFileChooserDialog openFileChooserDialog = 
                 new GenericOpenFileChooserDialog("Open ACR-NEMA or DICOM file");
             openFileChooserDialog.Self.Run();
-            if (File.Exists(openFileChooserDialog.FileName))
+            if (System.IO.File.Exists(openFileChooserDialog.FileName))
                 LoadDicomFile(openFileChooserDialog.FileName);
         }
         else
@@ -1623,14 +1623,14 @@ public sealed class MainWindow: GladeWidget
         string gimpRemoteExecutable = Configuration.Global.GimpRemoteExecutable;
         bool isUnix = 
             Regex.IsMatch(Environment.OSVersion.ToString().ToLower(), "unix");
-        if ( ! File.Exists(gimpRemoteExecutable) && isUnix)
+        if ( ! System.IO.File.Exists(gimpRemoteExecutable) && isUnix)
         {
             gimpRemoteExecutable = "/usr/bin/gimp-remote";
-            if (File.Exists(gimpRemoteExecutable))
+            if (System.IO.File.Exists(gimpRemoteExecutable))
                 Configuration.Global.GimpRemoteExecutable = 
                     gimpRemoteExecutable;
         }
-        if (File.Exists(Configuration.Global.GimpRemoteExecutable))
+        if (System.IO.File.Exists(Configuration.Global.GimpRemoteExecutable))
         {
             string tempFileName = Path.GetTempFileName();
             bool saveTempProblem = false;
@@ -1670,7 +1670,7 @@ public sealed class MainWindow: GladeWidget
             {
                 try
                 {
-                    Process.Start(Configuration.Global.GimpRemoteExecutable,
+                    System.Diagnostics.Process.Start(Configuration.Global.GimpRemoteExecutable,
                         tempFileName);
                 }
                 catch (Exception e2)

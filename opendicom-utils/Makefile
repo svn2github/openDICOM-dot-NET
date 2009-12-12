@@ -30,28 +30,28 @@ NAME=opendicom-utils
 GROUP=opendicom.net
 
 
-DICOM_FILE_TRANSFORM_COMPILE=mcs -target:exe\
+DICOM_FILE_TRANSFORM_COMPILE=gmcs -target:exe\
 	-nowarn:$(IGNORE_WARNINGS)\
 	-pkg:$(LIB)\
 	-doc:doc/$(DICOM_FILE_TRANSFORM).xml\
 	-out:bin/$(DICOM_FILE_TRANSFORM).exe\
 	 $(DICOM_FILE_TRANSFORM_SOURCES)
 
-DICOM_FILE_QUERY_COMPILE=mcs -target:exe\
+DICOM_FILE_QUERY_COMPILE=gmcs -target:exe\
         -nowarn:$(IGNORE_WARNINGS)\
         -pkg:$(LIB)\
         -doc:doc/$(DICOM_FILE_QUERY).xml\
         -out:bin/$(DICOM_FILE_QUERY).exe\
          $(DICOM_FILE_QUERY_SOURCES)
 
-DICOM_DD_TRANSFORM_COMPILE=mcs -target:exe\
+DICOM_DD_TRANSFORM_COMPILE=gmcs -target:exe\
         -nowarn:$(IGNORE_WARNINGS)\
         -pkg:$(LIB)\
         -doc:doc/$(DICOM_DD_TRANSFORM).xml\
         -out:bin/$(DICOM_DD_TRANSFORM).exe\
          $(DICOM_DD_TRANSFORM_SOURCES)
 
-DICOM_DD_QUERY_COMPILE=mcs -target:exe\
+DICOM_DD_QUERY_COMPILE=gmcs -target:exe\
         -nowarn:$(IGNORE_WARNINGS)\
         -pkg:$(LIB)\
         -doc:doc/$(DICOM_DD_QUERY).xml\
@@ -62,7 +62,7 @@ DICOM_DD_QUERY_COMPILE=mcs -target:exe\
 all: build
 
 build:
-	@sh check.sh --cmd -e mcs
+	@sh check.sh --cmd -e gmcs
 	@sh check.sh --lib -e $(LIB)
 	@sh check.sh --lib-version -ge $(LIB_VERSION) $(LIB)
 	@for DIR in $(OUTPUT_DIRS); do mkdir -p $$DIR; done

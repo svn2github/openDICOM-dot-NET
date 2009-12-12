@@ -63,8 +63,8 @@ namespace openDicom.File
         /// </summary>
         public FileMetaInformation()
         {
-            DataElement element = new DataElement(stream, TransferSyntax);
-            Add(element);
+            //DataElement element = new DataElement(stream, TransferSyntax);
+            //Add(element);
 
         }
 

@@ -108,7 +108,7 @@ namespace openDicom.Encoding
 
         protected override byte[] Encode(Array array)
         {
-            System.DateTime[] date = array as Date[];            
+            System.DateTime[] date = array as System.DateTime[];            
             string[] multiValue = new string[date.Length];
             for (int i = 0; i < date.Length; i++)
             {
@@ -119,7 +119,7 @@ namespace openDicom.Encoding
                     d.Day.ToString();
             }
             string s = ToJointMultiValue(multiValue);
-            return TransferSyntax.ToString(s);
+            return TransferSyntax.ToBytes(s);
         }
     }
 

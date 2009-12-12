@@ -62,6 +62,13 @@ namespace openDicom.File
                     throw new DicomException("ACR-NEMA file is null.",
                         "XmlFile.AcrNemaFile");
             }
+			set {
+				if (value == null)
+					throw new DicomException("ACR-NEMA file cannot set to null.",
+						"XmlFile.AcrNemaFile");
+				else
+					acrNemaFile = value;
+			}
         }
 
         /// <summary>
@@ -167,7 +174,7 @@ namespace openDicom.File
         /// </summary>
         public void LoadFrom(string fileName, bool isDicomFile)
         {
-            AcrNemaFile = isDicomFile ? new DicomFile() : new AcrNemaFile();
+/*            AcrNemaFile = isDicomFile ? new DicomFile() : new AcrNemaFile();
 
             FileStream fileStream = new FileStream(fileName, FileMode.Open, 
                 FileAccess.Read);
@@ -178,7 +185,7 @@ namespace openDicom.File
             finally
             {
                 fileStream.Close();
-            }
+            }*/
         }
 
         /// <summary>
@@ -326,7 +333,7 @@ namespace openDicom.File
         /// </summary>
         public virtual void LoadFrom(Stream stream)
         {
-            XmlTextReader xml = new XmlTextReader(stream, 
+/*            XmlTextReader xml = new XmlTextReader(stream, 
                 System.Text.Encoding.UTF8);
             try
             {
@@ -365,7 +372,7 @@ namespace openDicom.File
             finally
             {
                 xml.Close();
-            }
+            }*/
         }
  
         /// <summary>

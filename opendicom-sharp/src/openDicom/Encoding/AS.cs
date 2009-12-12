@@ -25,7 +25,7 @@
 using System;
 using openDicom.DataStructure;
 using openDicom.Encoding.Type;
-using System.Text.RegularExpressions;
+using System.Text;
 
 
 namespace openDicom.Encoding

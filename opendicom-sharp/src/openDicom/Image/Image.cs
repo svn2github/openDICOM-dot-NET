@@ -23,6 +23,7 @@
     $Id: $
 */
 using System;
+using System.Collections;
 
 
 namespace openDicom.Image

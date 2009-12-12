@@ -44,7 +44,7 @@ namespace openDicom.Encoding
 
         protected override Array DecodeImproper(byte[] bytes)
         {
-            float[] floatValue = new float[(int) Math.Floor(bytes.Length / 4)];
+            float[] floatValue = new float[(int) Math.Floor((double) bytes.Length / 4)];
             byte[] buffer = new byte[4];
             for (int i = 0; i < floatValue.Length; i++)
             {

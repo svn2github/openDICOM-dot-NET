@@ -35,9 +35,9 @@ namespace openDicom.Image
     ///     additional layer on top of DICOM pixel data in order to provide
     ///     enhanced image processing routines.
     /// </summary>
-    public sealed class Pixbuf: Gdk.Pixbuf
+    public sealed class Pixbuf
     {
-        public Pixbuf(Image image)
+        public Pixbuf(Gdk.Image image)
         {
         }
     }
